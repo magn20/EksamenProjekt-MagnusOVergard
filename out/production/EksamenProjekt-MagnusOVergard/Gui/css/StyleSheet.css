@@ -1,0 +1,43 @@
+
+.text-field{
+
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: 0;
+    -fx-padding: 1 3 1 3;
+
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-radius: 0;
+
+}
+
+.text-field:focused{
+    -fx-border-color: #0030ef;
+}
+
+.button{
+    -fx-background-radius: 60;
+    -fx-border-color: black;
+    -fx-border-radius: 60;
+}
+
+.backgrounding{
+    -fx-background-image: url('../img/Background.png');
+    -fx-background-size: 1000;
+    -fx-background-position: center;
+}
+
+.backgrounding2{
+    -fx-background-image: url('../img/Background.png');
+    -fx-background-size: 1500;
+    -fx-background-position: center;
+}
+
+.whitebackground{
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
+.logo{
+    -fx-position-shape: center;
+}
