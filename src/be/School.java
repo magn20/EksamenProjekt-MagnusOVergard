@@ -34,6 +34,12 @@ public class School {
         return id;
     }
 
+    public StringProperty getIdPropertyAsStringProperty(){
+            StringProperty id = new SimpleStringProperty();
+            id.set(String.valueOf(getId()));
+            return id;
+    }
+
     public StringProperty nameProperty() {
         return name;
     }

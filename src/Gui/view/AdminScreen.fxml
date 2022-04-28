@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="1189.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="1189.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.AdminController">
    <children>
       <TableView layoutX="15.0" layoutY="91.0" prefHeight="399.0" prefWidth="296.0">
         <columns>
@@ -27,10 +27,10 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <TableView layoutX="433.0" layoutY="91.0" prefHeight="399.0" prefWidth="274.0">
+      <TableView fx:id="tvSchool" layoutX="433.0" layoutY="91.0" prefHeight="399.0" prefWidth="274.0">
          <columns>
-            <TableColumn prefWidth="172.79999351501465" text="School" />
-            <TableColumn prefWidth="100.80002441406248" text="Skole ID" />
+            <TableColumn fx:id="tcSchoolname" prefWidth="172.79999351501465" text="School" />
+            <TableColumn fx:id="tcSchoolId" prefWidth="100.80002441406248" text="Skole ID" />
          </columns>
       </TableView>
       <Line endX="808.0" endY="-133.0" layoutX="364.0" layoutY="187.0" startX="-350.0" startY="-133.0" />
@@ -41,8 +41,8 @@
       </Label>
       <Button layoutX="328.0" layoutY="113.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" stylesheets="@../css/StyleSheet.css" text="Tilføj lærer" />
       <Button layoutX="328.0" layoutY="157.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Fjern Lære" />
-      <Button layoutX="720.0" layoutY="113.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Tilføj Skole" />
-      <Button layoutX="721.0" layoutY="143.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Fjern Skole" />
+      <Button layoutX="721.0" layoutY="113.0" mnemonicParsing="false" onAction="#onAddSchoolBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Tilføj " />
+      <Button layoutX="721.0" layoutY="143.0" mnemonicParsing="false" onAction="#onRemoveSchoolBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Fjern " />
       <Button layoutX="1097.0" layoutY="495.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Log ud" />
       <Line endX="681.60009765625" layoutX="404.0" layoutY="510.0" startX="-385.6000061035156" />
       <TableView layoutX="823.0" layoutY="91.0" prefHeight="399.0" prefWidth="274.0">
@@ -68,5 +68,8 @@
          </font>
       </Label>
       <Button layoutX="1077.0" layoutY="20.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="96.0" text="Clear selection" />
+      <Button layoutX="328.0" layoutY="197.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Fjern Lære" />
+      <Button layoutX="721.0" layoutY="173.0" mnemonicParsing="false" onAction="#onEditSchoolBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Rediger" />
+      <Button layoutX="1102.0" layoutY="172.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" stylesheets="@../css/StyleSheet.css" text="Fjern Elev" />
    </children>
 </AnchorPane>

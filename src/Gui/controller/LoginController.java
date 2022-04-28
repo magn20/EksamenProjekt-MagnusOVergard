@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import static bll.utill.DisplayMessage.displayMessage;
 
 public class LoginController implements Initializable {
 
@@ -32,6 +33,8 @@ public class LoginController implements Initializable {
             sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
+        }else{
+            displayMessage("Brugernavn eller Kodeord var Forkert");
         }
     }
 
