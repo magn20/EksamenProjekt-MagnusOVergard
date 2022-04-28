@@ -8,19 +8,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="421.0" minWidth="500.0" prefHeight="421.0" prefWidth="500.0" styleClass="backgrounding" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.LoginController">
+<AnchorPane minHeight="421.0" minWidth="456.0" prefHeight="421.0" prefWidth="456.0" style="-: light grey;" styleClass="whitebackground" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.LoginController">
    <children>
-      <AnchorPane layoutX="57.0" layoutY="28.0" prefHeight="68.0" prefWidth="399.0" style="-fx-background-radius: 40; -fx-border-radius: 40; -fx-border-color: Black;" styleClass="whitebackground" />
-      <AnchorPane layoutX="56.0" layoutY="113.0" minHeight="30.0" minWidth="30.0" prefHeight="270.0" prefWidth="399.0" style="-fx-background-radius: 40; -fx-border-radius: 40;" styleClass="whitebackground">
+      <AnchorPane layoutX="91.0" layoutY="164.0" prefHeight="158.0" prefWidth="273.0" style="-fx-background-radius: 40; -fx-border-radius: 40; -fx-border-color: Black; -: ;">
          <children>
-            <Label layoutX="22.0" layoutY="41.0" text="Username" />
-            <Label layoutX="23.0" layoutY="82.0" text="Password" />
-            <Button layoutX="228.0" layoutY="106.0" mnemonicParsing="false" onAction="#onLoginBtn" text="Login" />
-            <TextField fx:id="lblUsername" layoutX="133.0" layoutY="30.0" promptText="Username" />
-            <PasswordField fx:id="lblPassword" layoutX="133.0" layoutY="71.0" promptText="Password" />
-         </children>
-      </AnchorPane>
-      <ImageView fitHeight="54.0" fitWidth="262.0" layoutX="140.0" layoutY="34.0" styleClass="logo" AnchorPane.bottomAnchor="333.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="34.0">
+            <TextField fx:id="lblUsername" layoutX="108.0" layoutY="12.0" promptText="Username" />
+            <Label layoutX="27.0" layoutY="14.0" text="Username" />
+            <Label layoutX="28.0" layoutY="52.0" text="Password" />
+            <PasswordField fx:id="lblPassword" layoutX="108.0" layoutY="50.0" promptText="Password" />
+            <Button layoutX="181.0" layoutY="92.0" mnemonicParsing="false" onAction="#onLoginBtn" prefHeight="27.0" prefWidth="70.0" text="Log ind" />
+         </children></AnchorPane>
+      <ImageView fitHeight="83.0" fitWidth="280.0" layoutX="105.0" layoutY="37.0" styleClass="logo" AnchorPane.bottomAnchor="301.0" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="37.0">
          <image>
             <Image url="@../img/logo.jpg" />
          </image>
