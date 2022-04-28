@@ -11,13 +11,17 @@ public class Teacher {
     private final IntegerProperty schoolId = new SimpleIntegerProperty();
     private final StringProperty fName = new SimpleStringProperty();
     private final StringProperty lName = new SimpleStringProperty();
+    private final StringProperty password = new SimpleStringProperty();
+    private final StringProperty username = new SimpleStringProperty();
 
-    public Teacher(int id, int schoolId, String fName, String lName){
-
+    public Teacher(int id, int schoolId, String fName, String lName, String username, String password){
         setId(id);
         setSchoolId(schoolId);
         setFName(fName);
         setLName(lName);
+        setPassword(password);
+        setUsername(username);
+
 
     }
     public final void setFName(String fName) {this.fName.set(fName);}
@@ -58,5 +62,27 @@ public class Teacher {
 
     public StringProperty lNameProperty() {
         return lName;
+    }
+
+    public void setUsername(String username){
+        this.username.set(username);
+    }
+    public void setPassword(String password){
+        this.password.set(password);
+    }
+
+    public String getPassword() {
+        return password.get();
+    }
+
+    public String getUsername() {
+        return username.get();
+    }
+
+    public StringProperty usernameProperty() {
+        return username;
+    }
+    public StringProperty passwordProperty() {
+        return password;
     }
 }
