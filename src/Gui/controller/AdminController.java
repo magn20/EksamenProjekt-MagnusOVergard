@@ -1,9 +1,11 @@
 package Gui.controller;
 
 import Gui.model.SchoolModel;
+import Gui.model.StudentModel;
 import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
 import be.School;
+import be.Student;
 import be.Teacher;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -28,6 +30,15 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
+    // tableview for Student
+    @FXML
+    private TableView<Student> tvStudent;
+    @FXML
+    private TableColumn<Student, String> tcStudentFName;
+    @FXML
+    private TableColumn<Student, String> tcStudentLName;
+    @FXML
+    private TableColumn<Student, Integer> tcStudentSchoolId;
     // tableview for Teacher
     @FXML
     private TableView<Teacher> tvTeacher;
@@ -50,37 +61,53 @@ public class AdminController implements Initializable {
 
     SchoolModel schoolModel;
     TeacherModel teacherModel;
+    StudentModel studentModel;
 
     SceneSwapper sceneSwapper;
 
     private ObservableList<School> allSchools;
     private ObservableList<Teacher> allTeachers;
+    private ObservableList<Student> allStudents;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         schoolModel = new SchoolModel();
         teacherModel = new TeacherModel();
+        studentModel = new StudentModel();
         sceneSwapper = new SceneSwapper();
 
         allSchools = FXCollections.observableArrayList();
         allTeachers = FXCollections.observableArrayList();
+        allStudents = FXCollections.observableArrayList();
 
         prepareTableview();
     }
 
+    /**
+     * setup for all tableviews
+     */
     public void prepareTableview(){
-        // setup for the tableview School
+        // setup for tableview School
         tcSchoolname.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty()  );
 
+        // setup for tableview Teacher
         tcTeacherFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
         tcTeacherLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
         tcUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
         tcTeacherSchoolID.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
 
+        // setup for tableview Student
+        tcStudentFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
+        tcStudentLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
+        tcStudentSchoolId.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
+
         setTableview();
     }
 
+    /**
+     * sets the data into all the TableViews
+     */
     public void setTableview(){
         allSchools.clear();
         allSchools.addAll(schoolModel.getSchools());
@@ -89,16 +116,20 @@ public class AdminController implements Initializable {
         allTeachers.clear();
         allTeachers.addAll(teacherModel.getTeachers());
         tvTeacher.setItems(allTeachers);
+
+        allStudents.clear();
+        allStudents.addAll(studentModel.getStudents());
+        tvStudent.setItems(allStudents);
     }
 
 
-    public void onAddSchoolBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminAddSchool.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
 
-    }
 
+    /**
+     * Removes a school
+     * Checks for no selection
+     * proceed after confirmation
+     */
     public void onRemoveSchoolBtn(ActionEvent actionEvent) {
         if (tvSchool.getSelectionModel().getSelectedItem() == null) {
             displayMessage("Ingen Skole er valgt");
@@ -119,18 +150,11 @@ public class AdminController implements Initializable {
 
     }
 
-    public void onEditSchoolBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminEditSchool.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
-    public void onEditTeacherBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminEditTeacher.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
+    /**
+     * Removes a Teacher
+     * Checks for no selection
+     * proceed after confirmation
+     */
     public void OnRemoveTeacherBtn(ActionEvent actionEvent) {
         if (tvTeacher.getSelectionModel().getSelectedItem() == null) {
             displayMessage("Ingen lærer er valgt");
@@ -151,8 +175,84 @@ public class AdminController implements Initializable {
 
     }
 
+    /**
+     * Removes a Student
+     * Checks for no selection
+     * proceed after confirmation
+     */
+    public void onRemoveStudentBtn(ActionEvent actionEvent) {
+        if (tvStudent.getSelectionModel().getSelectedItem() == null) {
+            displayMessage("Ingen elev er valgt");
+        } else {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
+            a.setTitle("Fjern elev");
+            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
+            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+                try {
+                    studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
+                    prepareTableview();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    displayError(e);
+                }
+            });
+        }
+    }
+
+
+
+
+
+    /**
+     * switches to AdminAddSchool. and closes current stage.
+     */
+    public void onAddSchoolBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminAddSchool.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+
+    }
+
+    /**
+     * opens AdminEditSchool scene on new stage, Closes current stage
+     */
+    public void onEditSchoolBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminEditSchool.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * opens AdminEditTeacher scene on new stage, Closes current stage
+     */
+    public void onEditTeacherBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminEditTeacher.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * opens AdminAddTeacher scene on new stage, Closes current stage
+     */
     public void onAddTeacherBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminAddTeacher.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * opens AdminAddStudent scene on new stage, Closes current stage
+     */
+    public void onAddStudentBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminAddStudent.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+    /**
+     * opens AdminEditStudent scene on new stage, Closes current stage
+     */
+    public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminEditStudent.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }

@@ -32,12 +32,16 @@ public class AdminAddSchoolController implements Initializable {
     }
 
 
-
+    /**
+     * adds a school to Database
+     * @param actionEvent
+     */
     public void onAddBtn(ActionEvent actionEvent) {
-
+        //checks for no input for school name.
             if (txtSchoolName.getText().equals("")){
                 displayMessage("du har ikke skrevet noget navn");
             } else{
+                // creates school
                 try {
                     schoolModel.createSchool(txtSchoolName.getText());
                     txtSchoolName.setText("");
@@ -50,6 +54,9 @@ public class AdminAddSchoolController implements Initializable {
 
     }
 
+    /**
+     * switches back to AdminScreen
+     */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

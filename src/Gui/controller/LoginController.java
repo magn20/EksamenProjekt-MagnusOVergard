@@ -28,12 +28,18 @@ public class LoginController implements Initializable {
         sceneSwapper = new SceneSwapper();
     }
 
+
+    /**
+     * login functions and will switch to stage
+     */
     public void onLoginBtn(ActionEvent actionEvent) throws IOException {
+        //checks for admin
         if (lblPassword.getText().equals("admin") & lblUsername.getText().equals("admin")){
             sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
         }else{
+            // display wrong Login combination
             displayMessage("Brugernavn eller Kodeord var Forkert");
         }
     }

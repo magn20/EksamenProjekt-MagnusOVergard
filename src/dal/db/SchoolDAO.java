@@ -17,6 +17,10 @@ public class SchoolDAO implements ISchool {
         this.con = con;
     }
 
+    /**
+     * gets a list of all schools in Database
+     * @return list of school
+     */
     @Override
     public ObservableList<School> getSchool() {
         ObservableList<School> allSchools =  FXCollections.observableArrayList();
@@ -36,6 +40,12 @@ public class SchoolDAO implements ISchool {
         return allSchools;
     }
 
+
+    /**
+     * create school for database
+     * @param name of the school
+     * @return the school object created
+     */
     @Override
     public School createSchool(String name) {
         int insertedId = -1;
@@ -54,6 +64,11 @@ public class SchoolDAO implements ISchool {
 
     }
 
+    /**
+     * updates a school Name
+     * @param school object holding changed name.
+     * @throws SQLException
+     */
     @Override
     public void updateSchool(School school) throws SQLException {
 
@@ -68,6 +83,11 @@ public class SchoolDAO implements ISchool {
 
     }
 
+    /**
+     * removes a school from Database
+     * @param school object that will be deleted
+     * @return true if success, false if failed.
+     */
     @Override
     public boolean removeSchool(School school) {
         try {

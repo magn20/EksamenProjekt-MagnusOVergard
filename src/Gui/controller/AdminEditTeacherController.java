@@ -58,6 +58,9 @@ public class AdminEditTeacherController implements Initializable {
         fillComboBox();
     }
 
+    /**
+     * fills the comboboxs for schools and teachers
+     */
     public void fillComboBox(){
         allSchools.clear();
         cbSchool.getItems().clear();
@@ -75,67 +78,92 @@ public class AdminEditTeacherController implements Initializable {
         }
     }
 
+    /**
+     * switches back to Admin screen
+     * and closes the stage
+     */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
+
+    /**
+     * Edits a teacher
+     * @param actionEvent
+     */
     public void onEditBtn(ActionEvent actionEvent) {
             try {
+                // checks for no selected teacher
                 if (cbTeacher.getSelectionModel().isEmpty()){
                     displayMessage("vælg en lærer");
-                }
-                for (School school: allSchools){
-                    if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())){
+                }else{
+                    // runs thru schools and finds school
+                    for (School school: allSchools){
+                        if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())){
 
 
-                        if (txtPassword.getText().equals("")) {
-                            String hashed = selectedTeacher.getPassword();
-                            Teacher teacher = new Teacher(-1,school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
-                            teacherModel.updateTeacher(teacher);
-                            updateStatus(teacher);
-                            break;
-                        }else {
-                            String salt = BCrypt.gensalt(10);
-                            //hash + salt one liner
-                            String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
-
-
-                            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne lærer.");
-                            a.setTitle("Fjern lære");
-                            a.setHeaderText("Fjern lære");
-                            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-                                Teacher teacher = new Teacher(-1,school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
-                                try {
-                                    teacherModel.updateTeacher(teacher);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                    displayError(e);
-                                }
+                            // checks if there have been entered new password
+                            //if not just updates Teacher
+                            if (txtPassword.getText().equals("")) {
+                                String hashed = selectedTeacher.getPassword();
+                                Teacher teacher = new Teacher(selectedTeacher.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                                teacherModel.updateTeacher(teacher);
                                 updateStatus(teacher);
-                            });
-                            break;
+                                break;
+                                // if password needs to be changes we hash it with salt.
+                            }else {
+                                // generate salt
+                                String salt = BCrypt.gensalt(10);
+                                //hash + salt one liner
+                                String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
+
+                                // confirmation box to ensure user knows that Teacher Password will be changed
+                                Alert a = new Alert(Alert.AlertType.CONFIRMATION, "du overskriver kodeordet");
+                                a.setTitle("Redigere læren");
+                                a.setHeaderText("Ville du gerne færdigøre denne redigering i læren");
+                                a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+                                    Teacher teacher = new Teacher(selectedTeacher.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                                    try {
+                                        teacherModel.updateTeacher(teacher);
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        displayError(e);
+                                    }
+                                    updateStatus(teacher);
+                                });
+                                break;
+                            }
                         }
                     }
-                }
-            }catch (Exception e){
+
+
+                }  }catch (Exception e){
                 e.printStackTrace();
                 displayError(e);
             }
 
+
         }
 
 
-
+    /**
+     * inputs all the teachers data into the diffrent txtfields and combobox.
+     * @param actionEvent runs when an action is performed on combobox
+     */
     public void onTeacherCb(ActionEvent actionEvent) {
 
+        // finds selected teacher
         for (Teacher teacher : allTeachers){
             if (cbTeacher.getSelectionModel().getSelectedItem().equals(teacher.getFName() + " " + teacher.getLName())){
+               //sets up txtfields and input teacher data in
                 txtFName.setText(teacher.getFName());
                 txtLName.setText(teacher.getLName());
                 txtUsername.setText(teacher.getUsername());
                 selectedTeacher = teacher;
+
+                // gets the teachers school and automatic picks it.
                 for (School school: allSchools){
                     if (teacher.getSchoolId() == school.getId()){
                         cbSchool.getSelectionModel().select(school.getName());
@@ -146,8 +174,13 @@ public class AdminEditTeacherController implements Initializable {
         }
 
     }
+
+    /**
+     * tells the user that the change happend, and removes the data from textfields for visual feeling of succesfull changes
+     * @param teacher sends the teacher that has been changed
+     */
     public void updateStatus(Teacher teacher){
-        lblStatus.setText("tilføjet ny lære: " + teacher.getFName() + " " + teacher.getLName() );
+        lblStatus.setText("Redigeret i læreren: " + teacher.getFName() + " " + teacher.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");
         txtFName.setText("");

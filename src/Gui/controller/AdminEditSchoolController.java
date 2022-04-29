@@ -40,6 +40,9 @@ public class AdminEditSchoolController implements Initializable {
         fillComboBox();
     }
 
+    /**
+     * fills combox with all schools
+     */
     public void fillComboBox(){
         allSchools.clear();
         allSchools = schoolModel.getSchools();
@@ -50,12 +53,18 @@ public class AdminEditSchoolController implements Initializable {
 
     }
 
+    /**
+     *goes to admin screen and closes current stage.
+     */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * edit a school and check for wrong values
+     */
     public void onEditBtn(ActionEvent actionEvent) throws SQLException {
         if (cbSchool.getSelectionModel().isEmpty()){
             displayMessage("vælg en skole at rediger i");

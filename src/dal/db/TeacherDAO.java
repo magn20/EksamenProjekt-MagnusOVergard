@@ -17,6 +17,10 @@ public class TeacherDAO implements ITeacher {
         this.con = con;
     }
 
+    /**
+     * gets all teachers from database
+     * @return Observablelist of all Teachers
+     */
     @Override
     public ObservableList<Teacher> getTeachers() {
         ObservableList<Teacher> allTeachers =  FXCollections.observableArrayList();
@@ -40,6 +44,11 @@ public class TeacherDAO implements ITeacher {
         return allTeachers;
     }
 
+    /**
+     * cretes a Teacher in database
+     * @param teacher object holding values of teacher that should be created
+     * @return the teacher object that were created
+     */
     @Override
     public Teacher createTeacher(Teacher teacher) {
         int insertedId = -1;
@@ -61,10 +70,15 @@ public class TeacherDAO implements ITeacher {
         return new Teacher(insertedId,teacher.getSchoolId(), teacher.getFName(),teacher.getLName(),teacher.getUsername(),teacher.getPassword());
     }
 
+    /**
+     * updates a teacher in database
+     * @param teacher object holding values for updating in database
+     * @throws SQLException
+     */
     @Override
     public void updateTeacher(Teacher teacher) throws SQLException {
 
-        String sql = "UPDATE Teacher SET SchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE SchoolId=?;";
+        String sql = "UPDATE Teacher SET TeacherSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE TeacherId=?;";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
         preparedStatement.setInt(1, teacher.getSchoolId());
         preparedStatement.setString(2, teacher.getFName());
@@ -77,6 +91,11 @@ public class TeacherDAO implements ITeacher {
         }
     }
 
+    /**
+     * removes a teacher from database
+     * @param teacher object holding rightful id for deletion.
+     * @return true for success, false for failed deletion.
+     */
     @Override
     public boolean removeTeacher(Teacher teacher) {
         try {

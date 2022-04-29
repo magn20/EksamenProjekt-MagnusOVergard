@@ -1,9 +1,11 @@
 package Gui.controller;
 
 import Gui.model.SchoolModel;
+import Gui.model.StudentModel;
 import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
 import be.School;
+import be.Student;
 import be.Teacher;
 import bll.utill.BCrypt;
 import javafx.collections.FXCollections;
@@ -20,10 +22,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
 
-public class AdminAddTeacherController implements Initializable {
+public class AdminAddStudentController implements Initializable {
     @FXML
     private Label lblStatus;
     @FXML
@@ -39,21 +42,21 @@ public class AdminAddTeacherController implements Initializable {
 
     SceneSwapper sceneSwapper;
     SchoolModel schoolModel;
-    TeacherModel teacherModel;
+    StudentModel studentModel;
     private ObservableList<School> allSchools;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         schoolModel = new SchoolModel();
         sceneSwapper  = new SceneSwapper();
-        teacherModel = new TeacherModel();
+        studentModel = new StudentModel();
 
         allSchools = FXCollections.observableArrayList();
         fillComboBox();
     }
 
     /**
-     * fills combobox with all schools
+     * fills all schools into combobox
      */
     public void fillComboBox(){
         allSchools.clear();
@@ -65,8 +68,7 @@ public class AdminAddTeacherController implements Initializable {
     }
 
     /**
-     * switching scene and stage back to admin screen.
-     * closes current stage
+     * switches stage and scene back to admin screen.
      */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
@@ -74,22 +76,21 @@ public class AdminAddTeacherController implements Initializable {
         stage.close();
     }
 
-
     /**
-     * add teacher to database
+     * Add student to Database
      * checks for no inputs
-     * checks for school teacher should belong to
+     * checks for no school selection
      */
     public void onAddBtn(ActionEvent actionEvent) {
         // checks for no inputs
         if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().equals("")){
            displayMessage("Der mangler infomation");
-           //checks for selection of school
+           //checks for school selection
         }else if(cbSchool.getSelectionModel().isEmpty()){
-            displayMessage("vælg en skole for læren");
+            displayMessage("vælg en skole for Eleven");
         }else {
             try {
-                //finds school that user has selected
+                // finds school that is selected
                 for (School school: allSchools){
                     if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())){
 
@@ -98,10 +99,14 @@ public class AdminAddTeacherController implements Initializable {
                         //hash + salt one liner
                         String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
 
-                        // creates teacher object & creates it
-                        Teacher teacher = new Teacher(-1,school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
-                        updateStatus(teacher);
-                        teacherModel.createTeacher(teacher);
+                        // creates new Student object
+                        Student student = new Student(-1,school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+
+                        // adds the student to database
+                        studentModel.createStudent(student);
+
+                        //updates ui
+                        updateStatus(student);
                         break;
                     }
                 }
@@ -109,16 +114,16 @@ public class AdminAddTeacherController implements Initializable {
                 e.printStackTrace();
                 displayError(e);
             }
-
         }
-
     }
 
+
     /**
-     * updates ui for feeling of successful creation of teacher object
+     * updates the ui for user feeling of succesful creation of Student.
+     * @param student
      */
-    public void updateStatus(Teacher teacher){
-        lblStatus.setText("tilføjet ny lære: " + teacher.getFName() + " " + teacher.getLName() );
+    public void updateStatus(Student student){
+        lblStatus.setText("tilføjet ny Elev: " + student.getFName() + " " + student.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");
         txtFName.setText("");
