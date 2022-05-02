@@ -25,12 +25,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
+                        <TableView fx:id="tvTemplate" layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Template ID" />
-                            <TableColumn prefWidth="136.79998779296875" text="Fornavn" />
-                              <TableColumn prefWidth="144.8000030517578" text="Efternavn" />
-                              <TableColumn prefWidth="131.20001220703125" text="Age" />
+                            <TableColumn fx:id="tcTemplateID" prefWidth="75.0" text="Template ID" />
+                            <TableColumn fx:id="tcFName" prefWidth="136.79998779296875" text="Fornavn" />
+                              <TableColumn fx:id="tcLName" prefWidth="141.5999755859375" text="Efternavn" />
+                              <TableColumn fx:id="tcAge" minWidth="0.0" prefWidth="64.0000061035156" text="Age" />
                           </columns>
                         </TableView>
                         <Label layoutX="14.0" layoutY="14.0" text="Templates">
@@ -63,13 +63,19 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Tilløj Template" />
+                              <Button mnemonicParsing="false" onAction="#onAddTemplate" text="Tilløj Template" />
+                              <Label text="Rediger en Template">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onEditTemplate" text="Rediger Template" />
                               <Label text="Fjern en Template">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Fjern Template" />
+                              <Button mnemonicParsing="false" onAction="#onRemoveTemplate" text="Fjern Template" />
                            </children>
                         </VBox>
                      </children></AnchorPane>

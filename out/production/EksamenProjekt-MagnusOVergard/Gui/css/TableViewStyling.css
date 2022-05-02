@@ -10,11 +10,16 @@
 .table-view .cell{
     -fx-cell-size: 35;
     -fx-alignment: center-left;
-    -fx-background-color: #29292D;
-    -fx-border-color: #29292D;
-    -fx-text-fill: lightgray;
+    -fx-border-color: #65d965;
+    -fx-text-fill: #000000;
     -fx-alignment: CENTER_LEFT;
-
+}
+.table-view .cell:selected{
+    -fx-cell-size: 35;
+    -fx-alignment: center;
+    -fx-background-color: #8a8a8a;
+    -fx-text-fill: #000000;
+    -fx-alignment: center;
 }
 .table-row-cell:selected {
     -fx-background-color: whitesmoke;

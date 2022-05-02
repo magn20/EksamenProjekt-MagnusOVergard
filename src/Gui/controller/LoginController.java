@@ -57,11 +57,12 @@ public class LoginController implements Initializable {
             if (teacher.getUsername().equals(lblUsername.getText())){
                 if(BCrypt.checkpw(lblPassword.getText(), teacher.getPassword())){
                     // Sceneswapper
-                    sceneSwapper.sceneSwitch(new Stage(), "TeacherScreen.fxml");
-                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    stage.close();
                     correctLogin = true;
                     singletonUser.setTeacher(teacher);
+                    sceneSwapper.TeacherScreen(new Stage());
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.close();
+
                     break;
                 }
 
