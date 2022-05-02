@@ -17,7 +17,6 @@ public class DisplayMessage {
     public static void displayError(Exception ex) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-           // addIicon(alert);
             alert.setTitle("Error: Something went wrong");
             alert.setHeaderText(ex.getMessage());
             alert.setContentText(String.valueOf(ex.getCause()));

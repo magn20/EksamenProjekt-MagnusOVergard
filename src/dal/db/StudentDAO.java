@@ -68,7 +68,8 @@ public class StudentDAO implements IStudent {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Student(insertedId,student.getSchoolId(), student.getFName(),student.getLName(),student.getUsername(),student.getPassword());
+        return new Student(insertedId,student.getSchoolId(), student.getFName(),
+                student.getLName(),student.getUsername(),student.getPassword());
     }
 
     /**

@@ -1,6 +1,11 @@
 package Gui.controller;
 
+import Gui.model.StudentModel;
+import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
+import Gui.utill.SingletonUser;
+import be.Teacher;
+import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,10 +27,14 @@ public class LoginController implements Initializable {
     private TextField lblUsername;
 
     SceneSwapper sceneSwapper;
+    TeacherModel teacherModel;
+    SingletonUser singletonUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sceneSwapper = new SceneSwapper();
+        teacherModel = new TeacherModel();
+        singletonUser = SingletonUser.getInstance();
     }
 
 
@@ -33,15 +42,38 @@ public class LoginController implements Initializable {
      * login functions and will switch to stage
      */
     public void onLoginBtn(ActionEvent actionEvent) throws IOException {
+
+        boolean correctLogin = false;
+
         //checks for admin
         if (lblPassword.getText().equals("admin") & lblUsername.getText().equals("admin")){
             sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
-        }else{
-            // display wrong Login combination
+            correctLogin = true;
+        }
+
+        for (Teacher teacher : teacherModel.getTeachers()){
+            if (teacher.getUsername().equals(lblUsername.getText())){
+                if(BCrypt.checkpw(lblPassword.getText(), teacher.getPassword())){
+                    // Sceneswapper
+                    sceneSwapper.sceneSwitch(new Stage(), "TeacherScreen.fxml");
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.close();
+                    correctLogin = true;
+                    singletonUser.setTeacher(teacher);
+                    break;
+                }
+
+            }
+        }
+
+        // if login failed due to wrong information
+        if (!correctLogin){
             displayMessage("Brugernavn eller Kodeord var Forkert");
         }
+
+
     }
 
 }
