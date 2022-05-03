@@ -3,9 +3,9 @@ package Gui.controller;
 import Gui.model.TPLModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
-import be.Student;
 import be.Template;
 import bll.utill.DisplayMessage;
+import com.sun.tools.javac.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +36,7 @@ public class TeacherController implements Initializable {
 
     private ObservableList<Template> allTemplate;
 
+
     SceneSwapper sceneSwapper;
     TPLModel tplModel;
     SingletonUser singletonUser;
@@ -47,6 +48,7 @@ public class TeacherController implements Initializable {
         tplModel = new TPLModel();
 
         allTemplate = FXCollections.observableArrayList();
+
 
         prepareTableview();
     }
@@ -87,6 +89,24 @@ public class TeacherController implements Initializable {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void onAddTemplate(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAddTemplate.fxml");
     }
@@ -107,4 +127,5 @@ public class TeacherController implements Initializable {
             sceneSwapper.sceneSwitch(new Stage(), "TeacherJounalCreation.fxml");
         }
     }
+
 }
