@@ -1,6 +1,7 @@
 package Gui.model;
 
 import be.TPLGeneralInfo;
+import be.TPLHealthJournal;
 import be.Template;
 import bll.TPLFacade;
 import javafx.collections.ObservableList;
@@ -38,5 +39,16 @@ public class TPLModel {
     }
     public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo){
         return tplFacade.removeTPLGeneralInfo(tplGeneralInfo);
+    }
+
+    // for our TPLHealthJournal
+    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID){
+        return tplFacade.getTPLHealthJournal(templateID);
+    }
+    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal){
+        return tplFacade.createTPLHealthJournal(tplHealthJournal);
+    }
+    public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
+        tplFacade.updateTPLHealthJournal(tplHealthJournal);
     }
 }

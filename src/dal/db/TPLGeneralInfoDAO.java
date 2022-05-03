@@ -87,7 +87,7 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
 
     @Override
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
-        String sql = "UPDATE TPLGeneralInfo SET TPLCitizenSchoolId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquitmentAids = ?, HomeLayout = ?, Network = ? WHERE TPLGeneralInfoId=?;";
+        String sql = "UPDATE TPLGeneralInfo SET TPLCitizenGeneralInfoId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquipmentAids = ?, HomeLayout = ?, Network = ? WHERE TPLGeneralInfoId=?;";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
         preparedStatement.setInt(1, tplGeneralInfo.getTplCitizenId());
         preparedStatement.setString(2, tplGeneralInfo.getCoping());
