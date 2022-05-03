@@ -93,6 +93,18 @@ public class TeacherController implements Initializable {
 
 
     public void onEditTemplate(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "TeacherEditTemplate.fxml");
+        if (tvTemplate.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("Vælg en Template");
+        }else{
+            sceneSwapper.sceneSwitch(new Stage(), "TeacherEditTemplate.fxml");
+        }
+    }
+
+    public void onOpenJournalBtn(ActionEvent actionEvent) throws IOException {
+        if (tvTemplate.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("Vælg en Template");
+        }else{
+            sceneSwapper.sceneSwitch(new Stage(), "TeacherJounalCreation.fxml");
+        }
     }
 }

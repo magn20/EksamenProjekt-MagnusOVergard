@@ -45,7 +45,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text=" Omsorgs journal" />
+                              <Button mnemonicParsing="false" onAction="#onOpenJournalBtn" text=" Omsorgs journal" />
                               <Label text="Duplicerer Template">
                                  <font>
                                     <Font size="23.0" />
