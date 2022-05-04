@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -125,13 +126,14 @@ public class TeacherTemplateController implements Initializable {
         setComboboxMainHealth();
         setComboboxExpectation();
 
+        updatetplHealthJournals();
+        setupTableviewTPLHealthJournal();
 
         // gets the Templated that is selected from teacher screen.
 
         Template template = controller.getTemplateForEdit();
 
 
-        updatetplHealthJournals();
 
         lblTemplate.setText("Template: "+ template.getfName() + " " + template.getlName() + " Template ID" + template.getId());
 
@@ -143,6 +145,22 @@ public class TeacherTemplateController implements Initializable {
 
 
     }
+
+
+    public void setupTableviewTPLHealthJournal(){
+        tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+
+        tvTPLHealthJournal.setItems(tplHealthJournals);
+
+
+    }
+
+
 
     /**
      * closes the stage
@@ -393,12 +411,13 @@ public class TeacherTemplateController implements Initializable {
             tplModel.createTPLHealthJournal(tplHealthJournal);
             }
         }
+
+        updatetplHealthJournals();
+        setupTableviewTPLHealthJournal();
     }
 
 
     public void onSelectedHealthConditionCb(ActionEvent actionEvent) {
-
-
         updatetplHealthJournals();
         boolean hasupdated = false;
 
@@ -473,4 +492,7 @@ public class TeacherTemplateController implements Initializable {
         cbExpectation.getItems().add("Forsvinder");
     }
 
+    public void onSlectetTPLHealthJournal(MouseEvent mouseEvent) {
+        updateHealthScreen(tvTPLHealthJournal.getSelectionModel().getSelectedItem());
+    }
 }

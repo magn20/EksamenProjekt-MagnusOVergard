@@ -200,7 +200,7 @@
                                        </children>
                                     </GridPane>
                                     <Line endX="-22.199951171875" endY="35.599945068359375" layoutX="552.0" layoutY="404.0" startX="-22.199951171875" startY="-394.0" />
-                                    <TableView fx:id="tvTPLHealthJournal" layoutX="546.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="546.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+                                    <TableView fx:id="tvTPLHealthJournal" layoutX="546.0" layoutY="14.0" onMouseClicked="#onSlectetTPLHealthJournal" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="546.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
                                       <columns>
                                         <TableColumn fx:id="tcCondition" prefWidth="185.5999755859375" text="Tilstand" />
                                         <TableColumn fx:id="tcRelanacy" prefWidth="120.79998779296875" text="Vigtighed" />

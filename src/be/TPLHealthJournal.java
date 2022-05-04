@@ -84,4 +84,37 @@ public class TPLHealthJournal {
     public String getRelevancy() {
         return relevancy.get();
     }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public IntegerProperty tplCitizenIdProperty() {
+        return tplCitizenId;
+    }
+
+    public StringProperty conditionProperty() {
+        return condition;
+    }
+
+    public StringProperty evaluationProperty() {
+        return evaluation;
+    }
+
+    public StringProperty expectationProperty() {
+        return expectation;
+    }
+
+    public StringProperty lastUpdateProperty() {
+        return lastUpdate;
+    }
+
+    public StringProperty noteProperty() {
+        return note;
+    }
+
+    public StringProperty relevancyProperty() {
+        return relevancy;
+    }
+
 }
