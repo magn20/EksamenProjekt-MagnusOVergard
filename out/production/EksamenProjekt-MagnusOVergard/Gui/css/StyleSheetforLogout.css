@@ -18,6 +18,7 @@
 }
 
 .button:pressed {
+    -fx-border-color: transparent, black;
     -fx-background-color: black;
     -fx-text-fill: white;
 }

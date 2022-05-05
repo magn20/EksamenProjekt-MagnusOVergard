@@ -2,6 +2,7 @@ package Gui.controller;
 
 import Gui.model.TPLModel;
 import Gui.utill.SceneSwapper;
+import be.TPLFunctionalJournal;
 import be.TPLGeneralInfo;
 import be.TPLHealthJournal;
 import be.Template;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -25,7 +27,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.spi.CalendarDataProvider;
 
 public class TeacherTemplateController implements Initializable {
 
@@ -106,11 +107,96 @@ public class TeacherTemplateController implements Initializable {
     private TextArea txtEducationAndJob;
 
 
+    // For Functional Journal
+    @FXML
+    private Button btnCooking;
+    @FXML
+    private Button btnHouseWork;
+    @FXML
+    private Button btnDailyRoutines;
+    @FXML
+    private Button btnShopping;
+    @FXML
+    private Button btnCarry;
+    @FXML
+    private Button btnMoveAround;
+    @FXML
+    private Button btnTransport;
+    @FXML
+    private Button btnMoveInDiffrentAreas;
+    @FXML
+    private Button btnMove;
+    @FXML
+    private Button btnChangePosition;
+    @FXML
+    private Button btnMuscle;
+    @FXML
+    private Button btnWalk;
+    @FXML
+    private Button btnEndurance;
+    @FXML
+    private Button btnApplyIt;
+    @FXML
+    private Button btnMemory;
+    @FXML
+    private Button btnOrientationAbility;
+    @FXML
+    private Button btnCognitiveFunctions;
+    @FXML
+    private Button btnEmotion;
+    @FXML
+    private Button btnEnergy;
+    @FXML
+    private Button btnSkills;
+    @FXML
+    private Button btnProblemSolve;
+    @FXML
+    private Button btnPaidWork;
+    @FXML
+    private Button btnBath;
+    @FXML
+    private Button btnPersonalCare;
+    @FXML
+    private Button btnGettingDressed;
+    @FXML
+    private Button btnDrinking;
+    @FXML
+    private Button btnFoodIntake;
+    @FXML
+    private Button btnEating;
+    @FXML
+    private Button btnTakeCareOfOwnHealth;
+    @FXML
+    private Button btnUseToilet;
+
+    @FXML
+    private TextArea txtNoteFunction;
+    @FXML
+    private TextArea txtCitizenExpecationFunction;
+
+    @FXML
+    private ComboBox cbExecutionFunction;
+    @FXML
+    private ComboBox cbExecutionLimitsFunction;
+    @FXML
+    private ComboBox cbNiveauFunction;
+    @FXML
+    private ComboBox cbExpectedFunction;
+
+    @FXML
+    private CheckBox checkboxFunctionNotActive;
+    @FXML
+    private CheckBox checkboxFunctionActive;
+    @FXML
+    private Label lblFunctionLastUpdate;
 
 
+
+    private String functionConditionString;
     private ObservableList<String> MainCategory;
     private ObservableList<TPLGeneralInfo> tplGeneralInfos;
     private ObservableList<TPLHealthJournal> tplHealthJournals;
+    private ObservableList<TPLFunctionalJournal> tplFunctionJournals;
     TeacherController controller = new SceneSwapper().getTeacherController();
 
     TPLModel tplModel;
@@ -121,22 +207,30 @@ public class TeacherTemplateController implements Initializable {
         tplGeneralInfos = FXCollections.observableArrayList();
         MainCategory = FXCollections.observableArrayList();
         tplHealthJournals = FXCollections.observableArrayList();
+        tplFunctionJournals = FXCollections.observableArrayList();
+        functionConditionString = "";
 
-        // sets up the comboboxs for TPLHealthJournal.
+        // sets up the combobox for TPLHealthJournal.
         setComboboxMainHealth();
         setComboboxExpectation();
 
-        updatetplHealthJournals();
+        // gets healthJournals from one specific template
+        getTPLHealthJournals();
+        //set up the template with all healthJournals from that template.
         setupTableviewTPLHealthJournal();
 
-        // gets the Templated that is selected from teacher screen.
+        // Function ComboBox Setup
+        setupComboboxForFunctionJournal();
 
+        // gets the Templated that is selected from teacher screen.
         Template template = controller.getTemplateForEdit();
 
-
-
+        // sets the text to display which Template "Omsorgs Journal" is open
         lblTemplate.setText("Template: "+ template.getfName() + " " + template.getlName() + " Template ID" + template.getId());
 
+
+
+        // sets all the general info into the General Information page.
         if (!tplModel.getTPLGeneralInfo(template.getId()).isEmpty()){
             tplGeneralInfos.addAll(tplModel.getTPLGeneralInfo(template.getId()));
             setTextFieldsForGeneralInfo(tplGeneralInfos.get(0));
@@ -147,6 +241,9 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
+    /**
+     * sets up the tableview with all TPLHealthJournal objects that one specific Template has.
+     */
     public void setupTableviewTPLHealthJournal(){
         tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
@@ -374,7 +471,7 @@ public class TeacherTemplateController implements Initializable {
 
 
 
-            updatetplHealthJournals();
+            getTPLHealthJournals();
 
         for (TPLHealthJournal tplHealthJournal : tplHealthJournals){
             if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(tplHealthJournal.getCondition())){
@@ -412,13 +509,14 @@ public class TeacherTemplateController implements Initializable {
             }
         }
 
-        updatetplHealthJournals();
+        getTPLHealthJournals();
         setupTableviewTPLHealthJournal();
     }
 
 
+
     public void onSelectedHealthConditionCb(ActionEvent actionEvent) {
-        updatetplHealthJournals();
+        getTPLHealthJournals();
         boolean hasupdated = false;
 
         if (!tplHealthJournals.isEmpty()){
@@ -449,7 +547,10 @@ public class TeacherTemplateController implements Initializable {
         }
     }
 
-    private void updatetplHealthJournals(){
+    /**
+     * get all TPLHealthJournals from one template.
+     */
+    private void getTPLHealthJournals(){
 
         if (!tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()).isEmpty()){
             tplHealthJournals.clear();
@@ -457,13 +558,11 @@ public class TeacherTemplateController implements Initializable {
         }
     }
 
+    /**
+     * sets up the screen with data for the Health journal
+     * @param tplHealthJournal the object holding the data
+     */
     private void updateHealthScreen(TPLHealthJournal tplHealthJournal){
-        txtNote.setText("");
-        txtEvaluation.setText("");
-        cbExpectation.getSelectionModel().clearSelection();
-        lblLastUpdate.setText("Sidst Opdateret den:");
-        txtCondition.setText("Problem:");
-
         txtNote.setText(tplHealthJournal.getNote());
         txtEvaluation.setText(tplHealthJournal.getEvaluation());
         cbExpectation.getSelectionModel().select(tplHealthJournal.getExpectation());
@@ -486,13 +585,247 @@ public class TeacherTemplateController implements Initializable {
 
     }
 
+    /**
+     * setup the combobox for expectation for health journal
+     */
     public void setComboboxExpectation(){
         cbExpectation.getItems().add("Mindskes");
         cbExpectation.getItems().add("Forbliver uændret");
         cbExpectation.getItems().add("Forsvinder");
     }
 
+    /**
+     * When a condition for health journal is selected
+     */
     public void onSlectetTPLHealthJournal(MouseEvent mouseEvent) {
         updateHealthScreen(tvTPLHealthJournal.getSelectionModel().getSelectedItem());
+    }
+
+
+    /**
+     * Calls methods to update the screen of Function Journal, Depending on if there is a function journal for that condition
+     * @param actionEvent on button pressed.
+     */
+    public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) {
+        getTPLFunctionsJournals();
+        clearFunctionJournalView();
+
+        boolean hasUpdate = false;
+
+        if (!tplFunctionJournals.isEmpty()){
+            for (TPLFunctionalJournal tplFunctionalJournal : tplFunctionJournals){
+                if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())){
+
+                   updateFunctionJournalView(tplFunctionalJournal);
+                    hasUpdate = true;
+                    break;
+                }
+
+            }
+        }
+
+        if (!hasUpdate){
+            clearFunctionJournalView();
+        }
+        lblStatus.setText(getFunctionalCondition());
+
+    }
+
+    /**
+     * updates the View for Functions Journals
+     * @param tplFunctionalJournal
+     */
+    public void updateFunctionJournalView(TPLFunctionalJournal tplFunctionalJournal){
+        cbNiveauFunction.getSelectionModel().select(tplFunctionalJournal.getNiveau());
+        cbExecutionFunction.getSelectionModel().select(tplFunctionalJournal.getExecution());
+        cbExecutionLimitsFunction.getSelectionModel().select(tplFunctionalJournal.getExecutionLimits());
+        cbExpectedFunction.getSelectionModel().select(tplFunctionalJournal.getExpectation());
+        txtNoteFunction.setText(tplFunctionalJournal.getNote());
+        txtCitizenExpecationFunction.setText(tplFunctionalJournal.getCitizenExpectation());
+        lblFunctionLastUpdate.setText(tplFunctionalJournal.getLastUpdate());
+        lblStatus.setText("Status: " + tplFunctionalJournal.getCondition());
+
+        if (tplFunctionalJournal.getRelevancy().equals("Aktiv")){
+            checkboxFunctionNotActive.setSelected(false);
+            checkboxFunctionActive.setSelected(true);
+        }else {
+            checkboxFunctionNotActive.setSelected(true);
+            checkboxFunctionActive.setSelected(false);
+        }
+    }
+
+    /**
+     * clears the view for data
+     */
+    public void clearFunctionJournalView(){
+
+        cbNiveauFunction.getSelectionModel().clearSelection();
+        cbExecutionFunction.getSelectionModel().clearSelection();
+        cbExecutionLimitsFunction.getSelectionModel().clearSelection();
+        cbExpectedFunction.getSelectionModel().clearSelection();
+        txtNoteFunction.setText("");
+        txtCitizenExpecationFunction.setText("");
+        checkboxFunctionActive.setSelected(false);
+        checkboxFunctionNotActive.setSelected(false);
+        lblFunctionLastUpdate.setText("Sidst opdateret:");
+
+    }
+
+
+    /**
+     * checks which button is pressed in the list of Function Conditions
+     * @return
+     */
+    public String getFunctionalCondition(){
+        String condition = "";
+
+        if (btnBath.isFocused()){
+            condition = btnBath.getText();
+        }else if(btnApplyIt.isFocused()){
+            condition = btnApplyIt.getText();
+        }else if(btnCarry.isFocused()){
+            condition = btnCarry.getText();
+        }else if(btnCognitiveFunctions.isFocused()){
+            condition = btnCognitiveFunctions.getText();
+        }else if(btnChangePosition.isFocused()){
+            condition = btnChangePosition.getText();
+        }else if(btnEmotion.isFocused()){
+            condition = btnEmotion.getText();
+        }else if(btnCooking.isFocused()){
+            condition = btnCooking.getText();
+        }else if(btnDailyRoutines.isFocused()){
+            condition = btnDailyRoutines.getText();
+        }else if(btnDrinking.isFocused()){
+            condition = btnDrinking.getText();
+        }else if(btnEating.isFocused()){
+            condition = btnEating.getText();
+        }else if(btnEndurance.isFocused()){
+            condition = btnEndurance.getText() ;
+        }else if(btnEnergy.isFocused()){
+            condition = btnEnergy.getText();
+        }else if(btnFoodIntake.isFocused()){
+            condition = btnFoodIntake.getText();
+        }else if(btnGettingDressed.isFocused()){
+            condition = btnGettingDressed.getText();
+        }else if(btnHouseWork.isFocused()){
+            condition = btnHouseWork.getText();
+        }else if(btnMove.isFocused()){
+            condition = btnMove.getText();
+        }else if(btnMemory.isFocused()){
+            condition = btnMemory.getText();
+        }else if(btnWalk.isFocused()){
+            condition = btnWalk.getText();
+        }else if(btnUseToilet.isFocused()){
+            condition = btnUseToilet.getText();
+        }else if(btnTransport.isFocused()){
+            condition = btnTransport.getText();
+        }else if(btnTakeCareOfOwnHealth.isFocused()){
+            condition = btnTakeCareOfOwnHealth.getText();
+        }else if(btnSkills.isFocused()){
+            condition = btnSkills.getText();
+        }else if(btnShopping.isFocused()){
+            condition = btnShopping.getText();
+        }else if(btnProblemSolve.isFocused()){
+            condition = btnProblemSolve.getText();
+        }else if(btnPersonalCare.isFocused()){
+            condition = btnPersonalCare.getText();
+        }else if(btnPaidWork.isFocused()){
+            condition = btnPaidWork.getText();
+        }else if(btnOrientationAbility.isFocused()){
+            condition = btnOrientationAbility.getText();
+        }else if(btnMuscle.isFocused()){
+            condition = btnMuscle.getText();
+        }else if(btnMoveAround.isFocused()){
+            condition = btnMoveAround.getText();
+        }else if(btnMoveInDiffrentAreas.isFocused()) {
+            condition = btnMoveInDiffrentAreas.getText();
+        }
+        functionConditionString = condition;
+
+        return condition;
+    }
+
+    /**
+     * sets up the combobox with value for function journal
+     */
+    public void setupComboboxForFunctionJournal(){
+
+        cbNiveauFunction.getItems().add("0");
+        cbNiveauFunction.getItems().add("1");
+        cbNiveauFunction.getItems().add("2");
+        cbNiveauFunction.getItems().add("3");
+        cbNiveauFunction.getItems().add("4");
+
+        cbExpectedFunction.getItems().add("0");
+        cbExpectedFunction.getItems().add("1");
+        cbExpectedFunction.getItems().add("2");
+        cbExpectedFunction.getItems().add("3");
+        cbExpectedFunction.getItems().add("4");
+
+        cbExecutionFunction.getItems().add("Udfører selv");
+        cbExecutionFunction.getItems().add("Udfører dele selv");
+        cbExecutionFunction.getItems().add("Udfører ikke selv");
+        cbExecutionFunction.getItems().add("Ikke relavant");
+
+        cbExecutionLimitsFunction.getItems().add("Oplever begrænsinger");
+        cbExecutionLimitsFunction.getItems().add("Oplever ikke begrænsinger");
+    }
+
+    /**
+     * Either updates or Creates a new TPLFunctionJournal for Databasen, depending on if already exist
+     * @param actionEvent
+     */
+    public void onSaveTPLFunctionJournalBtn(ActionEvent actionEvent) {
+        Date date = new Date();
+        getTPLFunctionsJournals();
+        boolean hasSaved = false;
+        if (!tplFunctionJournals.isEmpty()){
+
+            for (TPLFunctionalJournal tplFunctionalJournal: tplFunctionJournals){
+                if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())){
+
+                    tplFunctionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
+                    tplFunctionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
+                    tplFunctionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
+                    tplFunctionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
+                    tplFunctionalJournal.setNote(txtNoteFunction.getText());
+                    tplFunctionalJournal.setCitizenExpectation(txtCitizenExpecationFunction.getText());
+                    tplFunctionalJournal.setLastUpdate(date.toString());
+                    if (checkboxFunctionActive.isSelected()){
+                        tplFunctionalJournal.setRelevancy("Aktiv");
+                    }else{
+                        tplFunctionalJournal.setRelevancy("Ikke Relavant");
+                    }
+                    updateFunctionJournalView(tplFunctionalJournal);
+                    hasSaved = true;
+                    break;
+                }
+            }
+        }
+
+        if (!hasSaved){
+
+            String relevancy = "";
+            if (checkboxFunctionActive.isSelected()){
+                 relevancy = "Aktiv";
+            }else{
+                relevancy = "Ikke Relavant";
+            }
+            TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1,controller.getTemplateForEdit().getId(), functionConditionString,date.toString(), cbNiveauFunction.getSelectionModel().getSelectedItem().toString(), relevancy, txtNoteFunction.getText(), cbExpectedFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(), txtCitizenExpecationFunction.getText());
+            tplModel.createTPLFunctionalJournal(tplFunctionalJournal);
+            updateFunctionJournalView(tplFunctionalJournal);
+
+        }
+    }
+
+    /**
+     * gets all TPLFunctionsJournals for a template on the Database
+     */
+    private void getTPLFunctionsJournals(){
+
+        if (!tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()).isEmpty()){
+            tplFunctionJournals.clear();
+            tplFunctionJournals.addAll(tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()));
+        }
     }
 }

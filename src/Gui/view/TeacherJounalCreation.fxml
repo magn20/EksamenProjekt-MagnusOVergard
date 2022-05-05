@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -231,24 +235,129 @@
                                           <Image url="@../img/guide.png" />
                                        </image>
                                     </ImageView>
-                                    <Button layoutX="397.0" mnemonicParsing="false" text="Ikke relavant" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="397.0" layoutY="157.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="3" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" />
-                                    <Button layoutX="397.0" layoutY="38.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="0" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" AnchorPane.topAnchor="38.0" />
-                                    <Button layoutX="397.0" layoutY="77.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="1" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" />
-                                    <Button layoutX="397.0" layoutY="114.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" text="2" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" />
-                                    <Button layoutX="396.0" layoutY="200.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="87.0" text="4" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="734.1999999999999" />
-                                    <ComboBox layoutX="14.0" layoutY="26.0" prefHeight="26.0" prefWidth="302.0" AnchorPane.leftAnchor="14.0" />
-                                    <ComboBox layoutX="14.0" layoutY="65.0" prefHeight="26.0" prefWidth="302.0" AnchorPane.leftAnchor="14.0" />
+                                    <Accordion layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="314.0">
+                                      <panes>
+                                        <TitledPane animated="false" text="Egenomsorg">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ScrollPane layoutX="9.600000381469727" layoutY="9.600000381469727" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <content>
+                                                            <VBox prefHeight="200.0" prefWidth="268.0">
+                                                               <children>
+                                                                  <Button fx:id="btnBath" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="272.0" stylesheets="@../css/StyleSheetforLogout.css" text="Vaske Sig" />
+                                                                  <Button fx:id="btnPersonalCare" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="285.0" stylesheets="@../css/StyleSheetforLogout.css" text="Kropspjele" />
+                                                                  <Button fx:id="btnGettingDressed" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="283.0" stylesheets="@../css/StyleSheetforLogout.css" text="Af og påklædning" />
+                                                                  <Button fx:id="btnDrinking" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="290.0" stylesheets="@../css/StyleSheetforLogout.css" text="Drikke" />
+                                                                  <Button fx:id="btnFoodIntake" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="286.0" stylesheets="@../css/StyleSheetforLogout.css" text="Fødeindtagelse" />
+                                                                  <Button fx:id="btnEating" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="292.0" stylesheets="@../css/StyleSheetforLogout.css" text="Spise" />
+                                                                  <Button fx:id="btnTakeCareOfOwnHealth" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="281.0" stylesheets="@../css/StyleSheetforLogout.css" text="Varetage egen sundhed" />
+                                                                  <Button fx:id="btnUseToilet" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="287.0" stylesheets="@../css/StyleSheetforLogout.css" text="Gå på Toilet" />
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Praktiske Opgaver">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ScrollPane prefHeight="0.0" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <content>
+                                                            <VBox prefHeight="98.0" prefWidth="285.0">
+                                                               <children>
+                                                                  <Button fx:id="btnHouseWork" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="288.0" stylesheets="@../css/StyleSheetforLogout.css" text="Lave husligt arbejde" />
+                                                                  <Button fx:id="btnCooking" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="282.0" stylesheets="@../css/StyleSheetforLogout.css" text="Lave mad" />
+                                                                  <Button fx:id="btnDailyRoutines" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="281.0" stylesheets="@../css/StyleSheetforLogout.css" text="udføre daglige rutiner" />
+                                                                  <Button fx:id="btnShopping" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="278.0" stylesheets="@../css/StyleSheetforLogout.css" text="skaffe sig varer og tjenesteydelser" />
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Mobilitet">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ScrollPane prefHeight="0.0" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <content>
+                                                            <VBox prefHeight="210.0" prefWidth="273.0">
+                                                               <children>
+                                                                  <Button fx:id="btnCarry" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="278.0" stylesheets="@../css/StyleSheetforLogout.css" text="Løfte og bære" />
+                                                                  <Button fx:id="btnMoveAround" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="275.0" stylesheets="@../css/StyleSheetforLogout.css" text="Bevæge sig omkring" />
+                                                                  <Button fx:id="btnTransport" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="272.0" stylesheets="@../css/StyleSheetforLogout.css" text="Bruge transportmidler" />
+                                                                  <Button fx:id="btnMoveInDiffrentAreas" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="273.0" stylesheets="@../css/StyleSheetforLogout.css" text="færden i forskellige omgivelser" />
+                                                                  <Button fx:id="btnMove" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="270.0" stylesheets="@../css/StyleSheetforLogout.css" text="Forflytte sig" />
+                                                                  <Button fx:id="btnChangePosition" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="274.0" stylesheets="@../css/StyleSheetforLogout.css" text="Ændre kropstilling" />
+                                                                  <Button fx:id="btnMuscle" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="274.0" stylesheets="@../css/StyleSheetforLogout.css" text="Muskelstyrke" />
+                                                                  <Button fx:id="btnWalk" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="274.0" stylesheets="@../css/StyleSheetforLogout.css" text="Gå" />
+                                                                  <Button fx:id="btnEndurance" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="266.0" stylesheets="@../css/StyleSheetforLogout.css" text="Udholdenhed" />
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                          <TitledPane animated="false" layoutX="10.0" layoutY="61.0" text="Mentale Funktioner">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ScrollPane prefHeight="0.0" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <content>
+                                                            <VBox prefHeight="200.0" prefWidth="270.0">
+                                                               <children>
+                                                                  <Button fx:id="btnApplyIt" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="275.0" stylesheets="@../css/StyleSheetforLogout.css" text="Anvende kommunikationsudstyr og teknikker" />
+                                                                  <Button fx:id="btnMemory" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="275.0" stylesheets="@../css/StyleSheetforLogout.css" text="Hukommelse" />
+                                                                  <Button fx:id="btnOrientationAbility" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="272.0" stylesheets="@../css/StyleSheetforLogout.css" text="Orienteringsevne" />
+                                                                  <Button fx:id="btnCognitiveFunctions" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="279.0" stylesheets="@../css/StyleSheetforLogout.css" text="Overordnede kognitive funktioner" />
+                                                                  <Button fx:id="btnEmotion" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="277.0" stylesheets="@../css/StyleSheetforLogout.css" text="Følelsesfunktioner" />
+                                                                  <Button fx:id="btnEnergy" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="277.0" stylesheets="@../css/StyleSheetforLogout.css" text="Energi og handlekraft" />
+                                                                  <Button fx:id="btnSkills" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="274.0" stylesheets="@../css/StyleSheetforLogout.css" text="Tilegne sig færdigheder" />
+                                                                  <Button fx:id="btnProblemSolve" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="274.0" stylesheets="@../css/StyleSheetforLogout.css" text="Problemløsning" />
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" layoutX="10.0" layoutY="61.0" prefWidth="195.0" text="Samfundsliv">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ScrollPane layoutX="18.6" layoutY="19.6" prefHeight="110.0" prefWidth="294.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="10.0">
+                                                         <content>
+                                                            <VBox prefHeight="31.0" prefWidth="276.0">
+                                                               <children>
+                                                                  <Button fx:id="btnPaidWork" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onFunctionJournalUpdateScreen" prefHeight="23.0" prefWidth="269.0" stylesheets="@../css/StyleSheetforLogout.css" text="Have lønnet beskæftigelse" />
+                                                               </children>
+                                                            </VBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                      </panes>
+                                    </Accordion>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <GridPane prefHeight="418.0" prefWidth="715.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane prefHeight="418.0" prefWidth="715.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.4000549316406" minWidth="10.0" prefWidth="384.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.5999755859375" minWidth="0.0" prefWidth="160.5999755859375" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="466.0000854492189" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="203.59991455078125" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="81.60001602172852" minHeight="10.0" prefHeight="24.799994373321532" vgrow="SOMETIMES" />
@@ -284,24 +393,23 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="1" />
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="3" />
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="5" />
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <TextArea fx:id="txtNoteFunction" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="5" />
+                                          <TextArea fx:id="txtCitizenExpecationFunction" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                           <Label text="Borgerens Ønsker og Mål" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                             <children>
-                                                <Button layoutX="96.0" layoutY="28.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="95.0" text="Gem" />
-                                             </children>
-                                          </AnchorPane>
-                                          <ComboBox prefWidth="150.0" promptText="Vælg udførelse" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <ComboBox prefWidth="150.0" promptText="vælg betydning" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="cbExecutionFunction" prefWidth="150.0" promptText="Vælg udførelse" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <ComboBox fx:id="cbExecutionLimitsFunction" prefWidth="150.0" promptText="vælg betydning" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="cbNiveauFunction" prefWidth="150.0" GridPane.rowIndex="1" />
+                                          <ComboBox fx:id="cbExpectedFunction" prefWidth="150.0" GridPane.rowIndex="3" />
                                        </children>
                                     </GridPane>
+                                    <Button layoutX="1066.0" layoutY="254.0" mnemonicParsing="false" onAction="#onSaveTPLFunctionJournalBtn" text="Gem Funktionstilstand" />
+                                    <CheckBox fx:id="checkboxFunctionNotActive" layoutX="920.0" layoutY="229.0" mnemonicParsing="false" text="Gem som ikke aktiv" />
+                                    <CheckBox fx:id="checkboxFunctionActive" layoutX="776.0" layoutY="229.0" mnemonicParsing="false" text="Gem som aktiv" />
+                                    <Label fx:id="lblFunctionLastUpdate" layoutX="776.0" layoutY="259.0" text="Sidst opdateret:" />
                                  </children>
                               </AnchorPane>
                           </items>

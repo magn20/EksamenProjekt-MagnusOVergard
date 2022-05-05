@@ -1,5 +1,6 @@
 package Gui.model;
 
+import be.TPLFunctionalJournal;
 import be.TPLGeneralInfo;
 import be.TPLHealthJournal;
 import be.Template;
@@ -50,5 +51,16 @@ public class TPLModel {
     }
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
         tplFacade.updateTPLHealthJournal(tplHealthJournal);
+    }
+
+    // for TPLFunctionalJournal
+    public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID){
+        return tplFacade.getTPLFunctionalJournal(templateID);
+    }
+    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal){
+        return tplFacade.createTPLFunctionalJournal(tplFunctionalJournal);
+    }
+    public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
+        tplFacade.updateTPLFunctionalJournal(tplFunctionalJournal);
     }
 }
