@@ -13,6 +13,6 @@ public interface ICitizen {
     public Citizen createCitizen(Citizen citizen) throws SQLException;
     public void updateCitizen(Citizen citizen) throws SQLException;
     public boolean removeCitizen(Citizen citizen) throws SQLException;
-    public ObservableList<Citizen> getCitizenForSchool(int studentID) throws SQLException;
+    public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException;
     public boolean setStudentWorkOnCitizen(Citizen citizen, Student student) throws SQLException;
 }

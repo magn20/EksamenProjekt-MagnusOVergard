@@ -34,7 +34,7 @@ public class CitizenFacade {
         return citizenDAO.getCitizen(schoolId);
     }
     public ObservableList<Citizen> getCitizenForStudent(int studentId) throws SQLException {
-        return citizenDAO.getCitizenForSchool(studentId);
+        return citizenDAO.getCitizenForStudent(studentId);
     }
 
     public boolean setStudentWorksOnCitizen(Citizen citizen, Student student) throws SQLException {

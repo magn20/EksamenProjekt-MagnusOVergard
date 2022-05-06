@@ -48,7 +48,7 @@ public class StudentDAO implements IStudent {
     public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();
         try {
-            String sqlStatement = "SELECT * FROM Student WHERE StudentId = ?;";
+            String sqlStatement = "SELECT * FROM Student WHERE StudentSchoolId = ?;";
             PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, schoolID);
 

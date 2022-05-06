@@ -4,6 +4,7 @@ import Gui.model.StudentModel;
 import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
+import be.Student;
 import be.Teacher;
 import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
@@ -29,14 +30,17 @@ public class LoginController implements Initializable {
     @FXML
     private TextField lblUsername;
 
-    SceneSwapper sceneSwapper;
-    TeacherModel teacherModel;
-    SingletonUser singletonUser;
+    private SceneSwapper sceneSwapper;
+    private TeacherModel teacherModel;
+    private SingletonUser singletonUser;
+    private StudentModel studentModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sceneSwapper = new SceneSwapper();
         teacherModel = new TeacherModel();
+        studentModel = new StudentModel();
+
         singletonUser = SingletonUser.getInstance();
     }
 
@@ -72,6 +76,23 @@ public class LoginController implements Initializable {
 
                 }
             }
+
+            for (Student student : studentModel.getStudents()){
+                if (student.getUsername().equals(lblUsername.getText())){
+                    if(BCrypt.checkpw(lblPassword.getText(), student.getPassword())){
+                        // Sceneswapper
+                        correctLogin = true;
+                        singletonUser.setStudent(student);
+                        sceneSwapper.sceneSwitch(new Stage(), "StudentScreen.fxml");
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.close();
+
+                        break;
+                    }
+
+                }
+            }
+
 
             // if login failed due to wrong information
             if (!correctLogin){

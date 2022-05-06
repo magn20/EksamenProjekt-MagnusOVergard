@@ -4,12 +4,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="581.0" prefWidth="870.0" styleClass="backgrounding" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.StudentController">
+<AnchorPane prefHeight="646.0" prefWidth="873.0" styleClass="backgrounding" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.StudentController">
    <children>
       <TabPane layoutX="89.0" layoutY="58.0" prefHeight="502.0" prefWidth="870.0" styleClass="whitebackground" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="75.60000000000002">
         <tabs>
@@ -18,11 +21,37 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="755.0" />
             </content>
           </Tab>
-          <Tab text="Borger">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
+            <Tab text="Borger">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tvCitizen" layoutX="14.0" layoutY="56.0" prefHeight="427.0" prefWidth="424.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="435.0" AnchorPane.topAnchor="56.0">
+                           <columns>
+                              <TableColumn fx:id="tcCitizenID" prefWidth="75.0" text="Borger ID" />
+                              <TableColumn fx:id="tcCitizenFName" prefWidth="136.79998779296875" text="Fornavn" />
+                              <TableColumn fx:id="tcCitizenLName" prefWidth="141.5999755859375" text="Efternavn" />
+                              <TableColumn fx:id="tcCitizenAge" minWidth="0.0" prefWidth="69.80000610351567" text="Age" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="14.0" layoutY="14.0" text="Borger">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
+                        <VBox layoutX="491.0" layoutY="56.0" prefHeight="350.0" prefWidth="313.0" AnchorPane.rightAnchor="74.60000000000002" AnchorPane.topAnchor="56.0">
+                           <children>
+                              <Label text="Åben">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onOpenCitizenJournalBtn" text=" Omsorgs journal" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="Settings">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
@@ -45,7 +74,6 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="12.0" text="Hans knudsen" AnchorPane.rightAnchor="49.39999999999998" AnchorPane.topAnchor="12.0" />
-      <Button layoutX="830.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" />
+      <Button layoutX="830.0" layoutY="7.0" mnemonicParsing="false" onAction="#onLogOutBtn" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" />
    </children>
 </AnchorPane>

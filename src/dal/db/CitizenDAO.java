@@ -54,30 +54,29 @@ public class CitizenDAO implements ICitizen {
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Citizen> getCitizenForSchool(int studentID) throws SQLException {
+    public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException {
         ObservableList<Citizen> allCitizenFromSchool = FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM Citizen INNER JOIN Works_on ON Works_on.FKCitizenId = Citizen.CitizenId WHERE FKStudentId =(?); ";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, studentID);
 
-            statement.execute();
+            PreparedStatement preparedStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, studentID);
 
-            ResultSet rs = statement.getResultSet();
-            while (rs.next()) {
+            //Extract data from DB
+            if(preparedStatement.execute()){
+                ResultSet resultSet = preparedStatement.getResultSet();
+                while(resultSet.next()){
+                    int id = resultSet.getInt("CitizenId");
+                    int schoolId = resultSet.getInt("CitizenSchoolId");
+                    String fName = resultSet.getString("fName");
+                    String lName = resultSet.getString("Lname");
+                    String age = resultSet.getString("age");
 
-                int id = rs.getInt(1);
-                int SchoolId = rs.getInt(2);
-                String fName = rs.getString(3);
-
-                String lName = rs.getString(4);
-
-                String age = rs.getString(5);
-
-
-                allCitizenFromSchool.add(new Citizen(id, SchoolId, fName,lName, age));
+                    allCitizenFromSchool.add(new Citizen(id,schoolId ,fName, lName, age));
+                }
             }
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             throw sqlException;
         }
         return allCitizenFromSchool;
