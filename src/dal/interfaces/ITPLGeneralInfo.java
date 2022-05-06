@@ -11,5 +11,5 @@ public interface ITPLGeneralInfo {
     public List<TPLGeneralInfo> getTPLGeneralInfo(int templateId);
     public TPLGeneralInfo createTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo);
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException;
-    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo);
+    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException;
 }

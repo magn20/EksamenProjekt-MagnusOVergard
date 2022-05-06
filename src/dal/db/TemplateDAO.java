@@ -21,7 +21,7 @@ public class TemplateDAO implements ITemplate {
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Template> getTemplate(int schoolId) {
+    public ObservableList<Template> getTemplate(int schoolId) throws SQLException {
         ObservableList<Template> AllTemplatesFromSchool = FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM TPLCitizen Where TPLCitizenSchoolId = ? ";
@@ -44,14 +44,14 @@ public class TemplateDAO implements ITemplate {
 
                 AllTemplatesFromSchool.add(new Template(id, tplSchoolId, fName,lName, age));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return AllTemplatesFromSchool;
     }
 
     @Override
-    public Template createTemplate(Template template) {
+    public Template createTemplate(Template template) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO TPLCitizen(TPLCitizenSchoolId, Fname, Lname, age) VALUES (?,?,?,?);";
@@ -64,38 +64,42 @@ public class TemplateDAO implements ITemplate {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return new Template(insertedId,template.getSchoolId(), template.getfName(),template.getlName(),template.getAge());
     }
 
     @Override
     public void updateTemplate(Template template) throws SQLException {
-        String sql = "UPDATE TPLCitizen SET TPLCitizenSchoolId = ?, Fname = ?, Lname = ?, age = ? WHERE TPLCitizenId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, template.getSchoolId());
-        preparedStatement.setString(2, template.getfName());
-        preparedStatement.setString(3, template.getlName());
-        preparedStatement.setString(4, template.getAge());
-        preparedStatement.setInt(5, template.getId());
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
+        try {
+            String sql = "UPDATE TPLCitizen SET TPLCitizenSchoolId = ?, Fname = ?, Lname = ?, age = ? WHERE TPLCitizenId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, template.getSchoolId());
+            preparedStatement.setString(2, template.getfName());
+            preparedStatement.setString(3, template.getlName());
+            preparedStatement.setString(4, template.getAge());
+            preparedStatement.setInt(5, template.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 1) {
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
+
     }
 
     @Override
-    public boolean removeTemplate(Template template) {
+    public boolean removeTemplate(Template template) throws SQLException {
         try {
             String sqlStatement = "DELETE FROM TPLCitizen WHERE TPLCitizenId=?";
             PreparedStatement statement = con.prepareStatement(sqlStatement);
             statement.setInt(1, template.getId());
             statement.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
-        return false;
     }
 
 }

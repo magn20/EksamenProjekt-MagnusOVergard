@@ -55,13 +55,18 @@ public class AdminEditTeacherController implements Initializable {
 
         allSchools = FXCollections.observableArrayList();
         allTeachers = FXCollections.observableArrayList();
-        fillComboBox();
+        try {
+            fillComboBox();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            displayError(e);
+        }
     }
 
     /**
      * fills the comboboxs for schools and teachers
      */
-    public void fillComboBox(){
+    public void fillComboBox() throws SQLException {
         allSchools.clear();
         cbSchool.getItems().clear();
         allSchools = schoolModel.getSchools();
@@ -131,7 +136,12 @@ public class AdminEditTeacherController implements Initializable {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
-                                    updateStatus(teacher);
+                                    try {
+                                        updateStatus(teacher);
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        displayError(e);
+                                    }
                                 });
                                 break;
                             }
@@ -179,7 +189,7 @@ public class AdminEditTeacherController implements Initializable {
      * tells the user that the change happend, and removes the data from textfields for visual feeling of succesfull changes
      * @param teacher sends the teacher that has been changed
      */
-    public void updateStatus(Teacher teacher){
+    public void updateStatus(Teacher teacher) throws SQLException {
         lblStatus.setText("Redigeret i læreren: " + teacher.getFName() + " " + teacher.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");

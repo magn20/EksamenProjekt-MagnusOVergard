@@ -11,10 +11,10 @@ public class SchoolModel {
 
     SchoolManager schoolManager = new SchoolManager();
 
-    public ObservableList<School> getSchools(){
+    public ObservableList<School> getSchools() throws SQLException {
         return schoolManager.getSchools();
     }
-    public School createSchool(String name){
+    public School createSchool(String name) throws SQLException {
         return schoolManager.createSchool(name);
     }
     public boolean removeSchool(School school) throws SQLException {

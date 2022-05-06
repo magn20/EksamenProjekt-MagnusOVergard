@@ -23,10 +23,10 @@ public class SchoolManager {
         }
     }
 
-    public ObservableList<School> getSchools(){
+    public ObservableList<School> getSchools() throws SQLException {
         return schoolDao.getSchool();
     }
-    public School createSchool(String name){
+    public School createSchool(String name) throws SQLException {
         return schoolDao.createSchool(name);
     }
     public boolean removeSchool(School school) throws SQLException {

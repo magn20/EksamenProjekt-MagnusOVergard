@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ITeacher {
-    public List<Teacher> getTeachers();
-    public Teacher createTeacher(Teacher teacher);
+    public List<Teacher> getTeachers() throws SQLException;
+    public Teacher createTeacher(Teacher teacher) throws SQLException;
     public void updateTeacher(Teacher teacher) throws SQLException;
-    public boolean removeTeacher(Teacher teacher);
+    public boolean removeTeacher(Teacher teacher) throws SQLException;
 }

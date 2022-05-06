@@ -87,39 +87,43 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
 
     @Override
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
-        String sql = "UPDATE TPLGeneralInfo SET TPLCitizenGeneralInfoId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquipmentAids = ?, HomeLayout = ?, Network = ? WHERE TPLGeneralInfoId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, tplGeneralInfo.getTplCitizenId());
-        preparedStatement.setString(2, tplGeneralInfo.getCoping());
-        preparedStatement.setString(3, tplGeneralInfo.getMotivation());
-        preparedStatement.setString(4, tplGeneralInfo.getResources());
-        preparedStatement.setString(5, tplGeneralInfo.getRoles());
-        preparedStatement.setString(6, tplGeneralInfo.getHabits());
-        preparedStatement.setString(7, tplGeneralInfo.getEducationAndJob());
-        preparedStatement.setString(8, tplGeneralInfo.getLifeStory());
-        preparedStatement.setString(9, tplGeneralInfo.getHealthInformation());
-        preparedStatement.setString(10, tplGeneralInfo.getEquipmentAids());
-        preparedStatement.setString(11, tplGeneralInfo.getHomeLayout());
-        preparedStatement.setString(12, tplGeneralInfo.getNetwork());
-        preparedStatement.setInt(13, tplGeneralInfo.getId());
+        try {
 
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
+            String sql = "UPDATE TPLGeneralInfo SET TPLCitizenGeneralInfoId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquipmentAids = ?, HomeLayout = ?, Network = ? WHERE TPLGeneralInfoId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, tplGeneralInfo.getTplCitizenId());
+            preparedStatement.setString(2, tplGeneralInfo.getCoping());
+            preparedStatement.setString(3, tplGeneralInfo.getMotivation());
+            preparedStatement.setString(4, tplGeneralInfo.getResources());
+            preparedStatement.setString(5, tplGeneralInfo.getRoles());
+            preparedStatement.setString(6, tplGeneralInfo.getHabits());
+            preparedStatement.setString(7, tplGeneralInfo.getEducationAndJob());
+            preparedStatement.setString(8, tplGeneralInfo.getLifeStory());
+            preparedStatement.setString(9, tplGeneralInfo.getHealthInformation());
+            preparedStatement.setString(10, tplGeneralInfo.getEquipmentAids());
+            preparedStatement.setString(11, tplGeneralInfo.getHomeLayout());
+            preparedStatement.setString(12, tplGeneralInfo.getNetwork());
+            preparedStatement.setInt(13, tplGeneralInfo.getId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 1) {
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
     }
 
     @Override
-    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) {
+    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         try {
             String sqlStatement = "DELETE FROM TPLGeneralInfo WHERE TPLGeneralInfoId=?";
             PreparedStatement statement = con.prepareStatement(sqlStatement);
             statement.setInt(1, tplGeneralInfo.getId());
             statement.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
-        return false;
     }
 
 }

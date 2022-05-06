@@ -16,10 +16,10 @@ public class TPLModel {
 
 
 
-    public ObservableList<Template> getTemplate(int schoolID){
+    public ObservableList<Template> getTemplate(int schoolID) throws SQLException {
         return tplFacade.getTemplate(schoolID);
     }
-    public Template createTemplate(Template template){
+    public Template createTemplate(Template template) throws SQLException {
         return tplFacade.createTemplate(template);
     }
     public boolean removeTemplate(Template template) throws SQLException {
@@ -38,15 +38,15 @@ public class TPLModel {
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         tplFacade.updateTPLGeneralInfo(tplGeneralInfo);
     }
-    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo){
+    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         return tplFacade.removeTPLGeneralInfo(tplGeneralInfo);
     }
 
     // for our TPLHealthJournal
-    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID){
+    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException {
         return tplFacade.getTPLHealthJournal(templateID);
     }
-    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal){
+    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
         return tplFacade.createTPLHealthJournal(tplHealthJournal);
     }
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
@@ -57,7 +57,7 @@ public class TPLModel {
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID){
         return tplFacade.getTPLFunctionalJournal(templateID);
     }
-    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal){
+    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
         return tplFacade.createTPLFunctionalJournal(tplFunctionalJournal);
     }
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {

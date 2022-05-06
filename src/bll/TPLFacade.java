@@ -30,10 +30,10 @@ public class TPLFacade {
 
     // for our template Citizens
 
-    public ObservableList<Template> getTemplate(int schoolID){
+    public ObservableList<Template> getTemplate(int schoolID) throws SQLException {
         return templateDAO.getTemplate(schoolID);
     }
-    public Template createTemplate(Template template){
+    public Template createTemplate(Template template) throws SQLException {
         return templateDAO.createTemplate(template);
     }
     public boolean removeTemplate(Template template) throws SQLException {
@@ -52,15 +52,15 @@ public class TPLFacade {
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         tplGeneralInfoDAO.updateTPLGeneralInfo(tplGeneralInfo);
     }
-    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo){
+    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         return tplGeneralInfoDAO.removeTPLGeneralInfo(tplGeneralInfo);
     }
 
     // for TPLHealthJournal
-    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID){
+    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException {
         return tplHealthJournalDAO.getTPLHealthJournal(templateID);
     }
-    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal){
+    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
         return tplHealthJournalDAO.createTPLHealthJournal(tplHealthJournal);
     }
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
@@ -70,7 +70,7 @@ public class TPLFacade {
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID){
         return tplFunctionalJournalDAO.getTPLFunctionalJournal(templateID);
     }
-    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal){
+    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
         return tplFunctionalJournalDAO.createTPLFunctionalJournal(tplFunctionalJournal);
     }
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {

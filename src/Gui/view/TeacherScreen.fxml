@@ -57,7 +57,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Lav Borger" />
+                              <Button mnemonicParsing="false" onAction="#onCreateCitizenOfTemplateBtn" text="Lav Borger" />
                               <Label text="Tilføj en Template">
                                  <font>
                                     <Font size="23.0" />
@@ -85,43 +85,53 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
+                        <TableView fx:id="tvCitizen" layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="Template ID" />
-                              <TableColumn prefWidth="136.79998779296875" text="Fornavn" />
-                              <TableColumn prefWidth="144.8000030517578" text="Efternavn" />
-                              <TableColumn prefWidth="131.20001220703125" text="Age" />
+                              <TableColumn fx:id="tcCitizenID" prefWidth="75.0" text="Borger ID" />
+                              <TableColumn fx:id="tcCitizenFName" prefWidth="136.79998779296875" text="Fornavn" />
+                              <TableColumn fx:id="tcCitizenLName" prefWidth="141.5999755859375" text="Efternavn" />
+                              <TableColumn fx:id="tcCitizenAge" minWidth="0.0" prefWidth="64.0000061035156" text="Age" />
                            </columns>
                         </TableView>
-                        <Label layoutX="14.0" layoutY="14.0" text="Borger">
+                        <Label layoutX="14.0" layoutY="14.0" text="Fiktive Borger">
                            <font>
                               <Font size="31.0" />
                            </font>
                         </Label>
-                        <Button layoutX="641.0" layoutY="533.0" mnemonicParsing="false" text="Tilløj Template" />
-                        <VBox layoutX="446.0" layoutY="56.0" prefHeight="350.0" prefWidth="313.0">
+                        <VBox layoutX="446.0" layoutY="56.0" prefHeight="350.0" prefWidth="313.0" AnchorPane.rightAnchor="513.9999999999999" AnchorPane.topAnchor="56.0">
                            <children>
                               <Label text="Åben">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text=" Omsorgs journal" />
-                              <Label text="Duplicerer Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Kopier Template" />
+                              <Button mnemonicParsing="false" onAction="#onOpenCitizenJournalBtn" text=" Omsorgs journal" />
                               <Label text="Lav en Borger til en elev">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Tilføj Borger" />
+                              <Button mnemonicParsing="false" onAction="#onAsignStudentForCitzen" text="Sæt En Elev" />
+                              <Label text="Tilføj en Template">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onAddCitizen" text="Tilløj Borger" />
+                              <Label text="Rediger en Template">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onEditCitizen" text="Rediger Borger" />
+                              <Label text="Fjern en Template">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onRemoveCitizenBtn" text="Fjern Borger" />
                            </children>
                         </VBox>
-                        <Button layoutX="689.0" layoutY="475.0" mnemonicParsing="false" text="Tilløj Template" />
                      </children>
                   </AnchorPane>
                </content>
@@ -163,7 +173,6 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <Label layoutX="734.0" layoutY="13.0" text="Hans knudsen" AnchorPane.rightAnchor="60.799999999999955" AnchorPane.topAnchor="13.0" />
-      <Button layoutX="804.0" layoutY="8.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="14.0" />
+      <Button layoutX="804.0" layoutY="8.0" mnemonicParsing="false" onAction="#onLogOutBtn" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>

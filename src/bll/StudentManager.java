@@ -24,10 +24,13 @@ public class StudentManager {
         }
     }
 
-    public ObservableList<Student> getStudents(){
+    public ObservableList<Student> getStudents() throws SQLException {
         return studentDAO.getStudents();
     }
-    public Student createStudent(Student student){
+    public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException {
+        return studentDAO.getStudentsFromSchool(schoolId);
+    }
+    public Student createStudent(Student student) throws SQLException {
         return studentDAO.createStudent(student);
     }
 

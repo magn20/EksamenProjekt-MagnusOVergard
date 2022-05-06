@@ -56,13 +56,18 @@ public class AdminEditStudentController implements Initializable {
 
         allSchools = FXCollections.observableArrayList();
         allStudents = FXCollections.observableArrayList();
-        fillComboBox();
+        try {
+            fillComboBox();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            displayError(e);
+        }
     }
 
     /**
      * fills combobox for Schools & Students
      */
-    public void fillComboBox(){
+    public void fillComboBox() throws SQLException {
         allSchools.clear();
         cbSchool.getItems().clear();
         allSchools = schoolModel.getSchools();
@@ -127,7 +132,12 @@ public class AdminEditStudentController implements Initializable {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
-                                    updateStatus(student);
+                                    try {
+                                        updateStatus(student);
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        displayError(e);
+                                    }
                                 });
                                 break;
                             }
@@ -144,7 +154,7 @@ public class AdminEditStudentController implements Initializable {
     /**
      * updates the view for visually effect of successful change to student
      */
-    public void updateStatus(Student student){
+    public void updateStatus(Student student) throws SQLException {
         lblStatus.setText("redigeret i: " + student.getFName() + " " + student.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");

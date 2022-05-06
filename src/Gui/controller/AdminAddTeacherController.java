@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
@@ -49,18 +50,28 @@ public class AdminAddTeacherController implements Initializable {
         teacherModel = new TeacherModel();
 
         allSchools = FXCollections.observableArrayList();
-        fillComboBox();
+        try {
+            fillComboBox();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * fills combobox with all schools
      */
-    public void fillComboBox(){
-        allSchools.clear();
-        allSchools = schoolModel.getSchools();
+    public void fillComboBox() throws SQLException {
+        try {
+            allSchools.clear();
+            allSchools = schoolModel.getSchools();
 
-        for(School school: allSchools){
-            cbSchool.getItems().add(school.getName());
+            for(School school: allSchools){
+                cbSchool.getItems().add(school.getName());
+            }
+
+        }catch (SQLException sqlException){
+            displayError(sqlException);
+            sqlException.printStackTrace();
         }
     }
 

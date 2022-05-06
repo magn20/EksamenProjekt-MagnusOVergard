@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static bll.utill.DisplayMessage.displayError;
@@ -52,18 +53,28 @@ public class AdminAddStudentController implements Initializable {
         studentModel = new StudentModel();
 
         allSchools = FXCollections.observableArrayList();
-        fillComboBox();
+
+        try {
+            fillComboBox();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * fills all schools into combobox
      */
-    public void fillComboBox(){
-        allSchools.clear();
-        allSchools = schoolModel.getSchools();
+    public void fillComboBox() throws SQLException {
+        try {
+            allSchools.clear();
+            allSchools = schoolModel.getSchools();
 
-        for(School school: allSchools){
-            cbSchool.getItems().add(school.getName());
+            for(School school: allSchools){
+                cbSchool.getItems().add(school.getName());
+            }
+        }catch (SQLException sqlException){
+            displayError(sqlException);
+            sqlException.printStackTrace();
         }
     }
 

@@ -1,11 +1,9 @@
 package Gui.controller;
 
-import Gui.model.TPLModel;
+import Gui.model.CitizenModel;
 import Gui.utill.SceneSwapper;
-import be.TPLFunctionalJournal;
-import be.TPLGeneralInfo;
-import be.TPLHealthJournal;
-import be.Template;
+import Gui.utill.SingletonUser;
+import be.*;
 import bll.utill.DisplayMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,10 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +26,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class TeacherTemplateController implements Initializable {
+public class TeacherCitizenController implements Initializable {
 
 
 
@@ -67,19 +65,19 @@ public class TeacherTemplateController implements Initializable {
 
     //tableview
     @FXML
-    private TableView<TPLHealthJournal> tvTPLHealthJournal;
+    private TableView<HealthJournal> tvTPLHealthJournal;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcCondition;
+    private TableColumn<HealthJournal, String> tcCondition;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcRelanacy;
+    private TableColumn<HealthJournal, String> tcRelanacy;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcEvaluation;
+    private TableColumn<HealthJournal, String> tcEvaluation;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcExpactation;
+    private TableColumn<HealthJournal, String> tcExpactation;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcNote;
+    private TableColumn<HealthJournal, String> tcNote;
     @FXML
-    private TableColumn<TPLHealthJournal, String> tcLastUpdate;
+    private TableColumn<HealthJournal, String> tcLastUpdate;
 
 
     // only for General Information tab
@@ -194,50 +192,59 @@ public class TeacherTemplateController implements Initializable {
 
     private String functionConditionString;
     private ObservableList<String> MainCategory;
-    private ObservableList<TPLGeneralInfo> tplGeneralInfos;
-    private ObservableList<TPLHealthJournal> tplHealthJournals;
-    private ObservableList<TPLFunctionalJournal> tplFunctionJournals;
-    TeacherController controller = new SceneSwapper().getTeacherController();
+    private ObservableList<GeneralInfo> generalInfos;
+    private ObservableList<HealthJournal> healthJournals;
+    private ObservableList<FunctionalJournal> functionalJournals;
 
-    TPLModel tplModel;
+    SingletonUser singletonUser = SingletonUser.getInstance();
+
+    CitizenModel citizenModel;
+    Citizen citizen;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tplModel = new TPLModel();
-        tplGeneralInfos = FXCollections.observableArrayList();
+        citizen = singletonUser.getCitizen();
+        citizenModel = new CitizenModel();
+        generalInfos = FXCollections.observableArrayList();
         MainCategory = FXCollections.observableArrayList();
-        tplHealthJournals = FXCollections.observableArrayList();
-        tplFunctionJournals = FXCollections.observableArrayList();
+        healthJournals = FXCollections.observableArrayList();
+        functionalJournals = FXCollections.observableArrayList();
         functionConditionString = "";
 
         // sets up the combobox for TPLHealthJournal.
         setComboboxMainHealth();
         setComboboxExpectation();
 
-        // gets healthJournals from one specific template
+        // gets healthJournals from one specific citizen
         try {
-            getTPLHealthJournals();
+            getHealthJournals();
         } catch (SQLException e) {
             e.printStackTrace();
+            DisplayMessage.displayError(e);
         }
-        //set up the template with all healthJournals from that template.
+        //set up the citizen with all healthJournals from that citizen.
         setupTableviewTPLHealthJournal();
 
         // Function ComboBox Setup
         setupComboboxForFunctionJournal();
 
         // gets the Templated that is selected from teacher screen.
-        Template template = controller.getTemplateForEdit();
+        citizen = singletonUser.getCitizen();
 
         // sets the text to display which Template "Omsorgs Journal" is open
-        lblTemplate.setText("Template: "+ template.getfName() + " " + template.getlName() + " Template ID" + template.getId());
+        lblTemplate.setText("Borger: "+ citizen.getfName() + " " + citizen.getlName() + " Borger ID: " + citizen.getId());
 
 
 
         // sets all the general info into the General Information page.
-        if (!tplModel.getTPLGeneralInfo(template.getId()).isEmpty()){
-            tplGeneralInfos.addAll(tplModel.getTPLGeneralInfo(template.getId()));
-            setTextFieldsForGeneralInfo(tplGeneralInfos.get(0));
+        try {
+            if (!citizenModel.getGeneralInfo(singletonUser.getCitizen().getId()).isEmpty()){
+                generalInfos.addAll(citizenModel.getGeneralInfo(citizen.getId()));
+                setTextFieldsForGeneralInfo(generalInfos.get(0));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
 
@@ -256,7 +263,7 @@ public class TeacherTemplateController implements Initializable {
         tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
         tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
 
-        tvTPLHealthJournal.setItems(tplHealthJournals);
+        tvTPLHealthJournal.setItems(healthJournals);
 
 
     }
@@ -278,32 +285,30 @@ public class TeacherTemplateController implements Initializable {
      * @throws SQLException
      */
     public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException {
-        TeacherController controller = new SceneSwapper().getTeacherController();
-        Template template = controller.getTemplateForEdit();
 
-        if (tplModel.getTPLGeneralInfo(template.getId()).isEmpty()){
-            TPLGeneralInfo tplGeneralInfo = new TPLGeneralInfo(-1, template.getId(), txtCoping.getText(), txtMovtivation.getText(), txtResources.getText(), txtRoles.getText(), txtHabits.getText(), txtEducationAndJob.getText(), txtLifestory.getText(), txtHealthInfo.getText(), txtEquitmentAids.getText(), txtHouseLayout.getText(), txtNetwork.getText());
-            tplModel.createTPLGeneralInfo(tplGeneralInfo);
+        if (citizenModel.getGeneralInfo(citizen.getId()).isEmpty()){
+            GeneralInfo generalInfo = new GeneralInfo(-1, citizen.getId(), txtCoping.getText(), txtMovtivation.getText(), txtResources.getText(), txtRoles.getText(), txtHabits.getText(), txtEducationAndJob.getText(), txtLifestory.getText(), txtHealthInfo.getText(), txtEquitmentAids.getText(), txtHouseLayout.getText(), txtNetwork.getText());
+            citizenModel.createGeneralInfo(generalInfo);
         }else{
 
-            tplGeneralInfos.addAll(tplModel.getTPLGeneralInfo(template.getId()));
-            TPLGeneralInfo tplGeneralInfo = tplGeneralInfos.get(0);
+            generalInfos.addAll(citizenModel.getGeneralInfo(citizen.getId()));
+            GeneralInfo generalInfo = generalInfos.get(0);
 
-            tplGeneralInfo.setTplCitizenId(template.getId());
-            tplGeneralInfo.setNetwork(txtNetwork.getText());
-            tplGeneralInfo.setHomeLayout(txtHouseLayout.getText());
-            tplGeneralInfo.setHealthInformation(txtHealthInfo.getText());
-            tplGeneralInfo.setEquipmentAids(txtEquitmentAids.getText());
-            tplGeneralInfo.setLifeStory(txtLifestory.getText());
-            tplGeneralInfo.setHabits(txtHabits.getText());
-            tplGeneralInfo.setRoles(txtRoles.getText());
-            tplGeneralInfo.setResources(txtResources.getText());
-            tplGeneralInfo.setEducationAndJob(txtEducationAndJob.getText());
-            tplGeneralInfo.setMotivation(txtMovtivation.getText());
-            tplGeneralInfo.setCoping(txtCoping.getText());
+            generalInfo.setCitizenId(citizen.getId());
+            generalInfo.setNetwork(txtNetwork.getText());
+            generalInfo.setHomeLayout(txtHouseLayout.getText());
+            generalInfo.setHealthInformation(txtHealthInfo.getText());
+            generalInfo.setEquipmentAids(txtEquitmentAids.getText());
+            generalInfo.setLifeStory(txtLifestory.getText());
+            generalInfo.setHabits(txtHabits.getText());
+            generalInfo.setRoles(txtRoles.getText());
+            generalInfo.setResources(txtResources.getText());
+            generalInfo.setEducationAndJob(txtEducationAndJob.getText());
+            generalInfo.setMotivation(txtMovtivation.getText());
+            generalInfo.setCoping(txtCoping.getText());
 
-            tplModel.updateTPLGeneralInfo(tplGeneralInfo);
-            setTextFieldsForGeneralInfo(tplGeneralInfo);
+            citizenModel.updateGeneralInfo(generalInfo);
+            setTextFieldsForGeneralInfo(generalInfo);
         }
 
         lblStatus.setText("Status: " + "Updated Generelle Informationer");
@@ -311,20 +316,20 @@ public class TeacherTemplateController implements Initializable {
 
     /**
      * sets the textfields up with data from template general information
-     * @param tplGeneralInfo the object.
+     * @param generalInfo the object.
      */
-    public void setTextFieldsForGeneralInfo(TPLGeneralInfo tplGeneralInfo){
-        txtCoping.setText(tplGeneralInfo.getCoping());
-        txtEducationAndJob.setText(tplGeneralInfo.getEducationAndJob());
-        txtEquitmentAids.setText(tplGeneralInfo.getCoping());
-        txtHabits.setText(tplGeneralInfo.getHabits());
-        txtHealthInfo.setText(tplGeneralInfo.getHealthInformation());
-        txtHouseLayout.setText(tplGeneralInfo.getHomeLayout());
-        txtLifestory.setText(tplGeneralInfo.getLifeStory());
-        txtMovtivation.setText(tplGeneralInfo.getMotivation());
-        txtNetwork.setText(tplGeneralInfo.getNetwork());
-        txtResources.setText(tplGeneralInfo.getResources());
-        txtRoles.setText(tplGeneralInfo.getRoles());
+    public void setTextFieldsForGeneralInfo(GeneralInfo generalInfo){
+        txtCoping.setText(generalInfo.getCoping());
+        txtEducationAndJob.setText(generalInfo.getEducationAndJob());
+        txtEquitmentAids.setText(generalInfo.getCoping());
+        txtHabits.setText(generalInfo.getHabits());
+        txtHealthInfo.setText(generalInfo.getHealthInformation());
+        txtHouseLayout.setText(generalInfo.getHomeLayout());
+        txtLifestory.setText(generalInfo.getLifeStory());
+        txtMovtivation.setText(generalInfo.getMotivation());
+        txtNetwork.setText(generalInfo.getNetwork());
+        txtResources.setText(generalInfo.getResources());
+        txtRoles.setText(generalInfo.getRoles());
     }
 
 
@@ -467,7 +472,6 @@ public class TeacherTemplateController implements Initializable {
     public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException {
         boolean hasSaved = false;
         Date date = new Date();
-        Template template = controller.getTemplateForEdit();
 
         if (cbUnderHealthCategory.getSelectionModel().isEmpty()){
             DisplayMessage.displayMessage("Vælg en helbredstilstand først");
@@ -475,25 +479,25 @@ public class TeacherTemplateController implements Initializable {
 
 
 
-            getTPLHealthJournals();
+            getHealthJournals();
 
-        for (TPLHealthJournal tplHealthJournal : tplHealthJournals){
-            if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(tplHealthJournal.getCondition())){
+        for (HealthJournal healthJournal : healthJournals){
+            if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(healthJournal.getCondition())){
 
-                tplHealthJournal.setNote(txtNote.getText());
-                tplHealthJournal.setExpectation((String) cbExpectation.getSelectionModel().getSelectedItem());
-                tplHealthJournal.setEvaluation(txtEvaluation.getText());
-                tplHealthJournal.setLastUpdate(date.toString());
+                healthJournal.setNote(txtNote.getText());
+                healthJournal.setExpectation((String) cbExpectation.getSelectionModel().getSelectedItem());
+                healthJournal.setEvaluation(txtEvaluation.getText());
+                healthJournal.setLastUpdate(date.toString());
 
                 if (checkboxActive.isSelected()){
-                    tplHealthJournal.setRelevancy("Aktiv");
+                    healthJournal.setRelevancy("Aktiv");
                 }else if (checkboxMaybe.isSelected()){
-                    tplHealthJournal.setRelevancy("potentiel");
+                    healthJournal.setRelevancy("potentiel");
                 }else{
-                    tplHealthJournal.setRelevancy("Ikke relavant");
+                    healthJournal.setRelevancy("Ikke relavant");
                 }
 
-                tplModel.updateTPLHealthJournal(tplHealthJournal);
+                citizenModel.updateHealthJournal(healthJournal);
                 hasSaved = true;
                 break;
             }
@@ -508,27 +512,27 @@ public class TeacherTemplateController implements Initializable {
                 relavancy = "Ikke relavant";
             }
 
-            TPLHealthJournal tplHealthJournal = new TPLHealthJournal(-1, template.getId(), (String) cbUnderHealthCategory.getSelectionModel().getSelectedItem(), date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
-            tplModel.createTPLHealthJournal(tplHealthJournal);
+            HealthJournal healthJournal = new HealthJournal(-1, citizen.getId(), (String) cbUnderHealthCategory.getSelectionModel().getSelectedItem(), date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
+            citizenModel.createHealthJournal(healthJournal);
             }
         }
 
-        getTPLHealthJournals();
+        getHealthJournals();
         setupTableviewTPLHealthJournal();
     }
 
 
 
     public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException {
-        getTPLHealthJournals();
+        getHealthJournals();
         boolean hasupdated = false;
 
-        if (!tplHealthJournals.isEmpty()){
-            for (TPLHealthJournal tplHealthJournal: tplHealthJournals){
+        if (!healthJournals.isEmpty()){
+            for (HealthJournal healthJournal: healthJournals){
                 if(cbUnderHealthCategory.getSelectionModel().isEmpty()){
 
-                } else if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(tplHealthJournal.getCondition())){
-                    updateHealthScreen(tplHealthJournal);
+                } else if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(healthJournal.getCondition())){
+                    updateHealthScreen(healthJournal);
                     hasupdated = true;
                     break;
                 }
@@ -554,30 +558,30 @@ public class TeacherTemplateController implements Initializable {
     /**
      * get all TPLHealthJournals from one template.
      */
-    private void getTPLHealthJournals() throws SQLException {
+    private void getHealthJournals() throws SQLException {
 
-        if (!tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()).isEmpty()){
-            tplHealthJournals.clear();
-            tplHealthJournals.addAll(tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()));
+        if (!citizenModel.getHealthJournal(citizen.getId()).isEmpty()){
+            healthJournals.clear();
+            healthJournals.addAll(citizenModel.getHealthJournal(citizen.getId()));
         }
     }
 
     /**
      * sets up the screen with data for the Health journal
-     * @param tplHealthJournal the object holding the data
+     * @param healthJournal the object holding the data
      */
-    private void updateHealthScreen(TPLHealthJournal tplHealthJournal){
-        txtNote.setText(tplHealthJournal.getNote());
-        txtEvaluation.setText(tplHealthJournal.getEvaluation());
-        cbExpectation.getSelectionModel().select(tplHealthJournal.getExpectation());
-        lblLastUpdate.setText("Sidst Opdateret den: " + tplHealthJournal.getLastUpdate());
-        txtCondition.setText("Problem: " + tplHealthJournal.getCondition());
+    private void updateHealthScreen(HealthJournal healthJournal){
+        txtNote.setText(healthJournal.getNote());
+        txtEvaluation.setText(healthJournal.getEvaluation());
+        cbExpectation.getSelectionModel().select(healthJournal.getExpectation());
+        lblLastUpdate.setText("Sidst Opdateret den: " + healthJournal.getLastUpdate());
+        txtCondition.setText("Problem: " + healthJournal.getCondition());
 
-        if (tplHealthJournal.getRelevancy().equals("Aktiv")){
+        if (healthJournal.getRelevancy().equals("Aktiv")){
             checkboxActive.setSelected(true);
             checkboxNotRelavant.setSelected(false);
             checkboxMaybe.setSelected(false);
-        }else if (tplHealthJournal.getRelevancy().equals("Ikke relavant")){
+        }else if (healthJournal.getRelevancy().equals("Ikke relavant")){
             checkboxActive.setSelected(false);
             checkboxNotRelavant.setSelected(true);
             checkboxMaybe.setSelected(false);
@@ -610,17 +614,17 @@ public class TeacherTemplateController implements Initializable {
      * Calls methods to update the screen of Function Journal, Depending on if there is a function journal for that condition
      * @param actionEvent on button pressed.
      */
-    public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) {
+    public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) throws SQLException {
         getTPLFunctionsJournals();
         clearFunctionJournalView();
 
         boolean hasUpdate = false;
 
-        if (!tplFunctionJournals.isEmpty()){
-            for (TPLFunctionalJournal tplFunctionalJournal : tplFunctionJournals){
-                if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())){
+        if (!functionalJournals.isEmpty()){
+            for (FunctionalJournal functionalJournal : functionalJournals){
+                if (functionalJournal.getCondition().equals(getFunctionalCondition())){
 
-                   updateFunctionJournalView(tplFunctionalJournal);
+                   updateFunctionJournalView(functionalJournal);
                     hasUpdate = true;
                     break;
                 }
@@ -637,19 +641,19 @@ public class TeacherTemplateController implements Initializable {
 
     /**
      * updates the View for Functions Journals
-     * @param tplFunctionalJournal
+     * @param functionalJournal
      */
-    public void updateFunctionJournalView(TPLFunctionalJournal tplFunctionalJournal){
-        cbNiveauFunction.getSelectionModel().select(tplFunctionalJournal.getNiveau());
-        cbExecutionFunction.getSelectionModel().select(tplFunctionalJournal.getExecution());
-        cbExecutionLimitsFunction.getSelectionModel().select(tplFunctionalJournal.getExecutionLimits());
-        cbExpectedFunction.getSelectionModel().select(tplFunctionalJournal.getExpectation());
-        txtNoteFunction.setText(tplFunctionalJournal.getNote());
-        txtCitizenExpecationFunction.setText(tplFunctionalJournal.getCitizenExpectation());
-        lblFunctionLastUpdate.setText(tplFunctionalJournal.getLastUpdate());
-        lblStatus.setText("Status: " + tplFunctionalJournal.getCondition());
+    public void updateFunctionJournalView(FunctionalJournal functionalJournal){
+        cbNiveauFunction.getSelectionModel().select(functionalJournal.getNiveau());
+        cbExecutionFunction.getSelectionModel().select(functionalJournal.getExecution());
+        cbExecutionLimitsFunction.getSelectionModel().select(functionalJournal.getExecutionLimits());
+        cbExpectedFunction.getSelectionModel().select(functionalJournal.getExpectation());
+        txtNoteFunction.setText(functionalJournal.getNote());
+        txtCitizenExpecationFunction.setText(functionalJournal.getCitizenExpectation());
+        lblFunctionLastUpdate.setText(functionalJournal.getLastUpdate());
+        lblStatus.setText("Status: " + functionalJournal.getCondition());
 
-        if (tplFunctionalJournal.getRelevancy().equals("Aktiv")){
+        if (functionalJournal.getRelevancy().equals("Aktiv")){
             checkboxFunctionNotActive.setSelected(false);
             checkboxFunctionActive.setSelected(true);
         }else {
@@ -785,24 +789,24 @@ public class TeacherTemplateController implements Initializable {
             Date date = new Date();
             getTPLFunctionsJournals();
             boolean hasSaved = false;
-            if (!tplFunctionJournals.isEmpty()){
+            if (!functionalJournals.isEmpty()){
 
-                for (TPLFunctionalJournal tplFunctionalJournal: tplFunctionJournals){
-                    if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())){
+                for (FunctionalJournal functionalJournal: functionalJournals){
+                    if (functionalJournal.getCondition().equals(getFunctionalCondition())){
 
-                        tplFunctionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
-                        tplFunctionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
-                        tplFunctionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
-                        tplFunctionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
-                        tplFunctionalJournal.setNote(txtNoteFunction.getText());
-                        tplFunctionalJournal.setCitizenExpectation(txtCitizenExpecationFunction.getText());
-                        tplFunctionalJournal.setLastUpdate(date.toString());
+                        functionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
+                        functionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
+                        functionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
+                        functionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
+                        functionalJournal.setNote(txtNoteFunction.getText());
+                        functionalJournal.setCitizenExpectation(txtCitizenExpecationFunction.getText());
+                        functionalJournal.setLastUpdate(date.toString());
                         if (checkboxFunctionActive.isSelected()){
-                            tplFunctionalJournal.setRelevancy("Aktiv");
+                            functionalJournal.setRelevancy("Aktiv");
                         }else{
-                            tplFunctionalJournal.setRelevancy("Ikke Relavant");
+                            functionalJournal.setRelevancy("Ikke Relavant");
                         }
-                        updateFunctionJournalView(tplFunctionalJournal);
+                        updateFunctionJournalView(functionalJournal);
                         hasSaved = true;
                         break;
                     }
@@ -817,9 +821,9 @@ public class TeacherTemplateController implements Initializable {
                 }else{
                     relevancy = "Ikke Relavant";
                 }
-                TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1,controller.getTemplateForEdit().getId(), functionConditionString,date.toString(), cbNiveauFunction.getSelectionModel().getSelectedItem().toString(), relevancy, txtNoteFunction.getText(), cbExpectedFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(), txtCitizenExpecationFunction.getText());
-                tplModel.createTPLFunctionalJournal(tplFunctionalJournal);
-                updateFunctionJournalView(tplFunctionalJournal);
+                FunctionalJournal functionalJournal = new FunctionalJournal(-1,citizen.getId(), functionConditionString,date.toString(), cbNiveauFunction.getSelectionModel().getSelectedItem().toString(), relevancy, txtNoteFunction.getText(), cbExpectedFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(), txtCitizenExpecationFunction.getText());
+                citizenModel.createFunctionalJournal(functionalJournal);
+                updateFunctionJournalView(functionalJournal);
 
             }
         }catch (Exception exception){
@@ -832,11 +836,11 @@ public class TeacherTemplateController implements Initializable {
     /**
      * gets all TPLFunctionsJournals for a template on the Database
      */
-    private void getTPLFunctionsJournals(){
+    private void getTPLFunctionsJournals() throws SQLException {
 
-        if (!tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()).isEmpty()){
-            tplFunctionJournals.clear();
-            tplFunctionJournals.addAll(tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()));
+        if (!citizenModel.getFunctionalJournal(citizen.getId()).isEmpty()){
+            functionalJournals.clear();
+            functionalJournals.addAll(citizenModel.getFunctionalJournal(citizen.getId()));
         }
     }
 }

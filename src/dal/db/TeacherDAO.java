@@ -22,7 +22,7 @@ public class TeacherDAO implements ITeacher {
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Teacher> getTeachers() {
+    public ObservableList<Teacher> getTeachers() throws SQLException {
         ObservableList<Teacher> allTeachers =  FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM Teacher";
@@ -38,8 +38,8 @@ public class TeacherDAO implements ITeacher {
                 int schoolId = rs.getInt("TeacherSchoolId");
                 allTeachers.add(new Teacher(teacherId,schoolId, fName, lName,username,password));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return allTeachers;
     }
@@ -50,7 +50,7 @@ public class TeacherDAO implements ITeacher {
      * @return the teacher object that were created
      */
     @Override
-    public Teacher createTeacher(Teacher teacher) {
+    public Teacher createTeacher(Teacher teacher) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO Teacher(TeacherSchoolId, Fname, Lname, Username, Password ) VALUES (?,?,?,?,?);";
@@ -64,8 +64,8 @@ public class TeacherDAO implements ITeacher {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return new Teacher(insertedId,teacher.getSchoolId(), teacher.getFName(),teacher.getLName(),teacher.getUsername(),teacher.getPassword());
     }
@@ -77,17 +77,21 @@ public class TeacherDAO implements ITeacher {
      */
     @Override
     public void updateTeacher(Teacher teacher) throws SQLException {
+        try {
 
-        String sql = "UPDATE Teacher SET TeacherSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE TeacherId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, teacher.getSchoolId());
-        preparedStatement.setString(2, teacher.getFName());
-        preparedStatement.setString(3, teacher.getLName());
-        preparedStatement.setString(4, teacher.getUsername());
-        preparedStatement.setString(5, teacher.getPassword());
-        preparedStatement.setInt(6, teacher.getId());
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
+            String sql = "UPDATE Teacher SET TeacherSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE TeacherId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, teacher.getSchoolId());
+            preparedStatement.setString(2, teacher.getFName());
+            preparedStatement.setString(3, teacher.getLName());
+            preparedStatement.setString(4, teacher.getUsername());
+            preparedStatement.setString(5, teacher.getPassword());
+            preparedStatement.setInt(6, teacher.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 1) {
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
     }
 
@@ -97,16 +101,15 @@ public class TeacherDAO implements ITeacher {
      * @return true for success, false for failed deletion.
      */
     @Override
-    public boolean removeTeacher(Teacher teacher) {
+    public boolean removeTeacher(Teacher teacher) throws SQLException {
         try {
             String sqlStatement = "DELETE FROM Teacher WHERE TeacherId=?";
             PreparedStatement statement = con.prepareStatement(sqlStatement);
             statement.setInt(1, teacher.getId());
             statement.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
-        return false;
     }
 }

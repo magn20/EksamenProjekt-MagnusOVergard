@@ -11,10 +11,14 @@ public class StudentModel {
     StudentManager studentManager = new StudentManager();
 
 
-    public ObservableList<Student> getStudents(){
+    public ObservableList<Student> getStudents() throws SQLException {
         return studentManager.getStudents();
     }
-    public Student createStudent(Student student){
+    public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException {
+        return studentManager.getStudentsFromSchool(schoolId);
+    }
+
+    public Student createStudent(Student student) throws SQLException {
         return studentManager.createStudent(student);
     }
 

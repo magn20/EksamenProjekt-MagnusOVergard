@@ -10,10 +10,10 @@ public class TeacherModel {
 
     TeacherManager teacherManager = new TeacherManager();
 
-    public ObservableList<Teacher> getTeachers(){
+    public ObservableList<Teacher> getTeachers() throws SQLException {
         return teacherManager.getTeachers();
     }
-    public Teacher createTeacher(Teacher teacher){
+    public Teacher createTeacher(Teacher teacher) throws SQLException {
         return teacherManager.createTeacher(teacher);
     }
     public boolean removeTeacher(Teacher teacher) throws SQLException {

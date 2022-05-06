@@ -16,7 +16,7 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
 
 
     @Override
-    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) {
+    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException {
         ObservableList<TPLHealthJournal> TPLHealthJournalFromTemplate = FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM TPLHealthJournal Where TPLCitizenHeatlhjournalId = ?";
@@ -39,14 +39,14 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
 
                 TPLHealthJournalFromTemplate.add(new TPLHealthJournal(id, templateCitizenId, condition,lastUpdate,evaluation,relevancy,note,expectation));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return TPLHealthJournalFromTemplate;
     }
 
     @Override
-    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) {
+    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO TPLHealthJournal(TPLCitizenHeatlhjournalId, Condition ,LastUpdate , Evaluation, Relevancy, Note, Expectation) VALUES (?,?,?,?,?,?,?);";
@@ -62,28 +62,34 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return new TPLHealthJournal(insertedId, tplHealthJournal.getTplCitizenId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(),tplHealthJournal.getExpectation());
     }
 
     @Override
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
-        String sql = "UPDATE TPLHealthJournal SET TPLCitizenHeatlhjournalId = ?, Condition = ?, LastUpdate = ?, Evaluation = ? , Relevancy = ?, Note = ?, Expectation = ? WHERE TPLHeatlhJournalId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, tplHealthJournal.getTplCitizenId());
-        preparedStatement.setString(2, tplHealthJournal.getCondition());
-        preparedStatement.setString(3, tplHealthJournal.getLastUpdate());
-        preparedStatement.setString(4, tplHealthJournal.getEvaluation());
-        preparedStatement.setString(5, tplHealthJournal.getRelevancy());
-        preparedStatement.setString(6, tplHealthJournal.getNote());
-        preparedStatement.setString(7, tplHealthJournal.getExpectation());
-        preparedStatement.setInt(8, tplHealthJournal.getId());
 
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
+        try {
+            String sql = "UPDATE TPLHealthJournal SET TPLCitizenHeatlhjournalId = ?, Condition = ?, LastUpdate = ?, Evaluation = ? , Relevancy = ?, Note = ?, Expectation = ? WHERE TPLHeatlhJournalId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, tplHealthJournal.getTplCitizenId());
+            preparedStatement.setString(2, tplHealthJournal.getCondition());
+            preparedStatement.setString(3, tplHealthJournal.getLastUpdate());
+            preparedStatement.setString(4, tplHealthJournal.getEvaluation());
+            preparedStatement.setString(5, tplHealthJournal.getRelevancy());
+            preparedStatement.setString(6, tplHealthJournal.getNote());
+            preparedStatement.setString(7, tplHealthJournal.getExpectation());
+            preparedStatement.setInt(8, tplHealthJournal.getId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 1) {
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
+
     }
 
 }

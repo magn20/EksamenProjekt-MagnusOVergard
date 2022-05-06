@@ -23,7 +23,7 @@ public class StudentDAO implements IStudent {
      * @return list of students
      */
     @Override
-    public ObservableList<Student> getStudents() {
+    public ObservableList<Student> getStudents() throws SQLException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM Student";
@@ -39,8 +39,34 @@ public class StudentDAO implements IStudent {
                 int schoolId = rs.getInt("StudentSchoolId");
                 allStudents.add(new Student(studentId,schoolId, fName, lName,username,password));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
+        }
+        return allStudents;
+    }
+    @Override
+    public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException {
+        ObservableList<Student> allStudents =  FXCollections.observableArrayList();
+        try {
+            String sqlStatement = "SELECT * FROM Student WHERE StudentId = ?;";
+            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, schoolID);
+
+            statement.execute();
+
+            ResultSet rs = statement.getResultSet();
+            while (rs.next()) {
+                String fName = rs.getString("fName");
+                String lName = rs.getString("Lname");
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+
+                int studentId = rs.getInt("StudentId");
+                int schoolId = rs.getInt("StudentSchoolId");
+                allStudents.add(new Student(studentId,schoolId, fName, lName,username,password));
+            }
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return allStudents;
     }
@@ -51,7 +77,7 @@ public class StudentDAO implements IStudent {
      * @return student object that was created
      */
     @Override
-    public Student createStudent(Student student) {
+    public Student createStudent(Student student) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO Student(StudentSchoolId, Fname, Lname, Username, Password ) VALUES (?,?,?,?,?);";
@@ -66,7 +92,7 @@ public class StudentDAO implements IStudent {
             rs.next();
             insertedId = rs.getInt(1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return new Student(insertedId,student.getSchoolId(), student.getFName(),
                 student.getLName(),student.getUsername(),student.getPassword());
@@ -80,16 +106,21 @@ public class StudentDAO implements IStudent {
     @Override
     public void updateStudent(Student student) throws SQLException {
 
-        String sql = "UPDATE Student SET StudentSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE StudentId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, student.getSchoolId());
-        preparedStatement.setString(2, student.getFName());
-        preparedStatement.setString(3, student.getLName());
-        preparedStatement.setString(4, student.getUsername());
-        preparedStatement.setString(5, student.getPassword());
-        preparedStatement.setInt(6, student.getId());
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
+        try {
+
+            String sql = "UPDATE Student SET StudentSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE StudentId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, student.getSchoolId());
+            preparedStatement.setString(2, student.getFName());
+            preparedStatement.setString(3, student.getLName());
+            preparedStatement.setString(4, student.getUsername());
+            preparedStatement.setString(5, student.getPassword());
+            preparedStatement.setInt(6, student.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 1) {
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
     }
 
@@ -99,16 +130,15 @@ public class StudentDAO implements IStudent {
      * @return true for success deleted student, false for failed.
      */
     @Override
-    public boolean removeStudent(Student student) {
+    public boolean removeStudent(Student student) throws SQLException {
         try {
             String sqlStatement = "DELETE FROM Student WHERE StudentId=?";
             PreparedStatement statement = con.prepareStatement(sqlStatement);
             statement.setInt(1, student.getId());
             statement.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
-        return false;
     }
 }

@@ -51,7 +51,7 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
     }
 
     @Override
-    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) {
+    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO TPLFunctionalJournal(TPLCitizenTPLFunctionalAbilitiesId, Condition ,Relevancy , LastUpdate, Niveau, Expectation, Note, Execution, ExucutionLimits, CitizenExpectation) VALUES (?,?,?,?,?,?,?,?,?,?);";
@@ -70,31 +70,37 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw sqlException;
         }
         return new TPLFunctionalJournal(insertedId, tplFunctionalJournal.getTplCitizenId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation());
     }
 
     @Override
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
-        String sql = "UPDATE TPLFunctionalJournal SET TPLCitizenHeatlhjournalId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExecutionLimits = ?, CitizenExpectation = ? WHERE TPLFunctionalAbilitiesID=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1, tplFunctionalJournal.getTplCitizenId());
-        preparedStatement.setString(2, tplFunctionalJournal.getCondition());
-        preparedStatement.setString(3, tplFunctionalJournal.getRelevancy());
-        preparedStatement.setString(4, tplFunctionalJournal.getLastUpdate());
-        preparedStatement.setString(5, tplFunctionalJournal.getNiveau());
-        preparedStatement.setString(6, tplFunctionalJournal.getExpectation());
-        preparedStatement.setString(7, tplFunctionalJournal.getNote());
-        preparedStatement.setString(8, tplFunctionalJournal.getExpectation());
-        preparedStatement.setString(9, tplFunctionalJournal.getExecutionLimits());
-        preparedStatement.setString(10, tplFunctionalJournal.getCitizenExpectation());
-        preparedStatement.setInt(11, tplFunctionalJournal.getId());
 
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows != 1) {
-        }
+       try {
+           String sql = "UPDATE TPLFunctionalJournal SET TPLCitizenTPLFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExecutionLimits = ?, CitizenExpectation = ? WHERE TPLFunctionalAbilitiesID=?;";
+           PreparedStatement preparedStatement = con.prepareStatement(sql);
+           preparedStatement.setInt(1, tplFunctionalJournal.getTplCitizenId());
+           preparedStatement.setString(2, tplFunctionalJournal.getCondition());
+           preparedStatement.setString(3, tplFunctionalJournal.getRelevancy());
+           preparedStatement.setString(4, tplFunctionalJournal.getLastUpdate());
+           preparedStatement.setString(5, tplFunctionalJournal.getNiveau());
+           preparedStatement.setString(6, tplFunctionalJournal.getExpectation());
+           preparedStatement.setString(7, tplFunctionalJournal.getNote());
+           preparedStatement.setString(8, tplFunctionalJournal.getExpectation());
+           preparedStatement.setString(9, tplFunctionalJournal.getExecutionLimits());
+           preparedStatement.setString(10, tplFunctionalJournal.getCitizenExpectation());
+           preparedStatement.setInt(11, tplFunctionalJournal.getId());
+
+           int affectedRows = preparedStatement.executeUpdate();
+           if (affectedRows != 1) {
+           }
+       }catch (SQLException sqlException){
+           throw sqlException;
+       }
+
     }
 
 }

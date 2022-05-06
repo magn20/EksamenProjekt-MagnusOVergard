@@ -1,10 +1,12 @@
 package Gui.utill;
 
+import be.Citizen;
 import be.Teacher;
 
 public class SingletonUser {
 
     Teacher teacher;
+    Citizen citizen;
     private static SingletonUser singletonUser;
 
     public static SingletonUser getInstance() {
@@ -20,6 +22,13 @@ public class SingletonUser {
 
     public Teacher getTeacher(){
         return teacher;
+    }
+
+    public void setCitizen(Citizen citizen){
+        this.citizen = citizen;
+    }
+    public Citizen getCitizen(){
+        return citizen;
     }
 
 }

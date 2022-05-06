@@ -22,7 +22,7 @@ public class SchoolDAO implements ISchool {
      * @return list of school
      */
     @Override
-    public ObservableList<School> getSchool() {
+    public ObservableList<School> getSchool() throws SQLException {
         ObservableList<School> allSchools =  FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM School";
@@ -34,8 +34,8 @@ public class SchoolDAO implements ISchool {
                 int id = rs.getInt("SchoolId");
                 allSchools.add(new School(id, name));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            throw exception;
         }
         return allSchools;
     }
@@ -47,7 +47,7 @@ public class SchoolDAO implements ISchool {
      * @return the school object created
      */
     @Override
-    public School createSchool(String name) {
+    public School createSchool(String name) throws SQLException {
         int insertedId = -1;
         try {
             String sqlStatement = "INSERT INTO School(SchoolName) VALUES (?);";
@@ -58,7 +58,7 @@ public class SchoolDAO implements ISchool {
             rs.next();
             insertedId = rs.getInt(1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
         return new School(insertedId, name);
 
@@ -72,14 +72,21 @@ public class SchoolDAO implements ISchool {
     @Override
     public void updateSchool(School school) throws SQLException {
 
-        String sql = "UPDATE School SET SchoolName = ? WHERE SchoolId=?;";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setString(1, school.getName());
-        preparedStatement.setInt(2, school.getId());
-        int affectedRows = preparedStatement.executeUpdate();
-        if(affectedRows != 1) {
+        try {
 
+            String sql = "UPDATE School SET SchoolName = ? WHERE SchoolId=?;";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, school.getName());
+            preparedStatement.setInt(2, school.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if(affectedRows != 1) {
+
+            }
+        }catch (SQLException sqlException){
+            throw sqlException;
         }
+
+
 
     }
 
@@ -89,7 +96,7 @@ public class SchoolDAO implements ISchool {
      * @return true if success, false if failed.
      */
     @Override
-    public boolean removeSchool(School school) {
+    public boolean removeSchool(School school) throws SQLException {
         try {
             String sqlStatement = "DELETE FROM School WHERE SchoolId=?";
             PreparedStatement statement = con.prepareStatement(sqlStatement);
@@ -97,8 +104,7 @@ public class SchoolDAO implements ISchool {
             statement.execute();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
-        return false;
     }
 }

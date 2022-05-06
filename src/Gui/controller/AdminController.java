@@ -80,13 +80,17 @@ public class AdminController implements Initializable {
         allTeachers = FXCollections.observableArrayList();
         allStudents = FXCollections.observableArrayList();
 
-        prepareTableview();
+        try {
+            prepareTableview();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * setup for all tableviews
      */
-    public void prepareTableview(){
+    public void prepareTableview() throws SQLException {
         // setup for tableview School
         tcSchoolname.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty()  );
@@ -108,7 +112,7 @@ public class AdminController implements Initializable {
     /**
      * sets the data into all the TableViews
      */
-    public void setTableview(){
+    public void setTableview() throws SQLException {
         allSchools.clear();
         allSchools.addAll(schoolModel.getSchools());
         tvSchool.setItems(allSchools);
@@ -253,6 +257,12 @@ public class AdminController implements Initializable {
      */
     public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminEditStudent.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    public void onLogoutBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }

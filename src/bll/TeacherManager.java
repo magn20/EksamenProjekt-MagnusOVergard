@@ -23,10 +23,10 @@ public class TeacherManager {
         }
     }
 
-    public ObservableList<Teacher> getTeachers(){
+    public ObservableList<Teacher> getTeachers() throws SQLException {
         return teacherDAO.getTeachers();
     }
-    public Teacher createTeacher(Teacher teacher){
+    public Teacher createTeacher(Teacher teacher) throws SQLException {
         return teacherDAO.createTeacher(teacher);
     }
     public boolean removeTeacher(Teacher teacher) throws SQLException {
