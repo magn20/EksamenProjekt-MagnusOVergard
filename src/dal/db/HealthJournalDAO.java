@@ -17,6 +17,11 @@ public class HealthJournalDAO implements IHealthJournal {
     }
 
 
+    /**
+     * gets all healthJournals for a citizen.
+     * @param citizenId the id of the citizen which health journals belong to.
+     * @return lst of HealthJournals
+     */
     @Override
     public ObservableList<HealthJournal> getHealthJournal(int citizenId) throws SQLException {
         ObservableList<HealthJournal> healthJournalFromCitizen = FXCollections.observableArrayList();
@@ -47,6 +52,11 @@ public class HealthJournalDAO implements IHealthJournal {
         return healthJournalFromCitizen;
     }
 
+    /**
+     * creates a HealthJournal
+     * @param healthJournal the object for creation
+     * @return the object that is created
+     */
     @Override
     public HealthJournal createHealthJournal(HealthJournal healthJournal) throws SQLException {
         int insertedId = -1;
@@ -70,6 +80,10 @@ public class HealthJournalDAO implements IHealthJournal {
         return new HealthJournal(insertedId, healthJournal.getCitizenId(), healthJournal.getCondition(), healthJournal.getLastUpdate(), healthJournal.getEvaluation(), healthJournal.getRelevancy(), healthJournal.getNote(),healthJournal.getExpectation());
     }
 
+    /**
+     * updates a HealthJournal.
+     * @param healthJournal the object holding the data for update.
+     */
     @Override
     public void updateHealthJournal(HealthJournal healthJournal) throws SQLException {
        try {

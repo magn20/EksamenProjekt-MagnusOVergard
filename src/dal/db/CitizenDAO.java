@@ -18,6 +18,13 @@ public class CitizenDAO implements ICitizen {
     }
 
 
+    /**
+     *
+     * Returns a list of all citizens for a school
+     * @param schoolId the id for school the citizen belongs to.
+     * @return list of citizens
+     * @throws SQLException
+     */
     @Override
     public ObservableList<Citizen> getCitizen(int schoolId) throws SQLException {
         ObservableList<Citizen> allCitizenFromSchool = FXCollections.observableArrayList();
@@ -82,6 +89,13 @@ public class CitizenDAO implements ICitizen {
         return allCitizenFromStudent;
     }
 
+    /**
+     * setup a student to work on a citizen
+     * @param citizen the object that being worked on
+     * @param student the object that working on citizen
+     * @return return true if successful
+     * @throws SQLException
+     */
     @Override
     public boolean setStudentWorkOnCitizen(Citizen citizen, Student student) throws SQLException {
         try {
@@ -96,6 +110,12 @@ public class CitizenDAO implements ICitizen {
         }
     }
 
+    /**
+     * creates a citizen in datebase
+     * @param citizen object for creation on database
+     * @return return the created object
+     * @throws SQLException
+     */
     @Override
     public Citizen createCitizen(Citizen citizen) throws SQLException {
         int insertedId = -1;
@@ -116,6 +136,10 @@ public class CitizenDAO implements ICitizen {
         return new Citizen(insertedId,citizen.getSchoolId(), citizen.getfName(),citizen.getlName(),citizen.getAge());
     }
 
+    /**
+     * updates a citizen on database
+     * @param citizen object holding the changed data.
+     */
     @Override
     public void updateCitizen(Citizen citizen) throws SQLException {
         try {
@@ -135,6 +159,11 @@ public class CitizenDAO implements ICitizen {
         }
     }
 
+    /**
+     * Removes a citizen on database
+     * @param citizen object for deletion.
+     * @return return true if successful
+     */
     @Override
     public boolean removeCitizen(Citizen citizen) throws SQLException {
         try {

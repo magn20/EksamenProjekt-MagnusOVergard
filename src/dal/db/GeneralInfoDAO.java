@@ -18,8 +18,8 @@ public class GeneralInfoDAO implements IGeneralInfo {
 
 
     /**
-     * gets templates a school from database
-     * @return Observablelist of all Teachers
+     * gets Generalinfo from a school
+     * @return Observablelist of all GeneralInfo
      */
     @Override
     public ObservableList<GeneralInfo> getGeneralInfo(int templateID) throws SQLException {
@@ -57,6 +57,12 @@ public class GeneralInfoDAO implements IGeneralInfo {
         return generalInfoFromCitizen;
     }
 
+
+    /**
+     * creates GeneralInfo
+     * @param generalInfo the object for creation
+     * @return the objected that has been created
+     */
     @Override
     public GeneralInfo createGeneralInfo(GeneralInfo generalInfo) throws SQLException {
         int insertedId = -1;
@@ -81,6 +87,10 @@ public class GeneralInfoDAO implements IGeneralInfo {
         return new GeneralInfo(insertedId, generalInfo.getCitizenId(), generalInfo.getCoping(), generalInfo.getMotivation(), generalInfo.getResources(), generalInfo.getRoles(), generalInfo.getHabits(),generalInfo.getEducationAndJob(), generalInfo.getLifeStory(), generalInfo.getHealthInformation(), generalInfo.getEquipmentAids(),generalInfo.getHomeLayout(), generalInfo.getNetwork());
     }
 
+    /**
+     * updates General Info
+     * @param generalInfo the object holding the Data
+     */
     @Override
     public void updateGeneralInfo(GeneralInfo generalInfo) throws SQLException {
 
@@ -110,6 +120,12 @@ public class GeneralInfoDAO implements IGeneralInfo {
         }
     }
 
+    /**
+     * Removes a GeneralInfo
+     * @param generalInfo the object for deletion.
+     * @return true if successful removed.
+     * @throws SQLException
+     */
     @Override
     public boolean removeGeneralInfo(GeneralInfo generalInfo) throws SQLException {
         try {

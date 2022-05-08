@@ -68,7 +68,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Kopier Template" />
+                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Kopier Template" />
                               <Label text="Lav en Borger til en elev">
                                  <font>
                                     <Font size="23.0" />
@@ -196,17 +196,14 @@
             </Tab>
             <Tab text="Sagsbehandling">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="197.0" layoutY="127.0" text="Here you can create diffrent cases" />
-                     </children></AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
             <Tab text="Settings">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="28.0" text="Ændre Username" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
+                        <Label layoutX="14.0" layoutY="28.0" text="Ændre Brugernavn" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -216,8 +213,8 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button layoutX="32.0" layoutY="60.0" mnemonicParsing="false" onAction="#onTeacherNewUsername" prefHeight="27.0" prefWidth="118.0" text="Glem Username" />
-                        <Button layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onTeacherNewPassword" prefHeight="27.0" prefWidth="118.0" text="Glem Password" />
+                        <Button layoutX="32.0" layoutY="60.0" mnemonicParsing="false" onAction="#onTeacherNewUsername" prefHeight="27.0" prefWidth="118.0" text="Ændre Brugernavn" />
+                        <Button layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onTeacherNewPassword" prefHeight="27.0" prefWidth="118.0" text="Ændre Password" />
                      </children>
                   </AnchorPane>
                </content>

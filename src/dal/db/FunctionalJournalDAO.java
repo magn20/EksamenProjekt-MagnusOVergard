@@ -16,7 +16,12 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
         this.con = con;
     }
 
-
+    /**
+     * Gets all functionaljournals from a citizen.
+     * @param citizenId the id of the citizen that the functionaljournals should belong to.
+     * @return list of functional journal
+     * @throws SQLException
+     */
     @Override
     public ObservableList<FunctionalJournal> getFunctionalJournal(int citizenId) throws SQLException {
         ObservableList<FunctionalJournal> functionalJournalFromCitizen = FXCollections.observableArrayList();
@@ -50,6 +55,11 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
         return functionalJournalFromCitizen;
     }
 
+    /**
+     * creates a functionalJournal
+     * @param functionalJournal the object for creation
+     * @return the object that has been created
+     */
     @Override
     public FunctionalJournal createFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
         int insertedId = -1;
@@ -76,6 +86,11 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
         return new FunctionalJournal(insertedId, functionalJournal.getCitizenId(), functionalJournal.getCondition(), functionalJournal.getLastUpdate(), functionalJournal.getNiveau(), functionalJournal.getRelevancy(), functionalJournal.getNote(), functionalJournal.getExpectation(), functionalJournal.getExecution(), functionalJournal.getExecutionLimits(), functionalJournal.getCitizenExpectation());
     }
 
+    /**
+     * Updates a FunctionalJournal
+     * @param functionalJournal the object holding the data
+     * @throws SQLException
+     */
     @Override
     public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
         try {

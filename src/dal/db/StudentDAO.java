@@ -47,6 +47,11 @@ public class StudentDAO implements IStudent {
     }
 
 
+    /**
+     * get all students that work on a specific Citizen
+     * @param citizenId the id of the citizen.
+     * @return list of students
+     */
     @Override
     public ObservableList<Student> getStudentForCitizen(int citizenId) throws SQLException {
         ObservableList<Student> allStudentForCitizen = FXCollections.observableArrayList();
@@ -78,6 +83,12 @@ public class StudentDAO implements IStudent {
     }
 
 
+    /**
+     * gets students for a school.
+     * @param schoolID the school id
+     * @return list of students from school
+     * @throws SQLException
+     */
     @Override
     public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();

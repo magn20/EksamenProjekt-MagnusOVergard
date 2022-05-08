@@ -17,6 +17,11 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
     }
 
 
+    /**
+     * gets TPLFunctionalJournals that belongs to a Template
+     * @param templateID the id of the template, that functional journals belong to
+     * @return list of TPLFunctionalJournals
+     */
     @Override
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID) {
         ObservableList<TPLFunctionalJournal> TPLFunctionalJournalFromTemplate = FXCollections.observableArrayList();
@@ -50,6 +55,11 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
         return TPLFunctionalJournalFromTemplate;
     }
 
+    /**
+     * creates a TPLFunctionalJournal for database
+     * @param tplFunctionalJournal the object for creation
+     * @return the object that been created
+     */
     @Override
     public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
         int insertedId = -1;
@@ -76,6 +86,10 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
         return new TPLFunctionalJournal(insertedId, tplFunctionalJournal.getTplCitizenId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation());
     }
 
+    /**
+     * updates a TPLFunctionalJournal
+     * @param tplFunctionalJournal the object holding the data
+     */
     @Override
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
 

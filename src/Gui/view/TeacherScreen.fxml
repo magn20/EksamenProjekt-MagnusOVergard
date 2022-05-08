@@ -68,7 +68,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" text="Kopier Template" />
+                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Kopier Template" />
                               <Label text="Lav en Borger til en elev">
                                  <font>
                                     <Font size="23.0" />

@@ -17,7 +17,7 @@ public class TemplateDAO implements ITemplate {
 
 
     /**
-     * gets templates a school from database
+     * gets templates from a school from database
      * @return Observablelist of all Teachers
      */
     @Override
@@ -50,6 +50,11 @@ public class TemplateDAO implements ITemplate {
         return AllTemplatesFromSchool;
     }
 
+    /**
+     * Creates a Template in database
+     * @param template the object for creation
+     * @return the object that has been created
+     */
     @Override
     public Template createTemplate(Template template) throws SQLException {
         int insertedId = -1;
@@ -70,6 +75,10 @@ public class TemplateDAO implements ITemplate {
         return new Template(insertedId,template.getSchoolId(), template.getfName(),template.getlName(),template.getAge());
     }
 
+    /**
+     * updates a template
+     * @param template the object holding the data
+     */
     @Override
     public void updateTemplate(Template template) throws SQLException {
         try {
@@ -89,6 +98,11 @@ public class TemplateDAO implements ITemplate {
 
     }
 
+    /**
+     * removes a template from database
+     * @param template the objected for deletion.
+     * @return true if successful
+     */
     @Override
     public boolean removeTemplate(Template template) throws SQLException {
         try {

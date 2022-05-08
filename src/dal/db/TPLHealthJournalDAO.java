@@ -15,6 +15,11 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
     }
 
 
+    /**
+     * get all TPLHealthJournal from a Template.
+     * @param templateID The id of the template
+     * @return list of TPLHealthJournal
+     */
     @Override
     public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException {
         ObservableList<TPLHealthJournal> TPLHealthJournalFromTemplate = FXCollections.observableArrayList();
@@ -45,6 +50,11 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
         return TPLHealthJournalFromTemplate;
     }
 
+    /**
+     * Creates a TPLHealthJournal
+     * @param tplHealthJournal object for creation
+     * @return The objected that has been Created
+     */
     @Override
     public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
         int insertedId = -1;
@@ -68,9 +78,12 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
         return new TPLHealthJournal(insertedId, tplHealthJournal.getTplCitizenId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(),tplHealthJournal.getExpectation());
     }
 
+    /**
+     * updates a TPLHealthJournal in Database
+     * @param tplHealthJournal object holding the data for updating.
+     */
     @Override
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
-
         try {
             String sql = "UPDATE TPLHealthJournal SET TPLCitizenHeatlhjournalId = ?, Condition = ?, LastUpdate = ?, Evaluation = ? , Relevancy = ?, Note = ?, Expectation = ? WHERE TPLHeatlhJournalId=?;";
             PreparedStatement preparedStatement = con.prepareStatement(sql);

@@ -18,8 +18,9 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
 
 
     /**
-     * gets templates a school from database
-     * @return Observablelist of all Teachers
+     * gets TPLGeneralInfo From a template.
+     * @param templateID the template id for
+     * @return list of TPLGeneralInfo
      */
     @Override
     public ObservableList<TPLGeneralInfo> getTPLGeneralInfo(int templateID) {
@@ -57,6 +58,11 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
         return TPLGeneralInfoFromTemplate;
     }
 
+    /**
+     * Creates a TPLGeneralInfo in Database
+     * @param tplGeneralInfo the object for creation
+     * @return the object created
+     */
     @Override
     public TPLGeneralInfo createTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) {
         int insertedId = -1;
@@ -85,6 +91,10 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
         return new TPLGeneralInfo(insertedId, tplGeneralInfo.getTplCitizenId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(),tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(),tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork());
     }
 
+    /**
+     * Updates TPLGeneralInfo in Database.
+     * @param tplGeneralInfo the object holding the updated data.
+     */
     @Override
     public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         try {
@@ -113,6 +123,11 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
         }
     }
 
+    /**
+     * removes a TPLGeneralInfo object from database.
+     * @param tplGeneralInfo the object for deletion
+     * @return true if successful
+     */
     @Override
     public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
         try {

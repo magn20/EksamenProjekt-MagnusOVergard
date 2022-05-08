@@ -89,7 +89,7 @@ public class TeacherController implements Initializable {
         allStudentsForSchool = FXCollections.observableArrayList();
 
         lblTeacherInfo.setText(singletonUser.getTeacher().getFName() + " " + singletonUser.getTeacher().getLName());
-        
+
         try {
             prepareTableview();
         } catch (SQLException e) {
@@ -135,12 +135,12 @@ public class TeacherController implements Initializable {
      */
     public void onRemoveTemplate(ActionEvent actionEvent) throws SQLException {
 
-        if (tvTemplate.getSelectionModel().isEmpty()){
+        if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template og fjerne.");
-        }else{
+        } else {
             try {
                 tplModel.removeTemplate(tvTemplate.getSelectionModel().getSelectedItem());
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 DisplayMessage.displayError(ex);
                 ex.printStackTrace();
             }
@@ -153,12 +153,12 @@ public class TeacherController implements Initializable {
      * Removes a Citizen
      */
     public void onRemoveCitizenBtn(ActionEvent actionEvent) throws SQLException {
-        if (tvCitizen.getSelectionModel().isEmpty()){
+        if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template og fjerne.");
-        }else{
+        } else {
             try {
                 citizenModel.removeCitizen(tvCitizen.getSelectionModel().getSelectedItem());
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 DisplayMessage.displayError(ex);
                 ex.printStackTrace();
             }
@@ -166,30 +166,13 @@ public class TeacherController implements Initializable {
         }
     }
 
-    public Template getTemplateForEdit(){
+    public Template getTemplateForEdit() {
         return tvTemplate.getSelectionModel().getSelectedItem();
     }
 
-    public Citizen getCitizenForEdit(){
+    public Citizen getCitizenForEdit() {
         return tvCitizen.getSelectionModel().getSelectedItem();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public void onAddTemplate(ActionEvent actionEvent) throws IOException {
@@ -198,26 +181,26 @@ public class TeacherController implements Initializable {
 
 
     public void onEditTemplate(ActionEvent actionEvent) throws IOException {
-        if (tvTemplate.getSelectionModel().isEmpty()){
+        if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template");
-        }else{
+        } else {
             sceneSwapper.sceneSwitch(new Stage(), "TeacherEditTemplate.fxml");
         }
     }
 
     public void onOpenJournalBtn(ActionEvent actionEvent) throws IOException {
-        if (tvTemplate.getSelectionModel().isEmpty()){
+        if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template");
-        }else{
+        } else {
             sceneSwapper.sceneSwitch(new Stage(), "TeacherTPLJournalCreation.fxml");
         }
     }
 
     public void onOpenCitizenJournalBtn(ActionEvent actionEvent) throws IOException {
 
-        if (tvCitizen.getSelectionModel().isEmpty()){
+        if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Ingen Borger er Valgt");
-        }else{
+        } else {
             singletonUser.setCitizen(tvCitizen.getSelectionModel().getSelectedItem());
             sceneSwapper.sceneSwitch(new Stage(), "TeacherJournalCreation.fxml");
         }
@@ -232,9 +215,9 @@ public class TeacherController implements Initializable {
      * opens scene for edits of  citizen
      */
     public void onEditCitizen(ActionEvent actionEvent) throws IOException {
-        if (tvCitizen.getSelectionModel().isEmpty()){
+        if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("ingen Borger valgt");
-        }else{
+        } else {
             sceneSwapper.sceneSwitch(new Stage(), "TeacherEditCitizen.fxml");
         }
 
@@ -243,51 +226,52 @@ public class TeacherController implements Initializable {
     /**
      * Copies Selected Template into Citizens.
      * Gets the Citizen, General information, Health Journal & Functional journal. And add them to new citizen.
+     *
      * @param actionEvent
      * @throws SQLException
      */
     public void onCreateCitizenOfTemplateBtn(ActionEvent actionEvent) throws SQLException {
-        if (tvTemplate.getSelectionModel().isEmpty()){
+        if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("vælg en template");
-        }else {
+        } else {
 
             final Runnable runnable = () -> {
-               try {
-                   Template template = tvTemplate.getSelectionModel().getSelectedItem();
+                try {
+                    Template template = tvTemplate.getSelectionModel().getSelectedItem();
 
-                   Citizen citizen = new Citizen(-1, template.getSchoolId(), template.getfName(), template.getlName(),template.getAge());
-                   citizenModel.createCitizen(citizen);
+                    Citizen citizen = new Citizen(-1, template.getSchoolId(), template.getfName(), template.getlName(), template.getAge());
+                    citizenModel.createCitizen(citizen);
 
-                   ObservableList<Citizen> citizens = citizenModel.getCitizen(citizen.getSchoolId());
+                    ObservableList<Citizen> citizens = citizenModel.getCitizen(citizen.getSchoolId());
 
-                   citizen =  citizens.get(citizens.size() -1);
+                    citizen = citizens.get(citizens.size() - 1);
 
-                   for (TPLGeneralInfo tplGeneralInfo: tplModel.getTPLGeneralInfo(template.getId())){
-                       citizenModel.createGeneralInfo(new GeneralInfo(-1, citizen.getId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(), tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(), tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork()));
-                   }
-                   for (TPLFunctionalJournal tplFunctionalJournal: tplModel.getTPLFunctionalJournal(template.getId())){
-                       citizenModel.createFunctionalJournal(new FunctionalJournal(-1, citizen.getId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation()));
-                   }
-                   for (TPLHealthJournal tplHealthJournal: tplModel.getTPLHealthJournal(template.getId())){
-                       citizenModel.createHealthJournal(new HealthJournal(-1, citizen.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
-                   }
-                   Platform.runLater(new Runnable() {
-                       @Override
-                       public void run() {
-                           try {
-                               setTableview();
-                           } catch (SQLException e) {
-                               e.printStackTrace();
-                           }
-                       }
-                   });
-                   DisplayMessage.displayMessage("Udført: ny Borger: " + citizen.getfName() + " " + citizen.getlName());
+                    for (TPLGeneralInfo tplGeneralInfo : tplModel.getTPLGeneralInfo(template.getId())) {
+                        citizenModel.createGeneralInfo(new GeneralInfo(-1, citizen.getId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(), tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(), tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork()));
+                    }
+                    for (TPLFunctionalJournal tplFunctionalJournal : tplModel.getTPLFunctionalJournal(template.getId())) {
+                        citizenModel.createFunctionalJournal(new FunctionalJournal(-1, citizen.getId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation()));
+                    }
+                    for (TPLHealthJournal tplHealthJournal : tplModel.getTPLHealthJournal(template.getId())) {
+                        citizenModel.createHealthJournal(new HealthJournal(-1, citizen.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                setTableview();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    DisplayMessage.displayMessage("Udført: ny Borger: " + citizen.getfName() + " " + citizen.getlName());
 
 
-               }catch (Exception e){
-                   DisplayMessage.displayMessage("Der Gik noget galt");
-                   e.printStackTrace();
-               }
+                } catch (Exception e) {
+                    DisplayMessage.displayMessage("Der Gik noget galt");
+                    e.printStackTrace();
+                }
 
             };
 
@@ -296,18 +280,15 @@ public class TeacherController implements Initializable {
             thread.start();
 
 
-
         }
-
-
 
 
     }
 
     public void onAsignStudentForCitzen(ActionEvent actionEvent) throws IOException {
-        if (tvCitizen.getSelectionModel().isEmpty()){
+        if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Borger");
-        }else{
+        } else {
             singletonUser.setCitizen(tvCitizen.getSelectionModel().getSelectedItem());
             sceneSwapper.sceneSwitch(new Stage(), "TeacherAddStudentWorksOn.fxml");
 
@@ -323,7 +304,7 @@ public class TeacherController implements Initializable {
 
     public void onSelectedStudentTV(MouseEvent mouseEvent) throws SQLException {
 
-        if (!tvStudent.getSelectionModel().isEmpty()){
+        if (!tvStudent.getSelectionModel().isEmpty()) {
             tvCitizen.getItems().clear();
             tvCitizen.setItems(citizenModel.getCitizenForStudent(tvStudent.getSelectionModel().getSelectedItem().getId()));
         }
@@ -339,14 +320,14 @@ public class TeacherController implements Initializable {
     }
 
     public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
-        if (tvStudent.getSelectionModel().isEmpty()){
+        if (tvStudent.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Der er ikke valgt nogen elev");
-        }else{
+        } else {
             sceneSwapper.sceneSwitch(new Stage(), "TeacherEditStudent.fxml");
         }
     }
 
-    public Student getStudentForEdit(){
+    public Student getStudentForEdit() {
 
         return tvStudent.getSelectionModel().getSelectedItem();
     }
@@ -356,12 +337,12 @@ public class TeacherController implements Initializable {
      * Checks for selections and confirmation
      */
     public void onRemoveStudent(ActionEvent actionEvent) {
-        if (tvStudent.getSelectionModel().isEmpty()){
+        if (tvStudent.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Der er ikke nogen elev valgt.");
-        }else {
+        } else {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
             a.setTitle("Fjern elev");
-            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
+            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName() + " fra systemet");
             a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
                 try {
                     studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
@@ -376,7 +357,7 @@ public class TeacherController implements Initializable {
     }
 
     public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException {
-        if (!tvCitizen.getSelectionModel().isEmpty()){
+        if (!tvCitizen.getSelectionModel().isEmpty()) {
             tvStudent.getItems().clear();
             tvStudent.setItems(studentModel.getStudentsFromCitizen(tvCitizen.getSelectionModel().getSelectedItem().getId()));
         }
@@ -388,5 +369,58 @@ public class TeacherController implements Initializable {
 
     public void onTeacherNewPassword(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherNewPassword.fxml");
+    }
+
+    public void onCopyTemplateBtn(ActionEvent actionEvent) {
+
+        if (tvTemplate.getSelectionModel().isEmpty()) {
+            DisplayMessage.displayMessage("vælg en template");
+        } else {
+
+            final Runnable templateCopy = () -> {
+                try {
+                    Template template = tvTemplate.getSelectionModel().getSelectedItem();
+
+                    tplModel.createTemplate(template);
+
+                    ObservableList<Template> templates = tplModel.getTemplate(template.getSchoolId());
+
+                    Template newTemplate = templates.get(templates.size() - 1);
+
+                    for (TPLGeneralInfo tplGeneralInfo : tplModel.getTPLGeneralInfo(template.getId())) {
+                        tplModel.createTPLGeneralInfo(new TPLGeneralInfo(-1, newTemplate.getId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(), tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(), tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork()));
+                    }
+                    for (TPLFunctionalJournal tplFunctionalJournal : tplModel.getTPLFunctionalJournal(template.getId())) {
+                        tplModel.createTPLFunctionalJournal(new TPLFunctionalJournal(-1, newTemplate.getId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation()));
+                    }
+                    for (TPLHealthJournal tplHealthJournal : tplModel.getTPLHealthJournal(template.getId())) {
+                        tplModel.createTPLHealthJournal(new TPLHealthJournal(-1, newTemplate.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                setTableview();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    DisplayMessage.displayMessage("Udført: Kopieret Template: " + newTemplate.getfName() + " " + newTemplate.getlName());
+
+
+                } catch (Exception e) {
+                    DisplayMessage.displayMessage("Der Gik noget galt");
+                    e.printStackTrace();
+                }
+
+            };
+
+
+            Thread thread = new Thread(templateCopy);
+            thread.start();
+
+
+        }
     }
 }
