@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
 
             boolean correctLogin = false;
 
-            //checks for admin
+            //checks for admin log in
             if (lblPassword.getText().equals("admin") & lblUsername.getText().equals("admin")){
                 sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -61,6 +61,7 @@ public class LoginController implements Initializable {
                 correctLogin = true;
             }
 
+            // checks for teachers log in
             for (Teacher teacher : teacherModel.getTeachers()){
                 if (teacher.getUsername().equals(lblUsername.getText())){
                     if(BCrypt.checkpw(lblPassword.getText(), teacher.getPassword())){
@@ -77,6 +78,7 @@ public class LoginController implements Initializable {
                 }
             }
 
+            //checks for Student log in
             for (Student student : studentModel.getStudents()){
                 if (student.getUsername().equals(lblUsername.getText())){
                     if(BCrypt.checkpw(lblPassword.getText(), student.getPassword())){

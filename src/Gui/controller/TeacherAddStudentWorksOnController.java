@@ -63,6 +63,9 @@ public class TeacherAddStudentWorksOnController implements Initializable {
 
     }
 
+    /**
+     * sets up tableview for all Students from a school
+     */
     private void setupTableview() {
         tcStudentId.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
         tcFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
@@ -72,16 +75,25 @@ public class TeacherAddStudentWorksOnController implements Initializable {
 
     }
 
+    /**
+     * adds a student working on a Citizen
+     * checks for no selected student.
+     */
     public void onAddBtn(ActionEvent actionEvent) throws SQLException {
+
         if (tvStudent.getSelectionModel().isEmpty()){
             DisplayMessage.displayMessage("vælg en elev, til borgeren");
         }else {
+            //Create works on.
             citizenFacade.setStudentWorksOnCitizen(citizen, tvStudent.getSelectionModel().getSelectedItem());
             lblStatus.setText(tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName() + " arbejder nu på borgeren: " + citizen.getfName() + " "+ citizen.getlName());
         }
 
     }
 
+    /**
+     * closes the stage.
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

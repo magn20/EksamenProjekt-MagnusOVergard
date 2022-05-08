@@ -53,12 +53,19 @@ public class TeacherEditStudentController implements Initializable {
 
     }
 
+    /**
+     * puts the selected students for changes data into textfields.
+     */
     private void setupTextFields() {
         txtFName.setText(student.getFName());
         txtLName.setText(student.getLName());
         txtUsername.setText(student.getUsername());
     }
 
+    /**
+     * updates a student
+     * checks for no inputs
+     */
     public void onEditBtn(ActionEvent actionEvent) throws SQLException {
 
         // checks for no inputs
@@ -111,15 +118,16 @@ public class TeacherEditStudentController implements Initializable {
             }
 
 
-
-
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
     /**
-     * updates the ui for user feeling of succesful Update of Template.
+     * updates the ui for user feeling of successful Update of Student.
      * @param student that has ben created
      */
     public void updateStatus(Student student){

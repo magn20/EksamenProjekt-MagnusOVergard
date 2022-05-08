@@ -37,6 +37,10 @@ public class TeacherNewUsernameController implements Initializable {
 
     }
 
+    /**
+     * saves the new username of a Teacher
+     * checks that both textfields for username match
+     */
     public void onSaveBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
@@ -57,6 +61,9 @@ public class TeacherNewUsernameController implements Initializable {
 
     }
 
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

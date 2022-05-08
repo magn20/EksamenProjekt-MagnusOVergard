@@ -37,6 +37,10 @@ public class TeacherNewPasswordController implements Initializable {
 
     }
 
+    /**
+     * updates a Teacher with new hashed password
+     * checks both textfields for password match
+     */
     public void onSaveBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
@@ -62,6 +66,9 @@ public class TeacherNewPasswordController implements Initializable {
 
     }
 
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

@@ -460,6 +460,10 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
+    /**
+     * when a selected maincategory set undercategories  that fits with to that main Category
+     * @param actionEvent on action on combobox.
+     */
     public void onMainCategoryForHeatlhCb(ActionEvent actionEvent) {
         selectUnderCategoryForHealth();
     }
@@ -518,7 +522,10 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
-
+    /**
+     * when a condition is selected in Combobox for HealthJournal.
+     * shows the healthjournal if already exist for that condition.
+     */
     public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException {
         getTPLHealthJournals();
         boolean hasupdated = false;

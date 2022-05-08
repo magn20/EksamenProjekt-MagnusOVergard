@@ -121,6 +121,10 @@ public class TeacherController implements Initializable {
         setTableview();
     }
 
+    /**
+     * puts the data into the tableviews for (Templates, Citizens & Students)
+     * @throws SQLException
+     */
     public void setTableview() throws SQLException {
         tvTemplate.setItems(tplModel.getTemplate(singletonUser.getTeacher().getSchoolId()));
 
@@ -166,20 +170,35 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * gets selected Template on Tableview for Templates
+     * @return selected Template object
+     */
     public Template getTemplateForEdit() {
         return tvTemplate.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * gets selected citizen on Tableview for Citizens
+     * @return selected Citizen Object
+     */
     public Citizen getCitizenForEdit() {
         return tvCitizen.getSelectionModel().getSelectedItem();
     }
 
 
+    /**
+     * opens the add template screen
+     * @param actionEvent on action button
+     */
     public void onAddTemplate(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAddTemplate.fxml");
     }
 
-
+    /**
+     * open edit Template screen
+     * Checks for no selection oon Tableview for templates
+     */
     public void onEditTemplate(ActionEvent actionEvent) throws IOException {
         if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template");
@@ -188,6 +207,10 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * opens a journal for templates
+     * checks for no selection of template
+     */
     public void onOpenJournalBtn(ActionEvent actionEvent) throws IOException {
         if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template");
@@ -196,6 +219,10 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * opens journal for citizens.
+     * Checks for no selection for Citizen on Tableview Citizen
+     */
     public void onOpenCitizenJournalBtn(ActionEvent actionEvent) throws IOException {
 
         if (tvCitizen.getSelectionModel().isEmpty()) {
@@ -207,6 +234,9 @@ public class TeacherController implements Initializable {
 
     }
 
+    /**
+     * opens add citizen screen
+     */
     public void onAddCitizen(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAddCitizen.fxml");
     }
@@ -234,7 +264,7 @@ public class TeacherController implements Initializable {
         if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("vælg en template");
         } else {
-
+            // copy a template into a citizen
             final Runnable runnable = () -> {
                 try {
                     Template template = tvTemplate.getSelectionModel().getSelectedItem();
@@ -246,15 +276,19 @@ public class TeacherController implements Initializable {
 
                     citizen = citizens.get(citizens.size() - 1);
 
+                    // copies all TPLGeneralInfo into GeneralInfo for new citizen
                     for (TPLGeneralInfo tplGeneralInfo : tplModel.getTPLGeneralInfo(template.getId())) {
                         citizenModel.createGeneralInfo(new GeneralInfo(-1, citizen.getId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(), tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(), tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork()));
                     }
+                    // copies all TPLFunctionalJournal into FunctionalJournal for new Citizen
                     for (TPLFunctionalJournal tplFunctionalJournal : tplModel.getTPLFunctionalJournal(template.getId())) {
                         citizenModel.createFunctionalJournal(new FunctionalJournal(-1, citizen.getId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation()));
                     }
+                    // Copies all TPLHealthJournal into HealthJournal for new Citizen
                     for (TPLHealthJournal tplHealthJournal : tplModel.getTPLHealthJournal(template.getId())) {
                         citizenModel.createHealthJournal(new HealthJournal(-1, citizen.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
                     }
+                    // updates the tableview.
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -275,7 +309,7 @@ public class TeacherController implements Initializable {
 
             };
 
-
+            // Starts the runnable in new thread.
             Thread thread = new Thread(runnable);
             thread.start();
 
@@ -285,6 +319,10 @@ public class TeacherController implements Initializable {
 
     }
 
+    /**
+     * opens new stage for assign student to work on Citizen
+     * Checks for no citizen is selected
+     */
     public void onAsignStudentForCitzen(ActionEvent actionEvent) throws IOException {
         if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Borger");
@@ -296,12 +334,20 @@ public class TeacherController implements Initializable {
 
     }
 
+    /**
+     * closes stage and opens new stage for login screen.
+     */
     public void onLogOutBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     *  updates tableview citizen with citizens a selected student is working on.
+     * @param mouseEvent when clicked on tableview Student
+     * @throws SQLException
+     */
     public void onSelectedStudentTV(MouseEvent mouseEvent) throws SQLException {
 
         if (!tvStudent.getSelectionModel().isEmpty()) {
@@ -311,14 +357,24 @@ public class TeacherController implements Initializable {
 
     }
 
+    /**
+     * reset the data in the tableview to show all.
+     */
     public void onShowAllCitizensBtn(ActionEvent actionEvent) throws SQLException {
         setTableview();
     }
 
+    /**
+     * opens new stage for add student screen
+     */
     public void onAddStudentBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAddStudent.fxml");
     }
 
+    /**
+     * opens new stage for edit in student
+     * checks for no selection in tableview student
+     */
     public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
         if (tvStudent.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Der er ikke valgt nogen elev");
@@ -327,6 +383,10 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * gets selected student on tableview student
+     * @return selected Student object
+     */
     public Student getStudentForEdit() {
 
         return tvStudent.getSelectionModel().getSelectedItem();
@@ -356,6 +416,11 @@ public class TeacherController implements Initializable {
 
     }
 
+    /**
+     * updates Tableview student to show all students that works on a Citizen
+     * checks for no selection on Citizen TableView
+     * @param mouseEvent when clicked is performed on tableview citizen
+     */
     public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException {
         if (!tvCitizen.getSelectionModel().isEmpty()) {
             tvStudent.getItems().clear();
@@ -363,14 +428,23 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * opens new stage for Teacher new username.
+     */
     public void onTeacherNewUsername(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherNewUsername.fxml");
     }
 
+    /**
+     * opens new stage for Teacher new password
+     */
     public void onTeacherNewPassword(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherNewPassword.fxml");
     }
 
+    /**
+     * copies a selected Template into a new template
+     */
     public void onCopyTemplateBtn(ActionEvent actionEvent) {
 
         if (tvTemplate.getSelectionModel().isEmpty()) {

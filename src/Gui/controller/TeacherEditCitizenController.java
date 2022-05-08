@@ -40,6 +40,10 @@ public class TeacherEditCitizenController implements Initializable {
         singletonUser = SingletonUser.getInstance();
     }
 
+    /**
+     * edit a citizen
+     * checks for no inputs
+     */
     public void onEditBtn(ActionEvent actionEvent) {
 
 
@@ -75,6 +79,9 @@ public class TeacherEditCitizenController implements Initializable {
 
     }
 
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

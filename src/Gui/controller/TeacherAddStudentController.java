@@ -46,6 +46,9 @@ public class TeacherAddStudentController implements Initializable {
         studentModel = new StudentModel();
     }
 
+    /**
+     * adds a Student,
+     */
     public void onAddBtn(ActionEvent actionEvent) {
         // checks for no inputs
         if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().isEmpty()){
@@ -76,6 +79,9 @@ public class TeacherAddStudentController implements Initializable {
 
     }
 
+    /**
+     * Closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

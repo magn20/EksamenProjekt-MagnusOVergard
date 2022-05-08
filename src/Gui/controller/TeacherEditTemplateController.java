@@ -42,6 +42,10 @@ public class TeacherEditTemplateController implements Initializable {
         singletonUser = SingletonUser.getInstance();
     }
 
+    /**
+     * edit a template
+     * checks for no inputs
+     */
     public void onEditBtn(ActionEvent actionEvent) {
 
 
@@ -77,6 +81,9 @@ public class TeacherEditTemplateController implements Initializable {
 
     }
 
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

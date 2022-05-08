@@ -42,20 +42,22 @@ public class TeacherAddCitizenController implements Initializable {
         singletonUser = SingletonUser.getInstance();
     }
 
+    /**
+     * adds a citizen.
+     * @param actionEvent
+     */
     public void onAddBtn(ActionEvent actionEvent) {
         // checks for no inputs
         if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")){
             displayMessage("Der mangler infomation");
         }else {
             try {
-                        // creates new Student object
-                        Citizen citizen = new Citizen(-1,singletonUser.getTeacher().getSchoolId(), txtFName.getText(), txtLName.getText(), txtAge.getText());
-
-                        // adds the student to database
-                        citizenFacade.createCitizen(citizen);
-
-                        //updates ui
-                        updateStatus(citizen);
+                 // creates new Student object
+                 Citizen citizen = new Citizen(-1,singletonUser.getTeacher().getSchoolId(), txtFName.getText(), txtLName.getText(), txtAge.getText());
+                 // adds the student to database
+                 citizenFacade.createCitizen(citizen);
+                 //updates ui
+                 updateStatus(citizen);
 
 
                 TeacherController controller = new SceneSwapper().getTeacherController();
@@ -68,6 +70,10 @@ public class TeacherAddCitizenController implements Initializable {
 
     }
 
+    /**
+     * closses the stage.
+     * @param actionEvent
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

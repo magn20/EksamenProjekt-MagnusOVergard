@@ -48,7 +48,11 @@ public class StudentController implements Initializable {
         }
     }
 
+    /**
+     * sets up Tableview
+     */
     public void setupTableview() throws SQLException {
+        // setup Citizen Tableview
         tcCitizenID.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         tcCitizenFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
         tcCitizenLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
@@ -62,6 +66,9 @@ public class StudentController implements Initializable {
 
     }
 
+    /**
+     * opens Citizen journal Containing "GeneralInfo, HealthJournal & FunctionalJournal"
+     */
     public void onOpenCitizenJournalBtn(ActionEvent actionEvent) throws IOException {
         if (tvCitizen.getSelectionModel().isEmpty()){
             DisplayMessage.displayMessage("Ingen borger valgt");
@@ -71,6 +78,9 @@ public class StudentController implements Initializable {
         }
     }
 
+    /**
+     * closses the stage and goes back to login screen
+     */
     public void onLogOutBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

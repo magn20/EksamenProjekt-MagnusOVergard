@@ -45,6 +45,9 @@ public class TeacherAddTemplateController implements Initializable {
         singletonUser = SingletonUser.getInstance();
     }
 
+    /**
+     * add a Template.
+     */
     public void onAddBtn(ActionEvent actionEvent) {
         // checks for no inputs
         if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")){
@@ -71,6 +74,9 @@ public class TeacherAddTemplateController implements Initializable {
 
     }
 
+    /**
+     * closes the stage
+     */
     public void onCloseBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

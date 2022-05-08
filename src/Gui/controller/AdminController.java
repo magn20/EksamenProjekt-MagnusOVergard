@@ -188,6 +188,7 @@ public class AdminController implements Initializable {
         if (tvStudent.getSelectionModel().getSelectedItem() == null) {
             displayMessage("Ingen elev er valgt");
         } else {
+            // waiting for confirmation.
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
             a.setTitle("Fjern elev");
             a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");

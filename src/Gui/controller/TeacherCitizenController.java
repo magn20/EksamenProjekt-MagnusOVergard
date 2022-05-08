@@ -281,8 +281,6 @@ public class TeacherCitizenController implements Initializable {
 
     /**
      * saves the general information to database.
-     * @param actionEvent
-     * @throws SQLException
      */
     public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException {
 
@@ -464,11 +462,18 @@ public class TeacherCitizenController implements Initializable {
 
     }
 
-
+    /**
+     * when a maincategory for healthJournal is selected. calls method to find rightful under categories.
+     * @param actionEvent when an click as happend on combobox
+     */
     public void onMainCategoryForHeatlhCb(ActionEvent actionEvent) {
         selectUnderCategoryForHealth();
     }
 
+    /**
+     *  saves a HealthJournal depending on if it already exits (update or create)
+     * @param actionEvent on button action
+     */
     public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException {
         boolean hasSaved = false;
         Date date = new Date();
@@ -522,7 +527,10 @@ public class TeacherCitizenController implements Initializable {
     }
 
 
-
+    /**
+     *  show a healthJournal depending on if a healthJournal already exist with that condition.
+     * @param actionEvent when a Condition is selected on combobox
+     */
     public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException {
         getHealthJournals();
         boolean hasupdated = false;
@@ -813,8 +821,10 @@ public class TeacherCitizenController implements Initializable {
                 }
             }
 
+            // checks if already has saved a functionalJournal if not creates new one
             if (!hasSaved){
 
+                //finds the relevancy.
                 String relevancy = "";
                 if (checkboxFunctionActive.isSelected()){
                     relevancy = "Aktiv";
