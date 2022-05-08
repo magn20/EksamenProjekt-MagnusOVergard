@@ -49,7 +49,7 @@ public class TeacherNewPasswordController implements Initializable {
                 String hashed = BCrypt.hashpw(txtNewPassword.getText(),salt);
 
                 Teacher teacher = singletonUser.getTeacher();
-                teacher.setUsername(hashed);
+                teacher.setPassword(hashed);
                 teacherModel.updateTeacher(teacher);
 
                 lblStatus.setText("Status: opdateret Password");
