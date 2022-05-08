@@ -55,7 +55,7 @@ public class CitizenDAO implements ICitizen {
      */
     @Override
     public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException {
-        ObservableList<Citizen> allCitizenFromSchool = FXCollections.observableArrayList();
+        ObservableList<Citizen> allCitizenFromStudent = FXCollections.observableArrayList();
         try {
             String sqlStatement = "SELECT * FROM Citizen INNER JOIN Works_on ON Works_on.FKCitizenId = Citizen.CitizenId WHERE FKStudentId =(?); ";
 
@@ -72,14 +72,14 @@ public class CitizenDAO implements ICitizen {
                     String lName = resultSet.getString("Lname");
                     String age = resultSet.getString("age");
 
-                    allCitizenFromSchool.add(new Citizen(id,schoolId ,fName, lName, age));
+                    allCitizenFromStudent.add(new Citizen(id,schoolId ,fName, lName, age));
                 }
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             throw sqlException;
         }
-        return allCitizenFromSchool;
+        return allCitizenFromStudent;
     }
 
     @Override

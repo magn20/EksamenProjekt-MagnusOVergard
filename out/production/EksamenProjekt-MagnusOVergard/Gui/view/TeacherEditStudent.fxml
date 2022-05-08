@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="332.0" style="-fx-background-color: #65d965;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.TeacherEditStudentController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Tilføj Elev">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Line endX="-55.5999755859375" endY="-133.0" layoutX="364.0" layoutY="187.0" startX="-350.0" startY="-133.0" />
+      <Line endX="-174.0" layoutX="400.0" layoutY="375.0" startX="-385.6000061035156" />
+      <Line endX="46.20001220703125" endY="116.19998168945312" layoutX="278.0" layoutY="221.0" startX="46.20001220703125" startY="-152.79998779296875" />
+      <Line endX="-226.00003051757812" endY="277.3999938964844" layoutX="234.0" layoutY="77.0" startX="-226.00001525878906" startY="-6.599998474121094" />
+      <Label layoutX="935.0" layoutY="20.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="70.0" text="fornavn:" />
+      <TextField fx:id="txtFName" layoutX="128.0" layoutY="65.0" prefHeight="26.0" prefWidth="173.0" promptText="hans" />
+      <TextField fx:id="txtLName" layoutX="128.0" layoutY="102.0" prefHeight="26.0" prefWidth="173.0" promptText="petersen" />
+      <TextField fx:id="txtUsername" layoutX="128.0" layoutY="140.0" prefHeight="26.0" prefWidth="173.0" promptText="Hape3145" />
+      <Button layoutX="215.0" layoutY="212.0" mnemonicParsing="false" onAction="#onEditBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Ret" />
+      <Button layoutX="238.0" layoutY="361.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Close" />
+      <Label layoutX="25.0" layoutY="107.0" text="Efternavn" />
+      <Label layoutX="23.0" layoutY="144.0" text="Brugernavn" />
+      <Label fx:id="lblStatus" layoutX="34.0" layoutY="339.0" text="Status" />
+      <TextField fx:id="txtPassword" layoutX="128.0" layoutY="177.0" prefHeight="26.0" prefWidth="173.0" promptText="xm52c95" />
+      <Label layoutX="23.0" layoutY="181.0" text="Password" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,6 @@
 package dal.interfaces;
 
+import be.Citizen;
 import be.Student;
 import be.Teacher;
 import javafx.collections.ObservableList;
@@ -13,4 +14,5 @@ public interface IStudent {
     public Student createStudent(Student student) throws SQLException;
     public void updateStudent(Student student) throws SQLException;
     public boolean removeStudent(Student student) throws SQLException;
+    public ObservableList<Student> getStudentForCitizen(int citizenId) throws SQLException;
 }

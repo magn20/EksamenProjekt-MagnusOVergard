@@ -1,6 +1,7 @@
 package Gui.controller;
 
 import Gui.model.CitizenModel;
+import Gui.model.StudentModel;
 import Gui.model.TPLModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
@@ -13,8 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,10 +26,21 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static bll.utill.DisplayMessage.displayError;
+
 public class TeacherController implements Initializable {
 
-
-
+    // Tableview for Student
+    @FXML
+    private TableView<Student> tvStudent;
+    @FXML
+    private TableColumn<Student, Integer> tcStudentId;
+    @FXML
+    private TableColumn<Student, String> tcStudentFName;
+    @FXML
+    private TableColumn<Student, String> tcStudentUsername;
+    @FXML
+    private TableColumn<Student, String> tcStudentLName;
     //Tableview for citizen
     @FXML
     private TableView<Citizen> tvCitizen;
@@ -52,12 +67,14 @@ public class TeacherController implements Initializable {
 
     private ObservableList<Template> templatesForSchool;
     private ObservableList<Citizen> citizensForSchool;
+    private ObservableList<Student> allStudentsForSchool;
 
 
     SceneSwapper sceneSwapper;
     TPLModel tplModel;
     CitizenModel citizenModel;
     SingletonUser singletonUser;
+    StudentModel studentModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,9 +82,11 @@ public class TeacherController implements Initializable {
         sceneSwapper = new SceneSwapper();
         tplModel = new TPLModel();
         citizenModel = new CitizenModel();
+        studentModel = new StudentModel();
 
         templatesForSchool = FXCollections.observableArrayList();
         citizensForSchool = FXCollections.observableArrayList();
+        allStudentsForSchool = FXCollections.observableArrayList();
 
 
         try {
@@ -92,6 +111,10 @@ public class TeacherController implements Initializable {
         tcCitizenLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
         tcCitizenAge.setCellValueFactory(cellData -> cellData.getValue().ageProperty());
 
+        tcStudentId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        tcStudentFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
+        tcCitizenLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
+        tcStudentUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
 
         setTableview();
     }
@@ -100,6 +123,8 @@ public class TeacherController implements Initializable {
         tvTemplate.setItems(tplModel.getTemplate(singletonUser.getTeacher().getSchoolId()));
 
         tvCitizen.setItems(citizenModel.getCitizen(singletonUser.getTeacher().getSchoolId()));
+
+        tvStudent.setItems(studentModel.getStudentsFromSchool(singletonUser.getTeacher().getSchoolId()));
     }
 
 
@@ -201,10 +226,24 @@ public class TeacherController implements Initializable {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAddCitizen.fxml");
     }
 
+    /**
+     * opens scene for edits of  citizen
+     */
     public void onEditCitizen(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "TeacherEditCitizen.fxml");
+        if (tvCitizen.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("ingen Borger valgt");
+        }else{
+            sceneSwapper.sceneSwitch(new Stage(), "TeacherEditCitizen.fxml");
+        }
+
     }
 
+    /**
+     * Copies Selected Template into Citizens.
+     * Gets the Citizen, General information, Health Journal & Functional journal. And add them to new citizen.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onCreateCitizenOfTemplateBtn(ActionEvent actionEvent) throws SQLException {
         if (tvTemplate.getSelectionModel().isEmpty()){
             DisplayMessage.displayMessage("vælg en template");
@@ -278,5 +317,66 @@ public class TeacherController implements Initializable {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public void onSelectedStudentTV(MouseEvent mouseEvent) throws SQLException {
+
+        if (!tvStudent.getSelectionModel().isEmpty()){
+            tvCitizen.getItems().clear();
+            tvCitizen.setItems(citizenModel.getCitizenForStudent(tvStudent.getSelectionModel().getSelectedItem().getId()));
+        }
+
+    }
+
+    public void onShowAllCitizensBtn(ActionEvent actionEvent) throws SQLException {
+        setTableview();
+    }
+
+    public void onAddStudentBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "TeacherAddStudent.fxml");
+    }
+
+    public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
+        if (tvStudent.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("Der er ikke valgt nogen elev");
+        }else{
+            sceneSwapper.sceneSwitch(new Stage(), "TeacherEditStudent.fxml");
+        }
+    }
+
+    public Student getStudentForEdit(){
+
+        return tvStudent.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * removes a student.
+     * Checks for selections and confirmation
+     */
+    public void onRemoveStudent(ActionEvent actionEvent) {
+        if (tvStudent.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("Der er ikke nogen elev valgt.");
+        }else {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
+            a.setTitle("Fjern elev");
+            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
+            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+                try {
+                    studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
+                    prepareTableview();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    displayError(e);
+                }
+            });
+        }
+
+    }
+
+    public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException {
+        if (!tvCitizen.getSelectionModel().isEmpty()){
+            tvStudent.getItems().clear();
+            tvStudent.setItems(studentModel.getStudentsFromCitizen(tvCitizen.getSelectionModel().getSelectedItem().getId()));
+        }
     }
 }

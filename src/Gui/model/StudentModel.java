@@ -17,6 +17,9 @@ public class StudentModel {
     public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException {
         return studentManager.getStudentsFromSchool(schoolId);
     }
+    public ObservableList<Student> getStudentsFromCitizen(int citizenId) throws SQLException {
+        return studentManager.getStudentsFromCitizen(citizenId);
+    }
 
     public Student createStudent(Student student) throws SQLException {
         return studentManager.createStudent(student);

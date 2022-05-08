@@ -1,5 +1,6 @@
 package dal.db;
 
+import be.Citizen;
 import be.Student;
 import be.Teacher;
 import dal.interfaces.IStudent;
@@ -44,6 +45,39 @@ public class StudentDAO implements IStudent {
         }
         return allStudents;
     }
+
+
+    @Override
+    public ObservableList<Student> getStudentForCitizen(int citizenId) throws SQLException {
+        ObservableList<Student> allStudentForCitizen = FXCollections.observableArrayList();
+        try {
+            String sqlStatement = "SELECT * FROM Student INNER JOIN Works_on ON Works_on.FKStudentId = Student.StudentId WHERE FKCitizenId =(?); ";
+
+            PreparedStatement preparedStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, citizenId);
+
+            //Extract data from DB
+            if(preparedStatement.execute()){
+                ResultSet resultSet = preparedStatement.getResultSet();
+                while(resultSet.next()){
+                    int id = resultSet.getInt("StudentId");
+                    int schoolId = resultSet.getInt("StudentSchoolId");
+                    String fName = resultSet.getString("fName");
+                    String lName = resultSet.getString("Lname");
+                    String username = resultSet.getString("Username");
+                    String password = resultSet.getString("Password");
+
+                    allStudentForCitizen.add(new Student(id,schoolId ,fName, lName, username,password));
+                }
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            throw sqlException;
+        }
+        return allStudentForCitizen;
+    }
+
+
     @Override
     public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();

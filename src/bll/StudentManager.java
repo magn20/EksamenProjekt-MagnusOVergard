@@ -30,6 +30,9 @@ public class StudentManager {
     public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException {
         return studentDAO.getStudentsFromSchool(schoolId);
     }
+    public ObservableList<Student> getStudentsFromCitizen(int citizenId) throws SQLException {
+        return studentDAO.getStudentForCitizen(citizenId);
+    }
     public Student createStudent(Student student) throws SQLException {
         return studentDAO.createStudent(student);
     }

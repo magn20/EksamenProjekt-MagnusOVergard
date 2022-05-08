@@ -18,7 +18,19 @@
         <tabs>
           <Tab text="Menu">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="755.0" stylesheets="@../css/StyleSheet.css" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="755.0" stylesheets="@../css/StyleSheet.css">
+                     <children>
+                        <Label fx:id="lblTeacherInfo" layoutX="36.0" layoutY="29.0" text="Velkommen" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="132.0">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Templates">
@@ -81,11 +93,11 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Fiktive Borger">
+            <Tab text="Borger Management">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tvCitizen" layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
+                        <TableView fx:id="tvCitizen" layoutX="14.0" layoutY="56.0" onMouseClicked="#onSelectedCitizenTv" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
                            <columns>
                               <TableColumn fx:id="tcCitizenID" prefWidth="75.0" text="Borger ID" />
                               <TableColumn fx:id="tcCitizenFName" prefWidth="136.79998779296875" text="Fornavn" />
@@ -130,8 +142,49 @@
                                  </font>
                               </Label>
                               <Button mnemonicParsing="false" onAction="#onRemoveCitizenBtn" text="Fjern Borger" />
+                              <Label text="Se alt Data">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="196.0" prefWidth="166.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onShowAllCitizensBtn" text="Se Alt Data" />
+                                    <Label text="Tilføj En Elev">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#onAddStudentBtn" text="Tilføj elev" />
+                                    <Label text="Rediger En Elev">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#onEditStudentBtn" text="Rediger elev" />
+                                    <Label text="Fjern En Elev">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#onRemoveStudent" text="Fjern elev" />
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
+                        <TableView fx:id="tvStudent" layoutX="760.0" layoutY="56.0" onMouseClicked="#onSelectedStudentTV" prefHeight="541.0" prefWidth="449.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="63.999999999999886" AnchorPane.topAnchor="56.0">
+                          <columns>
+                            <TableColumn fx:id="tcStudentId" prefWidth="75.0" text="Elev ID" />
+                            <TableColumn fx:id="tcStudentFName" prefWidth="113.60003662109375" text="Fornavn" />
+                              <TableColumn fx:id="tcStudentLName" prefWidth="139.9998779296875" text="Efternavn" />
+                              <TableColumn fx:id="tcStudentUsername" prefWidth="120.0" text="Brugernavn" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="760.0" layoutY="14.0" text="Elever" AnchorPane.rightAnchor="431.9999999999999" AnchorPane.topAnchor="14.0">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
@@ -144,19 +197,22 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab text="Elev adminstration">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="251.0" layoutY="89.0" text="Here you can add and manage all students" />
-                     </children></AnchorPane>
-               </content>
-            </Tab>
             <Tab text="Settings">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="230.0" layoutY="122.0" text="future features" />
+                        <Label layoutX="14.0" layoutY="28.0" text="Ændre Username" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="17.0" layoutY="113.0" text="Ændre Password" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="113.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="32.0" layoutY="60.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="118.0" text="Glem Username" />
+                        <Button layoutX="32.0" layoutY="143.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="118.0" text="Glem Password" />
                      </children>
                   </AnchorPane>
                </content>
