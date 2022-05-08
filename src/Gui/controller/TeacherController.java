@@ -14,10 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -30,6 +27,9 @@ import static bll.utill.DisplayMessage.displayError;
 
 public class TeacherController implements Initializable {
 
+
+    @FXML
+    private Label lblTeacherInfo;
     // Tableview for Student
     @FXML
     private TableView<Student> tvStudent;
@@ -88,13 +88,15 @@ public class TeacherController implements Initializable {
         citizensForSchool = FXCollections.observableArrayList();
         allStudentsForSchool = FXCollections.observableArrayList();
 
-
+        lblTeacherInfo.setText(singletonUser.getTeacher().getFName() + " " + singletonUser.getTeacher().getLName());
+        
         try {
             prepareTableview();
         } catch (SQLException e) {
             e.printStackTrace();
             DisplayMessage.displayError(e);
         }
+
     }
 
     /**
@@ -378,5 +380,13 @@ public class TeacherController implements Initializable {
             tvStudent.getItems().clear();
             tvStudent.setItems(studentModel.getStudentsFromCitizen(tvCitizen.getSelectionModel().getSelectedItem().getId()));
         }
+    }
+
+    public void onTeacherNewUsername(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "TeacherNewUsername.fxml");
+    }
+
+    public void onTeacherNewPassword(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "TeacherNewPassword.fxml");
     }
 }
