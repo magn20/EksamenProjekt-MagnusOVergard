@@ -193,6 +193,7 @@ public class TeacherTemplateController implements Initializable {
 
 
     private String functionConditionString;
+    private String healthConditionString;
     private ObservableList<String> MainCategory;
     private ObservableList<TPLGeneralInfo> tplGeneralInfos;
     private ObservableList<TPLHealthJournal> tplHealthJournals;
@@ -209,6 +210,7 @@ public class TeacherTemplateController implements Initializable {
         tplHealthJournals = FXCollections.observableArrayList();
         tplFunctionJournals = FXCollections.observableArrayList();
         functionConditionString = "";
+        healthConditionString = "";
 
         // sets up the combobox for TPLHealthJournal.
         setComboboxMainHealth();
@@ -250,7 +252,7 @@ public class TeacherTemplateController implements Initializable {
      */
     public void setupTableviewTPLHealthJournal(){
         tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
         tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
         tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
         tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
@@ -473,7 +475,7 @@ public class TeacherTemplateController implements Initializable {
         Date date = new Date();
         Template template = controller.getTemplateForEdit();
 
-        if (cbUnderHealthCategory.getSelectionModel().isEmpty()){
+        if (healthConditionString.equals("")){
             DisplayMessage.displayMessage("Vælg en helbredstilstand først");
         }else {
 
@@ -482,7 +484,7 @@ public class TeacherTemplateController implements Initializable {
             getTPLHealthJournals();
 
         for (TPLHealthJournal tplHealthJournal : tplHealthJournals){
-            if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(tplHealthJournal.getCondition())){
+            if (healthConditionString.equals(tplHealthJournal.getCondition())){
 
                 tplHealthJournal.setNote(txtNote.getText());
                 tplHealthJournal.setExpectation((String) cbExpectation.getSelectionModel().getSelectedItem());
@@ -512,7 +514,7 @@ public class TeacherTemplateController implements Initializable {
                 relavancy = "Ikke relavant";
             }
 
-            TPLHealthJournal tplHealthJournal = new TPLHealthJournal(-1, template.getId(), (String) cbUnderHealthCategory.getSelectionModel().getSelectedItem(), date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
+            TPLHealthJournal tplHealthJournal = new TPLHealthJournal(-1, template.getId(), healthConditionString, date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
             tplModel.createTPLHealthJournal(tplHealthJournal);
             }
         }
@@ -553,7 +555,9 @@ public class TeacherTemplateController implements Initializable {
                 checkboxNotRelavant.setSelected(false);
                 checkboxMaybe.setSelected(false);
             }
-
+            if (!cbUnderHealthCategory.getSelectionModel().isEmpty()){
+                healthConditionString = cbMainHealthCategory.getSelectionModel().getSelectedItem().toString();
+            }
 
         }
     }
@@ -610,6 +614,7 @@ public class TeacherTemplateController implements Initializable {
      */
     public void onSlectetTPLHealthJournal(MouseEvent mouseEvent) {
         updateHealthScreen(tvTPLHealthJournal.getSelectionModel().getSelectedItem());
+        healthConditionString = tvTPLHealthJournal.getSelectionModel().getSelectedItem().getCondition();
     }
 
 

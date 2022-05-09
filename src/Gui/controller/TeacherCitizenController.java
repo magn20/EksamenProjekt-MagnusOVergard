@@ -191,6 +191,7 @@ public class TeacherCitizenController implements Initializable {
 
 
     private String functionConditionString;
+    private String healthConditionString;
     private ObservableList<String> MainCategory;
     private ObservableList<GeneralInfo> generalInfos;
     private ObservableList<HealthJournal> healthJournals;
@@ -210,6 +211,7 @@ public class TeacherCitizenController implements Initializable {
         healthJournals = FXCollections.observableArrayList();
         functionalJournals = FXCollections.observableArrayList();
         functionConditionString = "";
+        healthConditionString = "";
 
         // sets up the combobox for TPLHealthJournal.
         setComboboxMainHealth();
@@ -258,7 +260,7 @@ public class TeacherCitizenController implements Initializable {
     public void setupTableviewTPLHealthJournal(){
         tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
         tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
         tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
         tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
@@ -478,7 +480,7 @@ public class TeacherCitizenController implements Initializable {
         boolean hasSaved = false;
         Date date = new Date();
 
-        if (cbUnderHealthCategory.getSelectionModel().isEmpty()){
+        if (healthConditionString.equals("")){
             DisplayMessage.displayMessage("Vælg en helbredstilstand først");
         }else {
 
@@ -517,7 +519,7 @@ public class TeacherCitizenController implements Initializable {
                 relavancy = "Ikke relavant";
             }
 
-            HealthJournal healthJournal = new HealthJournal(-1, citizen.getId(), (String) cbUnderHealthCategory.getSelectionModel().getSelectedItem(), date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
+            HealthJournal healthJournal = new HealthJournal(-1, citizen.getId(), healthConditionString, date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
             citizenModel.createHealthJournal(healthJournal);
             }
         }
@@ -559,6 +561,9 @@ public class TeacherCitizenController implements Initializable {
                 checkboxMaybe.setSelected(false);
             }
 
+            if (!cbUnderHealthCategory.getSelectionModel().isEmpty()){
+                healthConditionString = cbUnderHealthCategory.getSelectionModel().getSelectedItem().toString();
+            }
 
         }
     }
@@ -615,6 +620,7 @@ public class TeacherCitizenController implements Initializable {
      */
     public void onSlectetTPLHealthJournal(MouseEvent mouseEvent) {
         updateHealthScreen(tvTPLHealthJournal.getSelectionModel().getSelectedItem());
+        healthConditionString = tvTPLHealthJournal.getSelectionModel().getSelectedItem().getCondition();
     }
 
 
