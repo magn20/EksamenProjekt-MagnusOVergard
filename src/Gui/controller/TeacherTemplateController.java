@@ -752,7 +752,6 @@ public class TeacherTemplateController implements Initializable {
             condition = btnMoveInDiffrentAreas.getText();
         }
         functionConditionString = condition;
-
         return condition;
     }
 
@@ -795,7 +794,7 @@ public class TeacherTemplateController implements Initializable {
             if (!tplFunctionJournals.isEmpty()){
 
                 for (TPLFunctionalJournal tplFunctionalJournal: tplFunctionJournals){
-                    if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())){
+                    if (tplFunctionalJournal.getCondition().equals(functionConditionString)){
 
                         tplFunctionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
                         tplFunctionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());

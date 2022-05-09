@@ -800,7 +800,7 @@ public class TeacherCitizenController implements Initializable {
             if (!functionalJournals.isEmpty()){
 
                 for (FunctionalJournal functionalJournal: functionalJournals){
-                    if (functionalJournal.getCondition().equals(getFunctionalCondition())){
+                    if (functionalJournal.getCondition().equals(functionConditionString)){
 
                         functionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
                         functionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
