@@ -123,6 +123,7 @@ public class TeacherController implements Initializable {
 
     /**
      * puts the data into the tableviews for (Templates, Citizens & Students)
+     *
      * @throws SQLException
      */
     public void setTableview() throws SQLException {
@@ -172,6 +173,7 @@ public class TeacherController implements Initializable {
 
     /**
      * gets selected Template on Tableview for Templates
+     *
      * @return selected Template object
      */
     public Template getTemplateForEdit() {
@@ -180,6 +182,7 @@ public class TeacherController implements Initializable {
 
     /**
      * gets selected citizen on Tableview for Citizens
+     *
      * @return selected Citizen Object
      */
     public Citizen getCitizenForEdit() {
@@ -189,6 +192,7 @@ public class TeacherController implements Initializable {
 
     /**
      * opens the add template screen
+     *
      * @param actionEvent on action button
      */
     public void onAddTemplate(ActionEvent actionEvent) throws IOException {
@@ -344,7 +348,8 @@ public class TeacherController implements Initializable {
     }
 
     /**
-     *  updates tableview citizen with citizens a selected student is working on.
+     * updates tableview citizen with citizens a selected student is working on.
+     *
      * @param mouseEvent when clicked on tableview Student
      * @throws SQLException
      */
@@ -385,6 +390,7 @@ public class TeacherController implements Initializable {
 
     /**
      * gets selected student on tableview student
+     *
      * @return selected Student object
      */
     public Student getStudentForEdit() {
@@ -419,6 +425,7 @@ public class TeacherController implements Initializable {
     /**
      * updates Tableview student to show all students that works on a Citizen
      * checks for no selection on Citizen TableView
+     *
      * @param mouseEvent when clicked is performed on tableview citizen
      */
     public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException {
