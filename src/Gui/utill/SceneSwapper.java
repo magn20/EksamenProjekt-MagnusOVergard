@@ -4,6 +4,7 @@ import Gui.controller.TeacherController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -25,7 +26,12 @@ public class SceneSwapper {
 
             Scene ViewScene = new Scene(scene);
             //stage.setResizable(false);
-            stage.setTitle("Fælles sprog 3");
+            stage.setTitle("Sosu Esbjerg");
+
+            Image image = new Image("/gui/img/logo.png");
+            stage.getIcons().add(image);
+            stage.setScene(ViewScene);
+
             stage.setScene(ViewScene);
             stage.show();
 
@@ -37,7 +43,10 @@ public class SceneSwapper {
         primaryStage.centerOnScreen();
         //primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Fælles Sprog 3");
+        Image image = new Image("/gui/img/logo.png");
+        primaryStage.getIcons().add(image);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Sosu Esbjerg");
         primaryStage.show();
     }
 

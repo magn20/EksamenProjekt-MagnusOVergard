@@ -112,5 +112,47 @@ public class TPLFunctionalJournal {
         return relevancy.get();
     }
 
+    public IntegerProperty tplCitizenIdProperty() {
+        return tplCitizenId;
+    }
 
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public StringProperty relevancyProperty() {
+        return relevancy;
+    }
+
+    public StringProperty conditionProperty() {
+        return condition;
+    }
+
+    public StringProperty noteProperty() {
+        return note;
+    }
+
+    public StringProperty lastUpdateProperty() {
+        return lastUpdate;
+    }
+
+    public StringProperty expectationProperty() {
+        return expectation;
+    }
+
+    public StringProperty citizenExpectationProperty() {
+        return citizenExpectation;
+    }
+
+    public StringProperty executionLimitsProperty() {
+        return executionLimits;
+    }
+
+    public StringProperty executionProperty() {
+        return execution;
+    }
+
+    public StringProperty niveauProperty() {
+        return niveau;
+    }
 }

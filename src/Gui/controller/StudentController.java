@@ -74,7 +74,7 @@ public class StudentController implements Initializable {
             DisplayMessage.displayMessage("Ingen borger valgt");
         }else{
             singletonUser.setCitizen(tvCitizen.getSelectionModel().getSelectedItem());
-            sceneSwapper.sceneSwitch(new Stage(), "TeacherJournalCreation.fxml");
+            sceneSwapper.sceneSwitch(new Stage(), "Journal.fxml");
         }
     }
 

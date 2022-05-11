@@ -18,7 +18,7 @@
             <PasswordField fx:id="lblPassword" layoutX="108.0" layoutY="50.0" promptText="Password" />
             <Button layoutX="181.0" layoutY="92.0" mnemonicParsing="false" onAction="#onLoginBtn" prefHeight="27.0" prefWidth="70.0" text="Log ind" />
          </children></AnchorPane>
-      <ImageView fitHeight="83.0" fitWidth="280.0" layoutX="105.0" layoutY="37.0" styleClass="logo" AnchorPane.bottomAnchor="301.0" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="37.0">
+      <ImageView fitHeight="103.0" fitWidth="288.0" layoutX="91.0" layoutY="33.0" styleClass="logo" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="77.0" AnchorPane.topAnchor="33.0">
          <image>
             <Image url="@../img/logo.jpg" />
          </image>

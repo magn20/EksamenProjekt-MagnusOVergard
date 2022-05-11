@@ -115,7 +115,7 @@ public class TeacherController implements Initializable {
 
         tcStudentId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         tcStudentFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
-        tcCitizenLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
+        tcStudentLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
         tcStudentUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
 
         setTableview();
@@ -233,7 +233,7 @@ public class TeacherController implements Initializable {
             DisplayMessage.displayMessage("Ingen Borger er Valgt");
         } else {
             singletonUser.setCitizen(tvCitizen.getSelectionModel().getSelectedItem());
-            sceneSwapper.sceneSwitch(new Stage(), "TeacherJournalCreation.fxml");
+            sceneSwapper.sceneSwitch(new Stage(), "Journal.fxml");
         }
 
     }

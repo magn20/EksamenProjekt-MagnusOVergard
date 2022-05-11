@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="646.0" prefWidth="873.0" styleClass="backgrounding" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.StudentController">
+<AnchorPane prefHeight="646.0" prefWidth="873.0" styleClass="backgroundingBlue" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.StudentController">
    <children>
       <TabPane layoutX="89.0" layoutY="58.0" prefHeight="502.0" prefWidth="870.0" styleClass="whitebackground" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="75.60000000000002">
         <tabs>
@@ -69,11 +69,11 @@
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="61.0" layoutY="21.0" text="Simulations Program">
+      <Label layoutX="75.0" layoutY="21.0" text="Simulations Program">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="830.0" layoutY="7.0" mnemonicParsing="false" onAction="#onLogOutBtn" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" />
+      <Button layoutX="830.0" layoutY="7.0" mnemonicParsing="false" onAction="#onLogOutBtn" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="4.000000000000021" />
    </children>
 </AnchorPane>

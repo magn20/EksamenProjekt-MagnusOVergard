@@ -27,6 +27,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class TeacherTemplateController implements Initializable {
 
@@ -108,6 +109,30 @@ public class TeacherTemplateController implements Initializable {
 
 
     // For Functional Journal
+
+    // tableview
+    @FXML
+    private TableView<TPLFunctionalJournal> tvfunctionsJournals;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionCondition;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionsSaveAs;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionsNiveau;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctonsExpectation;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionsNote;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionalEvaluation;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionalEvaluationLimits;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionalCitizenExpactation;
+    @FXML
+    private TableColumn<TPLFunctionalJournal, String> tcFunctionsLastUpdate;
+
+    //buttons
     @FXML
     private Button btnCooking;
     @FXML
@@ -219,20 +244,18 @@ public class TeacherTemplateController implements Initializable {
         // gets healthJournals from one specific template
         try {
             getTPLHealthJournals();
+            getTPLFunctionsJournals();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //set up the template with all healthJournals from that template.
         setupTableviewTPLHealthJournal();
-
+        setupTableviewTPLFunctionalJournal();
         // Function ComboBox Setup
         setupComboboxForFunctionJournal();
 
         // gets the Templated that is selected from teacher screen.
         Template template = controller.getTemplateForEdit();
-
-        // sets the text to display which Template "Omsorgs Journal" is open
-        lblTemplate.setText("Template: "+ template.getfName() + " " + template.getlName() + " Template ID" + template.getId());
 
 
 
@@ -244,6 +267,23 @@ public class TeacherTemplateController implements Initializable {
 
 
 
+    }
+
+    /**
+     * setup tableview for TPLFunctionalJournal
+     */
+    private void setupTableviewTPLFunctionalJournal() {
+        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
+        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
+
+        tvfunctionsJournals.setItems(tplFunctionJournals);
     }
 
 
@@ -556,7 +596,7 @@ public class TeacherTemplateController implements Initializable {
                 checkboxMaybe.setSelected(false);
             }
             if (!cbUnderHealthCategory.getSelectionModel().isEmpty()){
-                healthConditionString = cbMainHealthCategory.getSelectionModel().getSelectedItem().toString();
+                healthConditionString = cbUnderHealthCategory.getSelectionModel().getSelectedItem().toString();
             }
 
         }
@@ -813,7 +853,7 @@ public class TeacherTemplateController implements Initializable {
                         }else{
                             tplFunctionalJournal.setRelevancy("Ikke Relavant");
                         }
-                        updateFunctionJournalView(tplFunctionalJournal);
+                        tplModel.updateTPLFunctionalJournal(tplFunctionalJournal);
                         hasSaved = true;
                         break;
                     }
@@ -849,5 +889,10 @@ public class TeacherTemplateController implements Initializable {
             tplFunctionJournals.clear();
             tplFunctionJournals.addAll(tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()));
         }
+    }
+
+    public void onTableviewTPLFunctionalJournal(MouseEvent mouseEvent) {
+        functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
+        updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
     }
 }

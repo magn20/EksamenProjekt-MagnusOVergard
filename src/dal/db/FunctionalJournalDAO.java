@@ -94,7 +94,7 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
     @Override
     public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
         try {
-            String sql = "UPDATE FunctionalJournal SET CitizenFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExecutionLimits = ?, CitizenExpectation = ? WHERE FunctionalAbilitiesID=?;";
+            String sql = "UPDATE FunctionalJournal SET CitizenFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExucutionLimits = ?, CitizenExpectation = ? WHERE FunctionalAbilitiesID=?;";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, functionalJournal.getCitizenId());
             preparedStatement.setString(2, functionalJournal.getCondition());
@@ -103,7 +103,7 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
             preparedStatement.setString(5, functionalJournal.getNiveau());
             preparedStatement.setString(6, functionalJournal.getExpectation());
             preparedStatement.setString(7, functionalJournal.getNote());
-            preparedStatement.setString(8, functionalJournal.getExpectation());
+            preparedStatement.setString(8, functionalJournal.getExecution());
             preparedStatement.setString(9, functionalJournal.getExecutionLimits());
             preparedStatement.setString(10, functionalJournal.getCitizenExpectation());
             preparedStatement.setInt(11, functionalJournal.getId());

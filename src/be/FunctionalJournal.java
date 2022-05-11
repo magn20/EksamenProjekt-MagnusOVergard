@@ -112,5 +112,47 @@ public class FunctionalJournal {
         return relevancy.get();
     }
 
+    public IntegerProperty idProperty() {
+        return id;
+    }
 
+    public IntegerProperty citizenIdProperty() {
+        return citizenId;
+    }
+
+    public StringProperty conditionProperty() {
+        return condition;
+    }
+
+    public StringProperty niveauProperty() {
+        return niveau;
+    }
+
+    public StringProperty lastUpdateProperty() {
+        return lastUpdate;
+    }
+
+    public StringProperty executionProperty() {
+        return execution;
+    }
+
+    public StringProperty executionLimitsProperty() {
+        return executionLimits;
+    }
+
+    public StringProperty citizenExpectationProperty() {
+        return citizenExpectation;
+    }
+
+    public StringProperty expectationProperty() {
+        return expectation;
+    }
+
+    public StringProperty noteProperty() {
+        return note;
+    }
+
+    public StringProperty relevancyProperty() {
+        return relevancy;
+    }
 }

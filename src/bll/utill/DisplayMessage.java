@@ -31,7 +31,7 @@ public class DisplayMessage {
      */
     public static boolean displayErrorSTOP(Exception ex) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        //addIicon(alert);
+        addIicon(alert);
         alert.setTitle("Error: Something went wrong");
         alert.setHeaderText(ex.getMessage());
         alert.setContentText(String.valueOf(ex.getCause()));
@@ -46,7 +46,7 @@ public class DisplayMessage {
      */
     public static boolean displayWarning (String message){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        //addIicon(alert);
+        addIicon(alert);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText(message);
         alert.setContentText("Press OK to continue.");
@@ -61,7 +61,7 @@ public class DisplayMessage {
     public static void displayMessage(String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            //addIicon(alert);
+            addIicon(alert);
             alert.setTitle("Message");
             alert.setHeaderText(message);
             alert.showAndWait();
@@ -74,7 +74,7 @@ public class DisplayMessage {
      */
     private static void addIicon(Alert alert){
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        Image image = new Image("/gui/Images/icon.png");
+        Image image = new Image("/gui/img/logo.png");
         stage.getIcons().add(image);
     }
 }

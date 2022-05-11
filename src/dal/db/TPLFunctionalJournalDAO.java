@@ -94,7 +94,7 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
 
        try {
-           String sql = "UPDATE TPLFunctionalJournal SET TPLCitizenTPLFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExecutionLimits = ?, CitizenExpectation = ? WHERE TPLFunctionalAbilitiesID=?;";
+           String sql = "UPDATE TPLFunctionalJournal SET TPLCitizenTPLFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExucutionLimits = ?, CitizenExpectation = ? WHERE TPLFunctionalAbilitiesID=?;";
            PreparedStatement preparedStatement = con.prepareStatement(sql);
            preparedStatement.setInt(1, tplFunctionalJournal.getTplCitizenId());
            preparedStatement.setString(2, tplFunctionalJournal.getCondition());
@@ -103,7 +103,7 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
            preparedStatement.setString(5, tplFunctionalJournal.getNiveau());
            preparedStatement.setString(6, tplFunctionalJournal.getExpectation());
            preparedStatement.setString(7, tplFunctionalJournal.getNote());
-           preparedStatement.setString(8, tplFunctionalJournal.getExpectation());
+           preparedStatement.setString(8, tplFunctionalJournal.getExecution());
            preparedStatement.setString(9, tplFunctionalJournal.getExecutionLimits());
            preparedStatement.setString(10, tplFunctionalJournal.getCitizenExpectation());
            preparedStatement.setInt(11, tplFunctionalJournal.getId());

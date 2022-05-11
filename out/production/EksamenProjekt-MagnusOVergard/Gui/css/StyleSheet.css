@@ -21,8 +21,34 @@
 }
 
 .backgrounding{
-    -fx-border-color: #65d965;
-    -fx-background-color: #65d965;
+    -fx-border-color: #c0c0c0;
+    -fx-background-color: #d0d0d0;
+    -fx-border-width: 2;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
+.backgroundingWhite{
+    -fx-border-color: #e5e5e5;
+    -fx-background-color: #ffffff;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
+.backgroundingBlue{
+    -fx-border-color: #a4b0f5;
+    -fx-background-color: #a4b0f5;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
+.backgroundingDarkBlue{
+    -fx-border-color: #000000;
+    -fx-background-color: #0051ff;
+    -fx-border-width: 1.5;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
+.backgroundingOrange{
+    -fx-border-color: #734515;
+    -fx-background-color: #ff8a1f;
     -fx-arc-width: 2;
     -fx-border-style: solid;
 }
@@ -33,6 +59,7 @@
     -fx-arc-width: 2;
     -fx-border-style: solid;
 }
+
 .logo{
     -fx-position-shape: center;
 }
@@ -58,7 +85,7 @@
 
 .tab-pane .tab:selected
 {
-    -fx-border-color: #96b946;
+    -fx-border-color: #1f598f;
 }
 
 .tab .tab-label {
@@ -70,5 +97,5 @@
 
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #96b946;
+    -fx-text-fill: #a4b0f5;
 }

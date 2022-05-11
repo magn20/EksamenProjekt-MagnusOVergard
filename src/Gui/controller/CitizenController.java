@@ -1,7 +1,6 @@
 package Gui.controller;
 
 import Gui.model.CitizenModel;
-import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.*;
 import bll.utill.DisplayMessage;
@@ -19,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.net.URL;
@@ -26,10 +26,10 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class TeacherCitizenController implements Initializable {
+public class CitizenController implements Initializable {
 
 
-
+    public Tooltip toolTipTest;
     // used  for all tabs
     @FXML
     private Label lblTemplate;
@@ -65,7 +65,7 @@ public class TeacherCitizenController implements Initializable {
 
     //tableview
     @FXML
-    private TableView<HealthJournal> tvTPLHealthJournal;
+    private TableView<HealthJournal> tvHealthJournal;
     @FXML
     private TableColumn<HealthJournal, String> tcCondition;
     @FXML
@@ -106,6 +106,30 @@ public class TeacherCitizenController implements Initializable {
 
 
     // For Functional Journal
+
+    // tableview
+    @FXML
+    private TableView<FunctionalJournal> tvfunctionsJournals;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionCondition;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionsSaveAs;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionsNiveau;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctonsExpectation;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionsNote;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionalEvaluation;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionalEvaluationLimits;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionalCitizenExpactation;
+    @FXML
+    private TableColumn<FunctionalJournal, String> tcFunctionsLastUpdate;
+
+    //buttons
     @FXML
     private Button btnCooking;
     @FXML
@@ -213,29 +237,28 @@ public class TeacherCitizenController implements Initializable {
         functionConditionString = "";
         healthConditionString = "";
 
-        // sets up the combobox for TPLHealthJournal.
+        toolTipTest.setShowDelay(Duration.millis(0.00));
+
+        // sets up the combobox for HealthJournal.
         setComboboxMainHealth();
         setComboboxExpectation();
 
         // gets healthJournals from one specific citizen
         try {
             getHealthJournals();
+            getFunctionsJournals();
         } catch (SQLException e) {
             e.printStackTrace();
             DisplayMessage.displayError(e);
         }
         //set up the citizen with all healthJournals from that citizen.
-        setupTableviewTPLHealthJournal();
-
+        setupTableviewHealthJournal();
+        setupTableviewFunctionalJournal();
         // Function ComboBox Setup
         setupComboboxForFunctionJournal();
 
         // gets the Templated that is selected from teacher screen.
         citizen = singletonUser.getCitizen();
-
-        // sets the text to display which Template "Omsorgs Journal" is open
-        lblTemplate.setText("Borger: "+ citizen.getfName() + " " + citizen.getlName() + " Borger ID: " + citizen.getId());
-
 
 
         // sets all the general info into the General Information page.
@@ -255,9 +278,9 @@ public class TeacherCitizenController implements Initializable {
 
 
     /**
-     * sets up the tableview with all TPLHealthJournal objects that one specific Template has.
+     * sets up the tableview with all HealthJournal objects that one specific Template has.
      */
-    public void setupTableviewTPLHealthJournal(){
+    public void setupTableviewHealthJournal(){
         tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcExpactation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
@@ -265,9 +288,24 @@ public class TeacherCitizenController implements Initializable {
         tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
         tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
 
-        tvTPLHealthJournal.setItems(healthJournals);
+        tvHealthJournal.setItems(healthJournals);
+    }
 
+    /**
+     * setup tableview for FunctionalJournal
+     */
+    private void setupTableviewFunctionalJournal() {
+        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
+        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
 
+        tvfunctionsJournals.setItems(functionalJournals);
     }
 
 
@@ -525,7 +563,7 @@ public class TeacherCitizenController implements Initializable {
         }
 
         getHealthJournals();
-        setupTableviewTPLHealthJournal();
+        setupTableviewHealthJournal();
     }
 
 
@@ -569,7 +607,7 @@ public class TeacherCitizenController implements Initializable {
     }
 
     /**
-     * get all TPLHealthJournals from one template.
+     * get all HealthJournals from one template.
      */
     private void getHealthJournals() throws SQLException {
 
@@ -618,9 +656,9 @@ public class TeacherCitizenController implements Initializable {
     /**
      * When a condition for health journal is selected
      */
-    public void onSlectetTPLHealthJournal(MouseEvent mouseEvent) {
-        updateHealthScreen(tvTPLHealthJournal.getSelectionModel().getSelectedItem());
-        healthConditionString = tvTPLHealthJournal.getSelectionModel().getSelectedItem().getCondition();
+    public void onSlectetHealthJournal(MouseEvent mouseEvent) {
+        updateHealthScreen(tvHealthJournal.getSelectionModel().getSelectedItem());
+        healthConditionString = tvHealthJournal.getSelectionModel().getSelectedItem().getCondition();
     }
 
 
@@ -629,7 +667,7 @@ public class TeacherCitizenController implements Initializable {
      * @param actionEvent on button pressed.
      */
     public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) throws SQLException {
-        getTPLFunctionsJournals();
+        getFunctionsJournals();
         clearFunctionJournalView();
 
         boolean hasUpdate = false;
@@ -794,22 +832,22 @@ public class TeacherCitizenController implements Initializable {
     }
 
     /**
-     * Either updates or Creates a new TPLFunctionJournal for Databasen, depending on if already exist
+     * Either updates or Creates a new FunctionJournal for Databasen, depending on if already exist
      * @param actionEvent
      */
-    public void onSaveTPLFunctionJournalBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveFunctionJournalBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
             Date date = new Date();
-            getTPLFunctionsJournals();
+            getFunctionsJournals();
             boolean hasSaved = false;
             if (!functionalJournals.isEmpty()){
 
                 for (FunctionalJournal functionalJournal: functionalJournals){
                     if (functionalJournal.getCondition().equals(functionConditionString)){
 
-                        functionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
-                        functionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
+                        functionalJournal.setNiveau(cbNiveauFunction.getSelectionModel().getSelectedItem().toString());
+                        functionalJournal.setExecution( cbExecutionFunction.getSelectionModel().getSelectedItem().toString());
                         functionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
                         functionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
                         functionalJournal.setNote(txtNoteFunction.getText());
@@ -820,7 +858,7 @@ public class TeacherCitizenController implements Initializable {
                         }else{
                             functionalJournal.setRelevancy("Ikke Relavant");
                         }
-                        updateFunctionJournalView(functionalJournal);
+                        citizenModel.updateFunctionalJournal(functionalJournal);
                         hasSaved = true;
                         break;
                     }
@@ -850,13 +888,18 @@ public class TeacherCitizenController implements Initializable {
     }
 
     /**
-     * gets all TPLFunctionsJournals for a template on the Database
+     * gets all FunctionsJournals for a template on the Database
      */
-    private void getTPLFunctionsJournals() throws SQLException {
+    private void getFunctionsJournals() throws SQLException {
 
         if (!citizenModel.getFunctionalJournal(citizen.getId()).isEmpty()){
             functionalJournals.clear();
             functionalJournals.addAll(citizenModel.getFunctionalJournal(citizen.getId()));
         }
+    }
+
+    public void onTableviewFunctionalJournal(MouseEvent mouseEvent) {
+        functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
+        updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
     }
 }

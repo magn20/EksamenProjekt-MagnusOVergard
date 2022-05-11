@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,32 +24,35 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="760.0" prefWidth="1280.0" styleClass="backgrounding" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.TeacherCitizenController">
+<AnchorPane minHeight="760.0" minWidth="1280.0" prefHeight="760.0" prefWidth="1280.0" styleClass="backgroundingBlue" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.CitizenController">
    <children>
       <ImageView fitHeight="77.0" fitWidth="75.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="61.0" layoutY="21.0" text="Simulations Program">
+      <Label layoutX="75.0" layoutY="21.0" text="Simulations Program">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="804.0" layoutY="8.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="14.0" />
-      <TabPane layoutX="30.0" layoutY="85.0" prefHeight="608.0" prefWidth="1176.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="121.0">
+      <Button layoutX="1201.0" layoutY="8.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="65.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.leftAnchor="1200.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
+      <TabPane layoutX="2.0" layoutY="85.0" prefHeight="675.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="84.0">
          <tabs>
             <Tab text="Generelle infomation">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgrounding">
                      <children>
-                        <GridPane layoutX="185.0" layoutY="-10.0" onKeyReleased="#handle" prefHeight="585.0" prefWidth="1218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane layoutX="185.0" layoutY="-10.0" onKeyReleased="#handle" prefHeight="585.0" prefWidth="1218.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.5999755859375" minWidth="10.0" prefWidth="450.5999755859375" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.79998779296875" minWidth="10.0" prefWidth="97.00002441406252" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="670.7999877929688" minWidth="10.0" prefWidth="670.7999877929688" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.5999755859375" minWidth="10.0" prefWidth="24.00000610351563" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="640.1999809265137" minWidth="10.0" prefWidth="459.19999389648444" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.79998779296875" minWidth="10.0" prefWidth="196.2000244140625" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="708.3999267578125" minWidth="10.0" prefWidth="595.3999755859373" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="670.7999877929688" minWidth="10.0" prefWidth="98.80007324218741" />
                            </columnConstraints>
                            <rowConstraints>
+                              <RowConstraints maxHeight="36.799993896484374" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="36.799993896484374" minHeight="10.0" prefHeight="21.600006103515625" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="72.80000915527344" minHeight="10.0" prefHeight="54.399993896484375" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="35.79999389648438" minHeight="3.7999938964843807" prefHeight="20.599987792968747" vgrow="SOMETIMES" />
@@ -63,78 +67,86 @@
                               <RowConstraints maxHeight="63.20003662109377" minHeight="10.0" prefHeight="56.00002441406252" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Mestring">
+                              <Label text="Mestring   (?)" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <tooltip>
+                                    <Tooltip fx:id="toolTipTest" text="Borgerens bevidste eller ubevidstehåndtering af livet/sygdommen – bådeudfordringer og muligheder." />
+                                 </tooltip>
+                              </Label>
+                              <Label text="LivsHistorie" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="LivsHistorie" GridPane.columnIndex="2">
+                              <Label text="Motivation" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Motivation" GridPane.rowIndex="2">
+                              <Label text="Boligen indretning" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Boligen indretning" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <Label text="Ressourcer" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Ressourcer" GridPane.rowIndex="4">
+                              <Label text="Hjælpemidler" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Hjælpemidler" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <Label text="Roller" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Roller" GridPane.rowIndex="6">
+                              <Label text="Vaner" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Vaner" GridPane.rowIndex="8">
+                              <Label text="Udannelse og Job" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Udannelse og Job" GridPane.rowIndex="10">
+                              <Label text="Netværk" GridPane.columnIndex="3" GridPane.rowIndex="7">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Netværk" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                              <Label text="Helbredsoplysninger" GridPane.columnIndex="3" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Helbredsoplysninger" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextArea fx:id="txtCoping" prefHeight="200.0" prefWidth="358.0" wrapText="true" GridPane.rowIndex="1" />
-                              <TextArea fx:id="txtLifestory" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextArea fx:id="txtMovtivation" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="3" />
-                              <TextArea fx:id="txtHouseLayout" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                              <TextArea fx:id="txtResources" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="5" />
-                              <TextArea fx:id="txtEquitmentAids" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <TextArea fx:id="txtRoles" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="7" />
-                              <TextArea fx:id="txtNetwork" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                              <TextArea fx:id="txtHabits" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="9" />
-                              <TextArea fx:id="txtHealthInfo" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                              <TextArea fx:id="txtEducationAndJob" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.rowIndex="11" />
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="11">
+                              <TextArea fx:id="txtCoping" prefHeight="200.0" prefWidth="358.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextArea fx:id="txtLifestory" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <TextArea fx:id="txtMovtivation" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextArea fx:id="txtHouseLayout" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <TextArea fx:id="txtResources" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextArea fx:id="txtEquitmentAids" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                              <TextArea fx:id="txtRoles" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextArea fx:id="txtNetwork" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                              <TextArea fx:id="txtHabits" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                              <TextArea fx:id="txtHealthInfo" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                              <TextArea fx:id="txtEducationAndJob" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="12">
                                  <children>
-                                    <Button layoutX="569.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveGeneralInfoBtn" prefHeight="35.0" prefWidth="95.0" text="Gem" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="7.0" />
-                                    <Button layoutX="452.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="35.0" prefWidth="95.0" text="Close" />
+                                    <Button layoutX="464.0" layoutY="13.0" mnemonicParsing="false" onAction="#onSaveGeneralInfoBtn" prefHeight="35.0" prefWidth="95.0" text="Gem" AnchorPane.bottomAnchor="14.199999999999996" AnchorPane.rightAnchor="15.199999999999932" />
+                                    <Button layoutX="361.0" layoutY="13.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="35.0" prefWidth="95.0" text="Close" />
                                  </children>
                               </AnchorPane>
+                              <Label text="Generelle Informationer" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold Italic" size="23.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </GridPane>
                      </children>
@@ -143,22 +155,27 @@
             </Tab>
             <Tab text="helbredstilstand">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingDarkBlue">
                      <children>
                         <SplitPane dividerPositions="0.21458478715980459" layoutX="167.0" layoutY="105.0" orientation="VERTICAL" prefHeight="509.6" prefWidth="716.8" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="81.0" prefWidth="715.0">
                                  <children>
-                                    <ComboBox fx:id="cbMainHealthCategory" layoutX="14.0" layoutY="43.0" onAction="#onMainCategoryForHeatlhCb" prefWidth="150.0" promptText="Hoved tilstand" />
-                                    <ComboBox fx:id="cbUnderHealthCategory" layoutX="195.0" layoutY="43.0" onAction="#onSelectedHealthConditionCb" prefWidth="150.0" promptText="Under Tilstand" />
-                                    <Label fx:id="txtCondition" layoutX="16.0" layoutY="69.0" prefHeight="51.0" prefWidth="509.0" text="Problem" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="692.0" AnchorPane.topAnchor="69.0">
+                                    <ComboBox fx:id="cbMainHealthCategory" layoutX="14.0" layoutY="86.0" onAction="#onMainCategoryForHeatlhCb" prefWidth="150.0" promptText="Hoved tilstand" />
+                                    <ComboBox fx:id="cbUnderHealthCategory" layoutX="199.0" layoutY="86.0" onAction="#onSelectedHealthConditionCb" prefWidth="150.0" promptText="Under Tilstand" />
+                                    <Label fx:id="txtCondition" layoutX="382.0" layoutY="47.0" prefHeight="66.0" prefWidth="884.0" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="382.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="47.0">
                                        <font>
                                           <Font size="35.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="14.0" text="Vælg tilstand for borgeren">
+                                    <Label layoutX="14.0" layoutY="45.0" text="Vælg tilstand for borgeren">
                                        <font>
-                                          <Font size="30.0" />
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="14.0" layoutY="12.0" text="Helbredstilstand">
+                                       <font>
+                                          <Font name="System Bold Italic" size="23.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -199,9 +216,9 @@
                                              <children>
                                                 <ComboBox fx:id="cbExpectation" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="180.0" promptText=" Vælg Forventet Niveau" />
                                                 <Label fx:id="lblLastUpdate" layoutX="14.0" layoutY="64.0" text="Sidst Opdateret den" />
-                                                <Button layoutX="398.0" layoutY="27.0" mnemonicParsing="false" onAction="#onSaveHealthjournalBtn" prefHeight="57.0" prefWidth="113.0" text="Gem">
+                                                <Button layoutX="430.0" layoutY="42.0" mnemonicParsing="false" onAction="#onSaveHealthjournalBtn" prefHeight="27.0" prefWidth="91.0" text="Gem">
                                                    <font>
-                                                      <Font name="System Bold" size="26.0" />
+                                                      <Font name="System Bold" size="19.0" />
                                                    </font></Button>
                                                 <CheckBox fx:id="checkboxMaybe" layoutX="307.0" layoutY="9.0" mnemonicParsing="false" text="potentiel" />
                                                 <CheckBox fx:id="checkboxActive" layoutX="220.0" layoutY="9.0" mnemonicParsing="false" text="aktiv" />
@@ -210,8 +227,8 @@
                                           </AnchorPane>
                                        </children>
                                     </GridPane>
-                                    <Line endX="-22.199951171875" endY="35.599945068359375" layoutX="552.0" layoutY="404.0" startX="-22.199951171875" startY="-394.0" />
-                                    <TableView fx:id="tvTPLHealthJournal" layoutX="546.0" layoutY="14.0" onMouseClicked="#onSlectetTPLHealthJournal" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="546.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+                                    <Line endX="-22.199951171875" endY="76.70001220703125" layoutX="564.0" layoutY="404.0" startX="-22.199951171875" startY="-394.0" />
+                                    <TableView fx:id="tvHealthJournal" layoutX="546.0" layoutY="14.0" onMouseClicked="#onSlectetHealthJournal" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="546.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
                                       <columns>
                                         <TableColumn fx:id="tcCondition" prefWidth="185.5999755859375" text="Tilstand" />
                                         <TableColumn fx:id="tcRelanacy" prefWidth="120.79998779296875" text="Vigtighed" />
@@ -231,13 +248,13 @@
             </Tab>
             <Tab text="Funktionstilstand">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingOrange">
                      <children>
-                        <SplitPane dividerPositions="0.4797627355198883" layoutX="433.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-background-color: Transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.41248431618569636" layoutX="433.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-background-color: Transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: transparent;">
                                  <children>
-                                    <ImageView fitHeight="280.0" fitWidth="803.0" layoutX="410.0" layoutY="20.0" AnchorPane.bottomAnchor="-28.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="20.0">
+                                    <ImageView fitHeight="77.0" fitWidth="614.0" layoutX="431.0" layoutY="14.0" AnchorPane.bottomAnchor="213.0" AnchorPane.rightAnchor="229.4000000000001" AnchorPane.topAnchor="14.0">
                                        <image>
                                           <Image url="@../img/guide.png" />
                                        </image>
@@ -360,11 +377,11 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <GridPane prefHeight="248.0" prefWidth="717.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane prefHeight="362.0" prefWidth="659.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="614.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.4000549316406" minWidth="10.0" prefWidth="384.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.5999755859375" minWidth="0.0" prefWidth="160.5999755859375" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="466.0000854492189" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.4000549316406" minWidth="10.0" prefWidth="297.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.5999755859375" minWidth="0.0" prefWidth="63.80000000000001" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="422.2" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="81.60001602172852" minHeight="10.0" prefHeight="24.799994373321532" vgrow="SOMETIMES" />
@@ -405,7 +422,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></TextArea>
-                                          <TextArea fx:id="txtCitizenExpecationFunction" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <TextArea fx:id="txtCitizenExpecationFunction" maxWidth="350.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                           <Label text="6. Borgerens egen Ønsker og Mål" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
@@ -434,13 +451,26 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                              <children>
-                                                <Button layoutX="228.0" layoutY="24.0" mnemonicParsing="false" onAction="#onSaveTPLFunctionJournalBtn" text="Gem Funktionstilstand" />
-                                                <CheckBox fx:id="checkboxFunctionNotActive" layoutX="8.0" layoutY="15.0" mnemonicParsing="false" text="Gem som ikke aktiv" />
-                                                <CheckBox fx:id="checkboxFunctionActive" layoutX="8.0" layoutY="41.0" mnemonicParsing="false" text="Gem som aktiv" />
+                                                <Button layoutX="228.0" layoutY="24.0" mnemonicParsing="false" onAction="#onSaveFunctionJournalBtn" text="Gem Funktionstilstand" />
+                                                <CheckBox fx:id="checkboxFunctionNotActive" layoutX="8.0" layoutY="5.0" mnemonicParsing="false" text="Gem som ikke aktiv" />
+                                                <CheckBox fx:id="checkboxFunctionActive" layoutX="8.0" layoutY="29.0" mnemonicParsing="false" text="Gem som aktiv" />
                                              </children>
                                           </AnchorPane>
                                        </children>
                                     </GridPane>
+                                    <TableView fx:id="tvfunctionsJournals" onMouseClicked="#onTableviewFunctionalJournal" prefHeight="342.0" prefWidth="588.0" stylesheets="@../css/TableViewStylingOrange.css" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
+                                       <columns>
+                                          <TableColumn fx:id="tcFunctionCondition" prefWidth="110.39996033906937" text="Funktionsevne" />
+                                          <TableColumn fx:id="tcFunctionsSaveAs" prefWidth="72.79998779296875" text="Gemt som" />
+                                          <TableColumn fx:id="tcFunctionsNiveau" prefWidth="72.79998779296875" text="Nuværende" />
+                                          <TableColumn fx:id="tcFunctonsExpectation" prefWidth="72.79998779296875" text="Forventet" />
+                                          <TableColumn fx:id="tcFunctionsNote" prefWidth="72.79998779296875" text="Notat" />
+                                          <TableColumn fx:id="tcFunctionalEvaluation" prefWidth="72.79998779296875" text="Vurdering" />
+                                          <TableColumn fx:id="tcFunctionalEvaluationLimits" prefWidth="111.19985961914062" text="Begrænsinger" />
+                                          <TableColumn fx:id="tcFunctionalCitizenExpactation" prefWidth="95.199951171875" text="Ønsker og Mål" />
+                                          <TableColumn fx:id="tcFunctionsLastUpdate" prefWidth="60.80014648437498" text="Sidst Opdateret" />
+                                       </columns>
+                                    </TableView>
                                  </children>
                               </AnchorPane>
                           </items>
@@ -451,13 +481,8 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Line endX="903.0" endY="7.62939453125E-6" layoutX="346.0" layoutY="122.0" startX="-306.79998779296875" startY="7.62939453125E-6" />
-      <Label fx:id="lblStatus" layoutX="47.0" layoutY="77.0" text="Status:">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblTemplate" layoutX="427.0" layoutY="21.0" text="Template:">
+      <Line endX="13.800018310546875" endY="-54.599998474121094" layoutX="346.0" layoutY="122.0" startX="-271.0" startY="-54.599998474121094" />
+      <Label fx:id="lblStatus" layoutX="448.0" layoutY="21.0">
          <font>
             <Font size="31.0" />
          </font>

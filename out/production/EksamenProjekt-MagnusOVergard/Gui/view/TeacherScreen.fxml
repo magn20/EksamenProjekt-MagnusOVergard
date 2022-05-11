@@ -9,10 +9,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="760.0" prefWidth="1280.0" styleClass="backgrounding" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.TeacherController">
+<AnchorPane prefHeight="760.0" prefWidth="1280.0" styleClass="backgroundingBlue" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.TeacherController">
    <children>
       <TabPane layoutX="89.0" layoutY="58.0" prefHeight="502.0" prefWidth="870.0" styleClass="whitebackground" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="75.60000000000002">
         <tabs>
@@ -55,46 +58,66 @@
                               <Font size="31.0" />
                            </font>
                         </Label>
-                        <VBox layoutX="446.0" layoutY="56.0" prefHeight="350.0" prefWidth="313.0" AnchorPane.rightAnchor="513.9999999999999" AnchorPane.topAnchor="56.0">
+                        <GridPane layoutX="488.0" layoutY="156.0" prefHeight="168.0" prefWidth="153.0" AnchorPane.rightAnchor="631.9999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="37.60001220703125" minHeight="10.0" prefHeight="31.9999755859375" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="52.8000244140625" minHeight="10.0" prefHeight="40.799920654296876" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="51.20007934570313" minHeight="10.0" prefHeight="44.40004882812501" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="48.800024414062506" minHeight="10.0" prefHeight="44.799951171874994" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Label text="Åben">
+                              <Label text="Templates">
                                  <font>
-                                    <Font size="23.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#onOpenJournalBtn" text=" Omsorgs journal" />
-                              <Label text="Duplicerer Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Kopier Template" />
-                              <Label text="Lav en Borger til en elev">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onCreateCitizenOfTemplateBtn" text="Lav Borger" />
-                              <Label text="Tilføj en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onAddTemplate" text="Tilløj Template" />
-                              <Label text="Rediger en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onEditTemplate" text="Rediger Template" />
-                              <Label text="Fjern en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onRemoveTemplate" text="Fjern Template" />
+                              <Button mnemonicParsing="false" onAction="#onEditTemplate" prefHeight="33.0" prefWidth="119.0" text="Rediger Template" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#onAddTemplate" prefHeight="34.0" prefWidth="117.0" text="Tilløj Template" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onRemoveTemplate" prefHeight="30.0" prefWidth="122.0" text="Fjern Template" GridPane.rowIndex="3" />
                            </children>
-                        </VBox>
+                        </GridPane>
+                        <GridPane layoutX="488.0" layoutY="346.0" prefHeight="98.0" prefWidth="140.0" AnchorPane.rightAnchor="645.5999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="49.9999755859375" minHeight="10.0" prefHeight="45.20002441406249" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="72.39999999999999" minHeight="10.0" prefHeight="33.19997558593751" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Kopier">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onCreateCitizenOfTemplateBtn" text="Template til Borger" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Template til template" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="488.0" layoutY="56.0" prefHeight="77.0" prefWidth="214.0" AnchorPane.rightAnchor="571.1999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="46.799993896484374" minHeight="10.0" prefHeight="22.799993896484374" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="82.00000610351563" minHeight="10.0" prefHeight="61.600012207031256" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Omsorgs Jornal">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onOpenJournalBtn" prefHeight="40.0" prefWidth="74.0" text="Åben" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Line endX="-279.5999755859375" endY="1.199981689453125" layoutX="755.0" layoutY="122.0" startX="-279.5999755859375" startY="-65.20000457763672" AnchorPane.rightAnchor="797.6999755859374" />
+                        <Line endX="-237.79998779296875" endY="-110.0" layoutX="713.0" layoutY="272.0" startX="-237.79998779296875" startY="44.399993896484375" />
+                        <Line endX="-16.20001220703125" endY="-135.4000244140625" layoutX="490.0" layoutY="479.0" startX="-16.20001220703125" startY="-32.999969482421875" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -115,68 +138,6 @@
                               <Font size="31.0" />
                            </font>
                         </Label>
-                        <VBox layoutX="446.0" layoutY="56.0" prefHeight="350.0" prefWidth="313.0" AnchorPane.rightAnchor="513.9999999999999" AnchorPane.topAnchor="56.0">
-                           <children>
-                              <Label text="Åben">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onOpenCitizenJournalBtn" text=" Omsorgs journal" />
-                              <Label text="Lav en Borger til en elev">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onAsignStudentForCitzen" text="Sæt En Elev" />
-                              <Label text="Tilføj en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onAddCitizen" text="Tilløj Borger" />
-                              <Label text="Rediger en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onEditCitizen" text="Rediger Borger" />
-                              <Label text="Fjern en Template">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#onRemoveCitizenBtn" text="Fjern Borger" />
-                              <Label text="Se alt Data">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <VBox prefHeight="196.0" prefWidth="166.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#onShowAllCitizensBtn" text="Se Alt Data" />
-                                    <Label text="Tilføj En Elev">
-                                       <font>
-                                          <Font size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#onAddStudentBtn" text="Tilføj elev" />
-                                    <Label text="Rediger En Elev">
-                                       <font>
-                                          <Font size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#onEditStudentBtn" text="Rediger elev" />
-                                    <Label text="Fjern En Elev">
-                                       <font>
-                                          <Font size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#onRemoveStudent" text="Fjern elev" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
                         <TableView fx:id="tvStudent" layoutX="760.0" layoutY="56.0" onMouseClicked="#onSelectedStudentTV" prefHeight="541.0" prefWidth="449.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="63.999999999999886" AnchorPane.topAnchor="56.0">
                           <columns>
                             <TableColumn fx:id="tcStudentId" prefWidth="75.0" text="Elev ID" />
@@ -190,13 +151,106 @@
                               <Font size="31.0" />
                            </font>
                         </Label>
+                        <GridPane layoutX="459.0" layoutY="257.0" prefHeight="139.0" prefWidth="110.0" AnchorPane.rightAnchor="704.1999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.60001220703125" minHeight="10.0" prefHeight="30.60001220703125" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="40.19998779296874" minHeight="10.0" prefHeight="40.19998779296874" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Elev">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onAddStudentBtn" prefHeight="27.0" prefWidth="110.0" text="Tilføj elev" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onEditStudentBtn" prefHeight="27.0" prefWidth="113.0" text="Rediger elev" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#onRemoveStudent" prefHeight="27.0" prefWidth="111.0" text="Fjern elev" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="456.0" layoutY="425.0" prefHeight="148.0" prefWidth="100.0" AnchorPane.rightAnchor="717.5999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Borger">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onAddCitizen" prefHeight="27.0" prefWidth="101.0" text="Tilløj Borger" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onEditCitizen" text="Rediger Borger" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#onRemoveCitizenBtn" prefHeight="27.0" prefWidth="103.0" text="Fjern Borger" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="457.0" layoutY="60.0" prefHeight="77.0" prefWidth="186.0" AnchorPane.rightAnchor="630.1999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Omsorgs Journal">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onOpenCitizenJournalBtn" prefHeight="35.0" prefWidth="130.0" text="Åben" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="643.0" layoutY="507.0" prefHeight="65.0" prefWidth="100.0" AnchorPane.rightAnchor="530.5999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="33.599981689453124" minHeight="10.0" prefHeight="28.000006103515624" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="48.799993896484374" minHeight="10.0" prefHeight="48.799993896484374" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Se Data">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onShowAllCitizensBtn" prefHeight="34.0" prefWidth="90.0" text="Se Alt Data" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="456.0" layoutY="161.0" prefHeight="64.0" prefWidth="147.0" AnchorPane.rightAnchor="670.3999999999999">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Elev-Borger">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#onAsignStudentForCitzen" prefHeight="27.0" prefWidth="143.0" text="Sæt En Elev på borger" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Line endX="-143.0" endY="-65.99999237060547" layoutX="592.0" layoutY="138.0" startX="-143.0" startY="-3.600006103515625" AnchorPane.rightAnchor="824.0999999999999" />
+                        <Line endX="-189.5999755859375" endY="-63.600006103515625" layoutX="637.0" layoutY="234.0" startX="-189.5999755859375" startY="-16.4000244140625" AnchorPane.rightAnchor="824.0999999999999" />
+                        <Line endX="-284.0" endY="146.79998779296875" layoutX="729.0" layoutY="246.0" startX="-284.0" startY="17.199981689453125" AnchorPane.rightAnchor="824.0999999999999" />
+                        <Line endX="-197.20001220703125" endY="138.00006103515625" layoutX="643.0" layoutY="434.0" startX="-197.20001220703125" startY="5.200042724609375" AnchorPane.rightAnchor="824.0999999999999" />
+                        <Line endX="19.60003662109375" endY="28.00006103515625" layoutX="615.0" layoutY="540.0" startX="19.60003662109375" startY="-29.5999755859375" />
                      </children>
                   </AnchorPane>
-               </content>
-            </Tab>
-            <Tab text="Sagsbehandling">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
             <Tab text="Settings">
@@ -226,7 +280,7 @@
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="61.0" layoutY="21.0" text="Simulations Program">
+      <Label layoutX="85.0" layoutY="22.0" text="Simulations Program">
          <font>
             <Font size="31.0" />
          </font>
