@@ -84,4 +84,18 @@ public class CitizenModel {
     public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
         citizenFacade.updateFunctionalJournal(functionalJournal);
     }
+
+    // for FunctionalJournalObservation
+    public FunctionJournalObservation getFunctionJournalObservation(int citizenId) throws SQLException {
+        return citizenFacade.getFunctionJournalObservation(citizenId);
+    }
+
+    public FunctionJournalObservation createFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException {
+        return citizenFacade.createFunctionJournalObservation(functionJournalObservation);
+    }
+
+    public void updateFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException {
+        citizenFacade.updateFunctionJournalObservation(functionJournalObservation);
+    }
+
 }

@@ -911,4 +911,8 @@ public class CitizenController implements Initializable {
     public void onObservationBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "HealthJournalObservations.fxml");
     }
+
+    public void onFunctionalObservationBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "FunctionJournalObservations.fxml");
+    }
 }

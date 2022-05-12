@@ -15,6 +15,7 @@ public class CitizenFacade {
     private HealthJournalDAO healthJournalDAO;
     private FunctionalJournalDAO functionalJournalDAO;
     private HealthJournalObservationDao healthJournalObservationDao;
+    private FunctionJournalObservationDao functionJournalObservationDao;
     private DatabaseConnector connector;
     {
         try {
@@ -24,6 +25,7 @@ public class CitizenFacade {
             generalInfoDAO = new GeneralInfoDAO(connector.getConnection());
             functionalJournalDAO = new FunctionalJournalDAO(connector.getConnection());
             healthJournalObservationDao = new HealthJournalObservationDao(connector.getConnection());
+            functionJournalObservationDao = new FunctionJournalObservationDao(connector.getConnection());
         } catch (SQLServerException | IOException e) {
             e.printStackTrace();
         }
@@ -102,5 +104,20 @@ public class CitizenFacade {
     public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
         functionalJournalDAO.updateFunctionalJournal(functionalJournal);
     }
+
+    // for FunctionalJournalObservation
+
+    public FunctionJournalObservation getFunctionJournalObservation(int citizenId) throws SQLException {
+        return functionJournalObservationDao.getFunctionJournalObservation(citizenId);
+    }
+
+    public FunctionJournalObservation createFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException {
+        return functionJournalObservationDao.createFunctionJournalObservation(functionJournalObservation);
+    }
+
+    public void updateFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException {
+        functionJournalObservationDao.updateFunctionJournalObservation(functionJournalObservation);
+    }
+
 
 }
