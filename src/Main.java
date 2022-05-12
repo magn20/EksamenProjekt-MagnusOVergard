@@ -16,7 +16,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoaderMain.load());
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Fælles Sprog 3");
+        primaryStage.setTitle("Sosu Esbjerg");
         primaryStage.show();
     }
 }

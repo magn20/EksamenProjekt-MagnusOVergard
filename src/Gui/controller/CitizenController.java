@@ -1,6 +1,7 @@
 package Gui.controller;
 
 import Gui.model.CitizenModel;
+import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.*;
 import bll.utill.DisplayMessage;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
@@ -225,17 +227,20 @@ public class CitizenController implements Initializable {
 
     CitizenModel citizenModel;
     Citizen citizen;
+    SceneSwapper sceneSwapper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         citizen = singletonUser.getCitizen();
         citizenModel = new CitizenModel();
+        sceneSwapper = new SceneSwapper();
         generalInfos = FXCollections.observableArrayList();
         MainCategory = FXCollections.observableArrayList();
         healthJournals = FXCollections.observableArrayList();
         functionalJournals = FXCollections.observableArrayList();
         functionConditionString = "";
         healthConditionString = "";
+
 
         toolTipTest.setShowDelay(Duration.millis(0.00));
 
@@ -901,5 +906,9 @@ public class CitizenController implements Initializable {
     public void onTableviewFunctionalJournal(MouseEvent mouseEvent) {
         functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
         updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+    }
+
+    public void onObservationBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "HealthJournalObservations.fxml");
     }
 }

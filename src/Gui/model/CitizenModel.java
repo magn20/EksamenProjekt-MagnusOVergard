@@ -57,6 +57,23 @@ public class CitizenModel {
     public void updateHealthJournal(HealthJournal healthJournal) throws SQLException {
         citizenFacade.updateHealthJournal(healthJournal);
     }
+
+    // for Health Journal Observations
+    public HealthJournalObservation getHealthJournalObservation(int citizenId) throws SQLException {
+        return citizenFacade.getHealthJournalObservation(citizenId);
+    }
+
+    public HealthJournalObservation createHealthJournalObservation(HealthJournalObservation healthJournalObservation) throws SQLException {
+        return citizenFacade.createHealthJournalObservation(healthJournalObservation);
+    }
+
+    public void updateHealthJournalObservation(HealthJournalObservation healthJournalObservation) throws SQLException {
+        citizenFacade.updateHealthJournalObservation(healthJournalObservation);
+    }
+
+
+
+
     // for FunctionalJournal
     public ObservableList<FunctionalJournal> getFunctionalJournal(int citizenId) throws SQLException {
         return citizenFacade.getFunctionalJournal(citizenId);
