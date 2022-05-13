@@ -35,8 +35,13 @@ public class BasicConnectionPool implements IConnectionPool {
             create();
         }
         Connection connection = connectionPool.remove(connectionPool.size() - 1);
-        usedConnections.add(connection);
-        return connection;
+        if (!connection.isClosed()){
+            usedConnections.add(connection);
+            return connection;
+        }else{
+            return getConnection();
+        }
+
     }
 
 

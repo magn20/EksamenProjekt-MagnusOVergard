@@ -24,9 +24,9 @@ public class CitizenFacade {
             citizenDAO = new CitizenDAO();
             generalInfoDAO = new GeneralInfoDAO();
             functionalJournalDAO = new FunctionalJournalDAO();
-            healthJournalObservationDao = new HealthJournalObservationDao(connector.getConnection());
+            healthJournalObservationDao = new HealthJournalObservationDao();
             functionJournalObservationDao = new FunctionJournalObservationDao();
-        } catch (SQLServerException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
