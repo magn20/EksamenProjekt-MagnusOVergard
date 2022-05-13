@@ -7,26 +7,23 @@ import dal.interfaces.ITPLGeneralInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class GeneralInfoDAO implements IGeneralInfo {
 
-    private Connection con;
-    public GeneralInfoDAO(Connection con){
-        this.con = con;
-    }
 
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
     /**
      * gets Generalinfo from a school
      * @return Observablelist of all GeneralInfo
      */
     @Override
-    public ObservableList<GeneralInfo> getGeneralInfo(int templateID) throws SQLException {
+    public ObservableList<GeneralInfo> getGeneralInfo(int templateID) throws SQLException, IOException {
         ObservableList<GeneralInfo> generalInfoFromCitizen = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM GeneralInfo Where CitizenGeneralInfoId = ? ";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, templateID);
 
             statement.execute();
@@ -51,8 +48,9 @@ public class GeneralInfoDAO implements IGeneralInfo {
 
                 generalInfoFromCitizen.add(new GeneralInfo(id, citizenId, coping,motivation, resource, roles,habits,educationAndJob,lifeStory,healthInfo,equipmentsAids,homeLayout,network));
             }
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return generalInfoFromCitizen;
     }
@@ -64,27 +62,33 @@ public class GeneralInfoDAO implements IGeneralInfo {
      * @return the objected that has been created
      */
     @Override
-    public GeneralInfo createGeneralInfo(GeneralInfo generalInfo) throws SQLException {
-        int insertedId = -1;
-        String sqlStatement = "INSERT INTO GeneralInfo(CitizenGeneralInfoId, Coping ,Motivation , Ressources, Roles, Habits, EducationAndJob, LifeStory, healthInformation, EquipmentAids, HomeLayout, Network) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
-        PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, generalInfo.getCitizenId());
-        statement.setString(2, generalInfo.getCoping() );
-        statement.setString(3, generalInfo.getMotivation());
-        statement.setString(4, generalInfo.getResources());
-        statement.setString(5, generalInfo.getRoles());
-        statement.setString(6, generalInfo.getHabits());
-        statement.setString(7, generalInfo.getEducationAndJob());
-        statement.setString(8, generalInfo.getLifeStory());
-        statement.setString(9, generalInfo.getHealthInformation());
-        statement.setString(10, generalInfo.getEquipmentAids());
-        statement.setString(11, generalInfo.getHomeLayout());
-        statement.setString(12, generalInfo.getNetwork());
-        statement.execute();
-        ResultSet rs = statement.getGeneratedKeys();
-        rs.next();
-        insertedId = rs.getInt(1);
-        return new GeneralInfo(insertedId, generalInfo.getCitizenId(), generalInfo.getCoping(), generalInfo.getMotivation(), generalInfo.getResources(), generalInfo.getRoles(), generalInfo.getHabits(),generalInfo.getEducationAndJob(), generalInfo.getLifeStory(), generalInfo.getHealthInformation(), generalInfo.getEquipmentAids(),generalInfo.getHomeLayout(), generalInfo.getNetwork());
+    public GeneralInfo createGeneralInfo(GeneralInfo generalInfo) throws SQLException, IOException {
+       try(Connection connection = basicConnectionPool.getConnection()) {
+
+           int insertedId = -1;
+           String sqlStatement = "INSERT INTO GeneralInfo(CitizenGeneralInfoId, Coping ,Motivation , Ressources, Roles, Habits, EducationAndJob, LifeStory, healthInformation, EquipmentAids, HomeLayout, Network) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+           PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+           statement.setInt(1, generalInfo.getCitizenId());
+           statement.setString(2, generalInfo.getCoping() );
+           statement.setString(3, generalInfo.getMotivation());
+           statement.setString(4, generalInfo.getResources());
+           statement.setString(5, generalInfo.getRoles());
+           statement.setString(6, generalInfo.getHabits());
+           statement.setString(7, generalInfo.getEducationAndJob());
+           statement.setString(8, generalInfo.getLifeStory());
+           statement.setString(9, generalInfo.getHealthInformation());
+           statement.setString(10, generalInfo.getEquipmentAids());
+           statement.setString(11, generalInfo.getHomeLayout());
+           statement.setString(12, generalInfo.getNetwork());
+           statement.execute();
+           ResultSet rs = statement.getGeneratedKeys();
+           rs.next();
+           insertedId = rs.getInt(1);
+           basicConnectionPool.releaseConnection(connection);
+           return new GeneralInfo(insertedId, generalInfo.getCitizenId(), generalInfo.getCoping(), generalInfo.getMotivation(), generalInfo.getResources(), generalInfo.getRoles(), generalInfo.getHabits(),generalInfo.getEducationAndJob(), generalInfo.getLifeStory(), generalInfo.getHealthInformation(), generalInfo.getEquipmentAids(),generalInfo.getHomeLayout(), generalInfo.getNetwork());
+       }catch (Exception exception){
+           throw exception;
+       }
     }
 
     /**
@@ -92,12 +96,12 @@ public class GeneralInfoDAO implements IGeneralInfo {
      * @param generalInfo the object holding the Data
      */
     @Override
-    public void updateGeneralInfo(GeneralInfo generalInfo) throws SQLException {
+    public void updateGeneralInfo(GeneralInfo generalInfo) throws SQLException, IOException {
 
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE GeneralInfo SET CitizenGeneralInfoId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquipmentAids = ?, HomeLayout = ?, Network = ? WHERE GeneralInfoId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, generalInfo.getCitizenId());
             preparedStatement.setString(2, generalInfo.getCoping());
             preparedStatement.setString(3, generalInfo.getMotivation());
@@ -115,27 +119,9 @@ public class GeneralInfoDAO implements IGeneralInfo {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException sqlException){
             throw sqlException;
-        }
-    }
-
-    /**
-     * Removes a GeneralInfo
-     * @param generalInfo the object for deletion.
-     * @return true if successful removed.
-     * @throws SQLException
-     */
-    @Override
-    public boolean removeGeneralInfo(GeneralInfo generalInfo) throws SQLException {
-        try {
-            String sqlStatement = "DELETE FROM GeneralInfo WHERE GeneralInfoId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
-            statement.setInt(1, generalInfo.getId());
-            statement.execute();
-            return true;
-        } catch (SQLException e) {
-            throw e;
         }
     }
 

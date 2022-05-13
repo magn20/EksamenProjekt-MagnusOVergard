@@ -252,7 +252,7 @@ public class CitizenController implements Initializable {
         try {
             getHealthJournals();
             getFunctionsJournals();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             DisplayMessage.displayError(e);
         }
@@ -327,7 +327,7 @@ public class CitizenController implements Initializable {
     /**
      * saves the general information to database.
      */
-    public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (citizenModel.getGeneralInfo(citizen.getId()).isEmpty()){
             GeneralInfo generalInfo = new GeneralInfo(-1, citizen.getId(), txtCoping.getText(), txtMovtivation.getText(), txtResources.getText(), txtRoles.getText(), txtHabits.getText(), txtEducationAndJob.getText(), txtLifestory.getText(), txtHealthInfo.getText(), txtEquitmentAids.getText(), txtHouseLayout.getText(), txtNetwork.getText());
@@ -519,7 +519,7 @@ public class CitizenController implements Initializable {
      *  saves a HealthJournal depending on if it already exits (update or create)
      * @param actionEvent on button action
      */
-    public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException, IOException {
         boolean hasSaved = false;
         Date date = new Date();
 
@@ -576,7 +576,7 @@ public class CitizenController implements Initializable {
      *  show a healthJournal depending on if a healthJournal already exist with that condition.
      * @param actionEvent when a Condition is selected on combobox
      */
-    public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException {
+    public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException, IOException {
         getHealthJournals();
         boolean hasupdated = false;
 
@@ -614,7 +614,7 @@ public class CitizenController implements Initializable {
     /**
      * get all HealthJournals from one template.
      */
-    private void getHealthJournals() throws SQLException {
+    private void getHealthJournals() throws SQLException, IOException {
 
         if (!citizenModel.getHealthJournal(citizen.getId()).isEmpty()){
             healthJournals.clear();
@@ -671,7 +671,7 @@ public class CitizenController implements Initializable {
      * Calls methods to update the screen of Function Journal, Depending on if there is a function journal for that condition
      * @param actionEvent on button pressed.
      */
-    public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) throws SQLException {
+    public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) throws SQLException, IOException {
         getFunctionsJournals();
         clearFunctionJournalView();
 
@@ -895,7 +895,7 @@ public class CitizenController implements Initializable {
     /**
      * gets all FunctionsJournals for a template on the Database
      */
-    private void getFunctionsJournals() throws SQLException {
+    private void getFunctionsJournals() throws SQLException, IOException {
 
         if (!citizenModel.getFunctionalJournal(citizen.getId()).isEmpty()){
             functionalJournals.clear();

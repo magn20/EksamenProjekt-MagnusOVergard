@@ -72,7 +72,7 @@ public class AdminAddStudentController implements Initializable {
             for(School school: allSchools){
                 cbSchool.getItems().add(school.getName());
             }
-        }catch (SQLException sqlException){
+        }catch (SQLException | IOException sqlException){
             displayError(sqlException);
             sqlException.printStackTrace();
         }

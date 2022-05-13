@@ -18,29 +18,29 @@ public class StudentManager {
     {
         try {
             connector = new DatabaseConnector();
-            studentDAO = new StudentDAO(connector.getConnection());
-        } catch (SQLServerException | IOException e) {
+            studentDAO = new StudentDAO();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ObservableList<Student> getStudents() throws SQLException {
+    public ObservableList<Student> getStudents() throws SQLException, IOException {
         return studentDAO.getStudents();
     }
-    public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException {
+    public ObservableList<Student> getStudentsFromSchool(int schoolId) throws SQLException, IOException {
         return studentDAO.getStudentsFromSchool(schoolId);
     }
-    public ObservableList<Student> getStudentsFromCitizen(int citizenId) throws SQLException {
+    public ObservableList<Student> getStudentsFromCitizen(int citizenId) throws SQLException, IOException {
         return studentDAO.getStudentForCitizen(citizenId);
     }
-    public Student createStudent(Student student) throws SQLException {
+    public Student createStudent(Student student) throws SQLException, IOException {
         return studentDAO.createStudent(student);
     }
 
-    public boolean removeStudent(Student student) throws SQLException {
+    public boolean removeStudent(Student student) throws SQLException, IOException {
         return studentDAO.removeStudent(student);
     }
-    public void updateStudent(Student student) throws SQLException {
+    public void updateStudent(Student student) throws SQLException, IOException {
         studentDAO.updateStudent(student);
     }
 

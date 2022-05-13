@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
@@ -245,7 +246,7 @@ public class TeacherTemplateController implements Initializable {
         try {
             getTPLHealthJournals();
             getTPLFunctionsJournals();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         //set up the template with all healthJournals from that template.
@@ -319,7 +320,7 @@ public class TeacherTemplateController implements Initializable {
      * @param actionEvent
      * @throws SQLException
      */
-    public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveGeneralInfoBtn(ActionEvent actionEvent) throws SQLException, IOException {
         TeacherController controller = new SceneSwapper().getTeacherController();
         Template template = controller.getTemplateForEdit();
 
@@ -510,7 +511,7 @@ public class TeacherTemplateController implements Initializable {
         selectUnderCategoryForHealth();
     }
 
-    public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveHealthjournalBtn(ActionEvent actionEvent) throws SQLException, IOException {
         boolean hasSaved = false;
         Date date = new Date();
         Template template = controller.getTemplateForEdit();
@@ -568,7 +569,7 @@ public class TeacherTemplateController implements Initializable {
      * when a condition is selected in Combobox for HealthJournal.
      * shows the healthjournal if already exist for that condition.
      */
-    public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException {
+    public void onSelectedHealthConditionCb(ActionEvent actionEvent) throws SQLException, IOException {
         getTPLHealthJournals();
         boolean hasupdated = false;
 
@@ -605,7 +606,7 @@ public class TeacherTemplateController implements Initializable {
     /**
      * get all TPLHealthJournals from one template.
      */
-    private void getTPLHealthJournals() throws SQLException {
+    private void getTPLHealthJournals() throws SQLException, IOException {
 
         if (!tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()).isEmpty()){
             tplHealthJournals.clear();

@@ -58,7 +58,7 @@ public class AdminEditStudentController implements Initializable {
         allStudents = FXCollections.observableArrayList();
         try {
             fillComboBox();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             displayError(e);
         }
@@ -67,7 +67,7 @@ public class AdminEditStudentController implements Initializable {
     /**
      * fills combobox for Schools & Students
      */
-    public void fillComboBox() throws SQLException {
+    public void fillComboBox() throws SQLException, IOException {
         allSchools.clear();
         cbSchool.getItems().clear();
         allSchools = schoolModel.getSchools();
@@ -128,13 +128,13 @@ public class AdminEditStudentController implements Initializable {
                                     Student student = new Student(selectedStudent.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                                     try {
                                         studentModel.updateStudent(student);
-                                    } catch (SQLException e) {
+                                    } catch (SQLException | IOException e) {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
                                     try {
                                         updateStatus(student);
-                                    } catch (SQLException e) {
+                                    } catch (SQLException | IOException e) {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
@@ -154,7 +154,7 @@ public class AdminEditStudentController implements Initializable {
     /**
      * updates the view for visually effect of successful change to student
      */
-    public void updateStatus(Student student) throws SQLException {
+    public void updateStatus(Student student) throws SQLException, IOException {
         lblStatus.setText("redigeret i: " + student.getFName() + " " + student.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");

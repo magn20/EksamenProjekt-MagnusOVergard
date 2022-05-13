@@ -5,14 +5,12 @@ import dal.interfaces.ITPLHealthJournal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TPLHealthJournalDAO implements ITPLHealthJournal {
 
-    private Connection con;
-    public TPLHealthJournalDAO(Connection con){
-        this.con = con;
-    }
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
     /**
@@ -21,11 +19,11 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
      * @return list of TPLHealthJournal
      */
     @Override
-    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException {
+    public ObservableList<TPLHealthJournal> getTPLHealthJournal(int templateID) throws SQLException, IOException {
         ObservableList<TPLHealthJournal> TPLHealthJournalFromTemplate = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM TPLHealthJournal Where TPLCitizenHeatlhjournalId = ?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, templateID);
 
             statement.execute();
@@ -44,7 +42,8 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
 
                 TPLHealthJournalFromTemplate.add(new TPLHealthJournal(id, templateCitizenId, condition,lastUpdate,evaluation,relevancy,note,expectation));
             }
-        } catch (SQLException sqlException) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException sqlException) {
             throw sqlException;
         }
         return TPLHealthJournalFromTemplate;
@@ -56,11 +55,11 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
      * @return The objected that has been Created
      */
     @Override
-    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
+    public TPLHealthJournal createTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO TPLHealthJournal(TPLCitizenHeatlhjournalId, Condition ,LastUpdate , Evaluation, Relevancy, Note, Expectation) VALUES (?,?,?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, tplHealthJournal.getTplCitizenId());
             statement.setString(2, tplHealthJournal.getCondition() );
             statement.setString(3, tplHealthJournal.getLastUpdate());
@@ -72,8 +71,9 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return new TPLHealthJournal(insertedId, tplHealthJournal.getTplCitizenId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(),tplHealthJournal.getExpectation());
     }
@@ -83,10 +83,10 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
      * @param tplHealthJournal object holding the data for updating.
      */
     @Override
-    public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException {
-        try {
+    public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sql = "UPDATE TPLHealthJournal SET TPLCitizenHeatlhjournalId = ?, Condition = ?, LastUpdate = ?, Evaluation = ? , Relevancy = ?, Note = ?, Expectation = ? WHERE TPLHeatlhJournalId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, tplHealthJournal.getTplCitizenId());
             preparedStatement.setString(2, tplHealthJournal.getCondition());
             preparedStatement.setString(3, tplHealthJournal.getLastUpdate());
@@ -99,8 +99,8 @@ public class TPLHealthJournalDAO implements ITPLHealthJournal {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+        }catch (SQLException | IOException exception){
+            throw exception;
         }
 
     }

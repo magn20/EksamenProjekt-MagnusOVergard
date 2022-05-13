@@ -39,7 +39,7 @@ public class AdminEditSchoolController implements Initializable {
         allSchools = FXCollections.observableArrayList();
         try {
             fillComboBox();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             displayError(e);
             e.printStackTrace();
         }
@@ -48,7 +48,7 @@ public class AdminEditSchoolController implements Initializable {
     /**
      * fills combox with all schools
      */
-    public void fillComboBox() throws SQLException {
+    public void fillComboBox() throws SQLException, IOException {
         allSchools.clear();
         allSchools = schoolModel.getSchools();
 

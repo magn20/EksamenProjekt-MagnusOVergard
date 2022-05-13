@@ -7,15 +7,12 @@ import dal.interfaces.ITPLHealthJournal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
 
-    private Connection con;
-    public TPLFunctionalJournalDAO(Connection con){
-        this.con = con;
-    }
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * gets TPLFunctionalJournals that belongs to a Template
@@ -25,9 +22,9 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
     @Override
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID) {
         ObservableList<TPLFunctionalJournal> TPLFunctionalJournalFromTemplate = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM TPLFunctionalJournal Where TPLCitizenTPLFunctionalAbilitiesId = ?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, templateID);
 
             statement.execute();
@@ -49,7 +46,8 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
 
                 TPLFunctionalJournalFromTemplate.add(new TPLFunctionalJournal(id, templateCitizenId, condition,lastUpdate, niveau,relevancy, note, expectation, execution, executionLimits, citizenExpectation));
             }
-        } catch (SQLException throwables) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
         return TPLFunctionalJournalFromTemplate;
@@ -61,11 +59,11 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
      * @return the object that been created
      */
     @Override
-    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
+    public TPLFunctionalJournal createTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try (Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO TPLFunctionalJournal(TPLCitizenTPLFunctionalAbilitiesId, Condition ,Relevancy , LastUpdate, Niveau, Expectation, Note, Execution, ExucutionLimits, CitizenExpectation) VALUES (?,?,?,?,?,?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, tplFunctionalJournal.getTplCitizenId());
             statement.setString(2, tplFunctionalJournal.getCondition() );
             statement.setString(3, tplFunctionalJournal.getRelevancy());
@@ -80,8 +78,9 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return new TPLFunctionalJournal(insertedId, tplFunctionalJournal.getTplCitizenId(), tplFunctionalJournal.getCondition(), tplFunctionalJournal.getLastUpdate(), tplFunctionalJournal.getNiveau(), tplFunctionalJournal.getRelevancy(), tplFunctionalJournal.getNote(), tplFunctionalJournal.getExpectation(), tplFunctionalJournal.getExecution(), tplFunctionalJournal.getExecutionLimits(), tplFunctionalJournal.getCitizenExpectation());
     }
@@ -91,11 +90,11 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
      * @param tplFunctionalJournal the object holding the data
      */
     @Override
-    public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException {
+    public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException, IOException {
 
-       try {
+       try(Connection connection = basicConnectionPool.getConnection()) {
            String sql = "UPDATE TPLFunctionalJournal SET TPLCitizenTPLFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExucutionLimits = ?, CitizenExpectation = ? WHERE TPLFunctionalAbilitiesID=?;";
-           PreparedStatement preparedStatement = con.prepareStatement(sql);
+           PreparedStatement preparedStatement = connection.prepareStatement(sql);
            preparedStatement.setInt(1, tplFunctionalJournal.getTplCitizenId());
            preparedStatement.setString(2, tplFunctionalJournal.getCondition());
            preparedStatement.setString(3, tplFunctionalJournal.getRelevancy());
@@ -111,8 +110,9 @@ public class TPLFunctionalJournalDAO implements ITPLFunctionalJournal {
            int affectedRows = preparedStatement.executeUpdate();
            if (affectedRows != 1) {
            }
-       }catch (SQLException sqlException){
-           throw sqlException;
+           basicConnectionPool.releaseConnection(connection);
+       }catch (SQLException | IOException exception){
+           throw exception;
        }
 
     }

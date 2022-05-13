@@ -92,7 +92,7 @@ public class TeacherController implements Initializable {
 
         try {
             prepareTableview();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             DisplayMessage.displayError(e);
         }
@@ -102,7 +102,7 @@ public class TeacherController implements Initializable {
     /**
      * sets up the tableview
      */
-    public void prepareTableview() throws SQLException {
+    public void prepareTableview() throws SQLException, IOException {
         tcTemplateID.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         tcFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
         tcLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
@@ -126,7 +126,7 @@ public class TeacherController implements Initializable {
      *
      * @throws SQLException
      */
-    public void setTableview() throws SQLException {
+    public void setTableview() throws SQLException, IOException {
         tvTemplate.setItems(tplModel.getTemplate(singletonUser.getTeacher().getSchoolId()));
 
         tvCitizen.setItems(citizenModel.getCitizen(singletonUser.getTeacher().getSchoolId()));
@@ -138,7 +138,7 @@ public class TeacherController implements Initializable {
     /**
      * removes a template
      */
-    public void onRemoveTemplate(ActionEvent actionEvent) throws SQLException {
+    public void onRemoveTemplate(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (tvTemplate.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template og fjerne.");
@@ -157,7 +157,7 @@ public class TeacherController implements Initializable {
     /**
      * Removes a Citizen
      */
-    public void onRemoveCitizenBtn(ActionEvent actionEvent) throws SQLException {
+    public void onRemoveCitizenBtn(ActionEvent actionEvent) throws SQLException, IOException {
         if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Template og fjerne.");
         } else {
@@ -298,7 +298,7 @@ public class TeacherController implements Initializable {
                         public void run() {
                             try {
                                 setTableview();
-                            } catch (SQLException e) {
+                            } catch (SQLException | IOException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -353,7 +353,7 @@ public class TeacherController implements Initializable {
      * @param mouseEvent when clicked on tableview Student
      * @throws SQLException
      */
-    public void onSelectedStudentTV(MouseEvent mouseEvent) throws SQLException {
+    public void onSelectedStudentTV(MouseEvent mouseEvent) throws SQLException, IOException {
 
         if (!tvStudent.getSelectionModel().isEmpty()) {
             tvCitizen.getItems().clear();
@@ -365,7 +365,7 @@ public class TeacherController implements Initializable {
     /**
      * reset the data in the tableview to show all.
      */
-    public void onShowAllCitizensBtn(ActionEvent actionEvent) throws SQLException {
+    public void onShowAllCitizensBtn(ActionEvent actionEvent) throws SQLException, IOException {
         setTableview();
     }
 
@@ -413,7 +413,7 @@ public class TeacherController implements Initializable {
                 try {
                     studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
                     prepareTableview();
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     displayError(e);
                 }
@@ -428,7 +428,7 @@ public class TeacherController implements Initializable {
      *
      * @param mouseEvent when clicked is performed on tableview citizen
      */
-    public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException {
+    public void onSelectedCitizenTv(MouseEvent mouseEvent) throws SQLException, IOException {
         if (!tvCitizen.getSelectionModel().isEmpty()) {
             tvStudent.getItems().clear();
             tvStudent.setItems(studentModel.getStudentsFromCitizen(tvCitizen.getSelectionModel().getSelectedItem().getId()));
@@ -482,7 +482,7 @@ public class TeacherController implements Initializable {
                         public void run() {
                             try {
                                 setTableview();
-                            } catch (SQLException e) {
+                            } catch (SQLException | IOException e) {
                                 e.printStackTrace();
                             }
                         }

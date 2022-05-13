@@ -2,21 +2,16 @@ package dal.db;
 
 import be.Citizen;
 import be.Student;
-import be.Template;
 import dal.interfaces.ICitizen;
-import dal.interfaces.ITemplate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class CitizenDAO implements ICitizen {
 
-    private Connection con;
-    public CitizenDAO(Connection con){
-        this.con = con;
-    }
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      *
@@ -26,11 +21,11 @@ public class CitizenDAO implements ICitizen {
      * @throws SQLException
      */
     @Override
-    public ObservableList<Citizen> getCitizen(int schoolId) throws SQLException {
+    public ObservableList<Citizen> getCitizen(int schoolId) throws SQLException, IOException {
         ObservableList<Citizen> allCitizenFromSchool = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Citizen Where CitizenSchoolId = ? ";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, schoolId);
 
             statement.execute();
@@ -49,7 +44,8 @@ public class CitizenDAO implements ICitizen {
 
                 allCitizenFromSchool.add(new Citizen(id, SchoolId, fName,lName, age));
             }
-        } catch (SQLException sqlException) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException sqlException) {
             throw sqlException;
         }
         return allCitizenFromSchool;
@@ -61,12 +57,12 @@ public class CitizenDAO implements ICitizen {
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException {
+    public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException, IOException {
         ObservableList<Citizen> allCitizenFromStudent = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Citizen INNER JOIN Works_on ON Works_on.FKCitizenId = Citizen.CitizenId WHERE FKStudentId =(?); ";
 
-            PreparedStatement preparedStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, studentID);
 
             //Extract data from DB
@@ -82,9 +78,10 @@ public class CitizenDAO implements ICitizen {
                     allCitizenFromStudent.add(new Citizen(id,schoolId ,fName, lName, age));
                 }
             }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            throw e;
         }
         return allCitizenFromStudent;
     }
@@ -97,13 +94,14 @@ public class CitizenDAO implements ICitizen {
      * @throws SQLException
      */
     @Override
-    public boolean setStudentWorkOnCitizen(Citizen citizen, Student student) throws SQLException {
-        try {
+    public boolean setStudentWorkOnCitizen(Citizen citizen, Student student) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sql = "INSERT INTO Works_on VALUES (?,?);";
-            PreparedStatement preparedStatement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, citizen.getId());
             preparedStatement.setInt(2, student.getId());
             preparedStatement.executeUpdate();
+            basicConnectionPool.releaseConnection(connection);
             return true;
         }catch (Exception ex){
             throw ex;
@@ -117,11 +115,11 @@ public class CitizenDAO implements ICitizen {
      * @throws SQLException
      */
     @Override
-    public Citizen createCitizen(Citizen citizen) throws SQLException {
+    public Citizen createCitizen(Citizen citizen) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO Citizen(CitizenSchoolId, Fname, Lname, age) VALUES (?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, citizen.getSchoolId());
             statement.setString(2, citizen.getfName() );
             statement.setString(3, citizen.getlName());
@@ -130,7 +128,8 @@ public class CitizenDAO implements ICitizen {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             throw e;
         }
         return new Citizen(insertedId,citizen.getSchoolId(), citizen.getfName(),citizen.getlName(),citizen.getAge());
@@ -141,11 +140,11 @@ public class CitizenDAO implements ICitizen {
      * @param citizen object holding the changed data.
      */
     @Override
-    public void updateCitizen(Citizen citizen) throws SQLException {
-        try {
+    public void updateCitizen(Citizen citizen) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE Citizen SET CitizenSchoolId = ?, Fname = ?, Lname = ?, age = ? WHERE CitizenId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, citizen.getSchoolId());
             preparedStatement.setString(2, citizen.getfName());
             preparedStatement.setString(3, citizen.getlName());
@@ -154,8 +153,9 @@ public class CitizenDAO implements ICitizen {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (Exception exception){
+            throw exception;
         }
     }
 
@@ -165,14 +165,15 @@ public class CitizenDAO implements ICitizen {
      * @return return true if successful
      */
     @Override
-    public boolean removeCitizen(Citizen citizen) throws SQLException {
-        try {
+    public boolean removeCitizen(Citizen citizen) throws SQLException, IOException {
+        try (Connection connection = basicConnectionPool.getConnection()){
             String sqlStatement = "DELETE FROM Citizen WHERE CitizenId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, citizen.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw e;
         }
     }

@@ -7,15 +7,12 @@ import dal.interfaces.ITemplate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
 
-    private Connection con;
-    public TPLGeneralInfoDAO(Connection con){
-        this.con = con;
-    }
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * gets TPLGeneralInfo From a template.
@@ -25,9 +22,9 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
     @Override
     public ObservableList<TPLGeneralInfo> getTPLGeneralInfo(int templateID) {
         ObservableList<TPLGeneralInfo> TPLGeneralInfoFromTemplate = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM TPLGeneralInfo Where TPLCitizenGeneralInfoId = ? ";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, templateID);
 
             statement.execute();
@@ -52,7 +49,8 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
 
                 TPLGeneralInfoFromTemplate.add(new TPLGeneralInfo(id, templateCitizenId, coping,motivation, resource, roles,habits,educationAndJob,lifeStory,healthInfo,equipmentsAids,homeLayout,network));
             }
-        } catch (SQLException throwables) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
         return TPLGeneralInfoFromTemplate;
@@ -66,9 +64,9 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
     @Override
     public TPLGeneralInfo createTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO TPLGeneralInfo(TPLCitizenGeneralInfoId, Coping ,Motivation , Ressources, Roles, Habits, EducationAndJob, LifeStory, healthInformation, EquipmentAids, HomeLayout, Network) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, tplGeneralInfo.getTplCitizenId());
             statement.setString(2, tplGeneralInfo.getCoping() );
             statement.setString(3, tplGeneralInfo.getMotivation());
@@ -85,7 +83,8 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return new TPLGeneralInfo(insertedId, tplGeneralInfo.getTplCitizenId(), tplGeneralInfo.getCoping(), tplGeneralInfo.getMotivation(), tplGeneralInfo.getResources(), tplGeneralInfo.getRoles(), tplGeneralInfo.getHabits(),tplGeneralInfo.getEducationAndJob(), tplGeneralInfo.getLifeStory(), tplGeneralInfo.getHealthInformation(), tplGeneralInfo.getEquipmentAids(),tplGeneralInfo.getHomeLayout(), tplGeneralInfo.getNetwork());
@@ -96,11 +95,11 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
      * @param tplGeneralInfo the object holding the updated data.
      */
     @Override
-    public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
-        try {
+    public void updateTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE TPLGeneralInfo SET TPLCitizenGeneralInfoId = ?, Coping = ?, Motivation = ?, Ressources = ? , Roles = ?, Habits = ?, EducationAndJob = ?, LifeStory = ?, healthInformation = ?, EquipmentAids = ?, HomeLayout = ?, Network = ? WHERE TPLGeneralInfoId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, tplGeneralInfo.getTplCitizenId());
             preparedStatement.setString(2, tplGeneralInfo.getCoping());
             preparedStatement.setString(3, tplGeneralInfo.getMotivation());
@@ -118,8 +117,9 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException exception){
+            throw exception;
         }
     }
 
@@ -129,15 +129,16 @@ public class TPLGeneralInfoDAO implements ITPLGeneralInfo {
      * @return true if successful
      */
     @Override
-    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException {
-        try {
+    public boolean removeTPLGeneralInfo(TPLGeneralInfo tplGeneralInfo) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "DELETE FROM TPLGeneralInfo WHERE TPLGeneralInfoId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, tplGeneralInfo.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException sqlException) {
-            throw sqlException;
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
     }
 

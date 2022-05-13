@@ -17,22 +17,22 @@ public class TeacherManager {
     {
         try {
             connector = new DatabaseConnector();
-            teacherDAO = new TeacherDAO(connector.getConnection());
-        } catch (SQLServerException | IOException e) {
+            teacherDAO = new TeacherDAO();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ObservableList<Teacher> getTeachers() throws SQLException {
+    public ObservableList<Teacher> getTeachers() throws SQLException, IOException {
         return teacherDAO.getTeachers();
     }
-    public Teacher createTeacher(Teacher teacher) throws SQLException {
+    public Teacher createTeacher(Teacher teacher) throws SQLException, IOException {
         return teacherDAO.createTeacher(teacher);
     }
-    public boolean removeTeacher(Teacher teacher) throws SQLException {
+    public boolean removeTeacher(Teacher teacher) throws SQLException, IOException {
         return teacherDAO.removeTeacher(teacher);
     }
-    public void updateTeacher(Teacher teacher) throws SQLException {
+    public void updateTeacher(Teacher teacher) throws SQLException, IOException {
         teacherDAO.updateTeacher(teacher);
     }
 

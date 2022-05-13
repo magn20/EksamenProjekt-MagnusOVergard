@@ -6,26 +6,23 @@ import dal.interfaces.ITemplate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TemplateDAO implements ITemplate {
 
-    private Connection con;
-    public TemplateDAO(Connection con){
-        this.con = con;
-    }
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * gets templates from a school from database
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Template> getTemplate(int schoolId) throws SQLException {
+    public ObservableList<Template> getTemplate(int schoolId) throws SQLException, IOException {
         ObservableList<Template> AllTemplatesFromSchool = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM TPLCitizen Where TPLCitizenSchoolId = ? ";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, schoolId);
 
             statement.execute();
@@ -44,8 +41,9 @@ public class TemplateDAO implements ITemplate {
 
                 AllTemplatesFromSchool.add(new Template(id, tplSchoolId, fName,lName, age));
             }
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return AllTemplatesFromSchool;
     }
@@ -56,11 +54,11 @@ public class TemplateDAO implements ITemplate {
      * @return the object that has been created
      */
     @Override
-    public Template createTemplate(Template template) throws SQLException {
+    public Template createTemplate(Template template) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO TPLCitizen(TPLCitizenSchoolId, Fname, Lname, age) VALUES (?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, template.getSchoolId());
             statement.setString(2, template.getfName() );
             statement.setString(3, template.getlName());
@@ -69,8 +67,9 @@ public class TemplateDAO implements ITemplate {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return new Template(insertedId,template.getSchoolId(), template.getfName(),template.getlName(),template.getAge());
     }
@@ -80,10 +79,10 @@ public class TemplateDAO implements ITemplate {
      * @param template the object holding the data
      */
     @Override
-    public void updateTemplate(Template template) throws SQLException {
-        try {
+    public void updateTemplate(Template template) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sql = "UPDATE TPLCitizen SET TPLCitizenSchoolId = ?, Fname = ?, Lname = ?, age = ? WHERE TPLCitizenId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, template.getSchoolId());
             preparedStatement.setString(2, template.getfName());
             preparedStatement.setString(3, template.getlName());
@@ -92,8 +91,9 @@ public class TemplateDAO implements ITemplate {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException exception){
+            throw exception;
         }
 
     }
@@ -104,15 +104,16 @@ public class TemplateDAO implements ITemplate {
      * @return true if successful
      */
     @Override
-    public boolean removeTemplate(Template template) throws SQLException {
-        try {
+    public boolean removeTemplate(Template template) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "DELETE FROM TPLCitizen WHERE TPLCitizenId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, template.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException sqlException) {
-            throw sqlException;
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
     }
 

@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -66,7 +67,7 @@ public class TeacherEditStudentController implements Initializable {
      * updates a student
      * checks for no inputs
      */
-    public void onEditBtn(ActionEvent actionEvent) throws SQLException {
+    public void onEditBtn(ActionEvent actionEvent) throws SQLException, IOException {
 
         // checks for no inputs
         if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("")){
@@ -94,7 +95,7 @@ public class TeacherEditStudentController implements Initializable {
                         Student student = new Student(this.student.getId(),this.student.getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                         try {
                             studentModel.updateStudent(student);
-                        } catch (SQLException e) {
+                        } catch (SQLException | IOException e) {
                             e.printStackTrace();
                             displayError(e);
                         }

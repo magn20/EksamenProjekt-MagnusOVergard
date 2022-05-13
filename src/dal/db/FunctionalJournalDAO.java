@@ -7,14 +7,12 @@ import dal.interfaces.ITPLFunctionalJournal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class FunctionalJournalDAO implements IFunctionalJournal {
 
-    private Connection con;
-    public FunctionalJournalDAO(Connection con){
-        this.con = con;
-    }
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * Gets all functionaljournals from a citizen.
@@ -23,11 +21,11 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
      * @throws SQLException
      */
     @Override
-    public ObservableList<FunctionalJournal> getFunctionalJournal(int citizenId) throws SQLException {
+    public ObservableList<FunctionalJournal> getFunctionalJournal(int citizenId) throws SQLException, IOException {
         ObservableList<FunctionalJournal> functionalJournalFromCitizen = FXCollections.observableArrayList();
-        try {
+        try (Connection connection = basicConnectionPool.getConnection()){
             String sqlStatement = "SELECT * FROM FunctionalJournal Where CitizenFunctionalAbilitiesId = ?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, citizenId);
 
             statement.execute();
@@ -49,6 +47,7 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
 
                 functionalJournalFromCitizen.add(new FunctionalJournal(id, citizenIdFromDb, condition,lastUpdate, niveau,relevancy, note, expectation, execution, executionLimits, citizenExpectation));
             }
+            basicConnectionPool.releaseConnection(connection);
         } catch (SQLException sqlException) {
             throw sqlException;
         }
@@ -61,11 +60,11 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
      * @return the object that has been created
      */
     @Override
-    public FunctionalJournal createFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
+    public FunctionalJournal createFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO FunctionalJournal(CitizenFunctionalAbilitiesId, Condition ,Relevancy , LastUpdate, Niveau, Expectation, Note, Execution, ExucutionLimits, CitizenExpectation) VALUES (?,?,?,?,?,?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, functionalJournal.getCitizenId());
             statement.setString(2, functionalJournal.getCondition() );
             statement.setString(3, functionalJournal.getRelevancy());
@@ -80,7 +79,8 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             throw e;
         }
         return new FunctionalJournal(insertedId, functionalJournal.getCitizenId(), functionalJournal.getCondition(), functionalJournal.getLastUpdate(), functionalJournal.getNiveau(), functionalJournal.getRelevancy(), functionalJournal.getNote(), functionalJournal.getExpectation(), functionalJournal.getExecution(), functionalJournal.getExecutionLimits(), functionalJournal.getCitizenExpectation());
@@ -92,10 +92,10 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
      * @throws SQLException
      */
     @Override
-    public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException {
-        try {
+    public void updateFunctionalJournal(FunctionalJournal functionalJournal) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sql = "UPDATE FunctionalJournal SET CitizenFunctionalAbilitiesId = ?, Condition = ?, Relevancy = ?, LastUpdate = ?, Niveau = ?, Expectation = ?, Note = ?, Execution = ?, ExucutionLimits = ?, CitizenExpectation = ? WHERE FunctionalAbilitiesID=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, functionalJournal.getCitizenId());
             preparedStatement.setString(2, functionalJournal.getCondition());
             preparedStatement.setString(3, functionalJournal.getRelevancy());
@@ -111,8 +111,9 @@ public class FunctionalJournalDAO implements IFunctionalJournal {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException e){
+            throw e;
         }
 
 

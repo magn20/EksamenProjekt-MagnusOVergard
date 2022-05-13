@@ -1,7 +1,11 @@
+import dal.db.BasicConnectionPool;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -18,5 +22,21 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Sosu Esbjerg");
         primaryStage.show();
+
+        Thread createConnection = new Thread(runnable);
+        createConnection.start();
     }
+
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                BasicConnectionPool.create();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
 }

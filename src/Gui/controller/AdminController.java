@@ -82,7 +82,7 @@ public class AdminController implements Initializable {
 
         try {
             prepareTableview();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +90,7 @@ public class AdminController implements Initializable {
     /**
      * setup for all tableviews
      */
-    public void prepareTableview() throws SQLException {
+    public void prepareTableview() throws SQLException, IOException {
         // setup for tableview School
         tcSchoolname.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty()  );
@@ -112,7 +112,7 @@ public class AdminController implements Initializable {
     /**
      * sets the data into all the TableViews
      */
-    public void setTableview() throws SQLException {
+    public void setTableview() throws SQLException, IOException {
         allSchools.clear();
         allSchools.addAll(schoolModel.getSchools());
         tvSchool.setItems(allSchools);
@@ -145,7 +145,7 @@ public class AdminController implements Initializable {
                 try {
                     schoolModel.removeSchool(tvSchool.getSelectionModel().getSelectedItem());
                     prepareTableview();
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     displayError(e);
                 }
@@ -170,7 +170,7 @@ public class AdminController implements Initializable {
                 try {
                     teacherModel.removeTeacher(tvTeacher.getSelectionModel().getSelectedItem());
                     prepareTableview();
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     displayError(e);
                 }
@@ -196,7 +196,7 @@ public class AdminController implements Initializable {
                 try {
                     studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
                     prepareTableview();
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     displayError(e);
                 }

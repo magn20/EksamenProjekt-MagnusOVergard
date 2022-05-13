@@ -5,6 +5,7 @@ import dal.interfaces.ISchool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +13,17 @@ import java.util.List;
 public class SchoolDAO implements ISchool {
 
 
-    private Connection con;
-    public SchoolDAO(Connection con){
-        this.con = con;
-    }
-
+    private final BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
     /**
      * gets a list of all schools in Database
      * @return list of school
      */
     @Override
-    public ObservableList<School> getSchool() throws SQLException {
+    public ObservableList<School> getSchool() throws SQLException, IOException {
         ObservableList<School> allSchools =  FXCollections.observableArrayList();
-        try {
+        try (Connection connection = basicConnectionPool.getConnection()){
             String sqlStatement = "SELECT * FROM School";
-            Statement statement = con.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sqlStatement);
             while (rs.next()) {
                 String name = rs.getString("SchoolName");
@@ -34,9 +31,12 @@ public class SchoolDAO implements ISchool {
                 int id = rs.getInt("SchoolId");
                 allSchools.add(new School(id, name));
             }
-        } catch (SQLException exception) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (Exception exception) {
+            exception.printStackTrace();
             throw exception;
         }
+
         return allSchools;
     }
 
@@ -47,17 +47,18 @@ public class SchoolDAO implements ISchool {
      * @return the school object created
      */
     @Override
-    public School createSchool(String name) throws SQLException {
+    public School createSchool(String name) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO School(SchoolName) VALUES (?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, name);
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             throw e;
         }
         return new School(insertedId, name);
@@ -70,19 +71,20 @@ public class SchoolDAO implements ISchool {
      * @throws SQLException
      */
     @Override
-    public void updateSchool(School school) throws SQLException {
+    public void updateSchool(School school) throws SQLException, IOException {
 
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE School SET SchoolName = ? WHERE SchoolId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, school.getName());
             preparedStatement.setInt(2, school.getId());
             int affectedRows = preparedStatement.executeUpdate();
             if(affectedRows != 1) {
 
             }
-        }catch (SQLException sqlException){
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException sqlException){
             throw sqlException;
         }
 
@@ -96,14 +98,15 @@ public class SchoolDAO implements ISchool {
      * @return true if success, false if failed.
      */
     @Override
-    public boolean removeSchool(School school) throws SQLException {
-        try {
+    public boolean removeSchool(School school) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "DELETE FROM School WHERE SchoolId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, school.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw e;
         }
     }

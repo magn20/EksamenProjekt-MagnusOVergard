@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ public class FunctionalJournalObservationsController implements Initializable {
     private Citizen citizen;
     private CitizenModel citizenModel;
 
-    public void onSaveCloseBtn(ActionEvent actionEvent) throws SQLException {
+    public void onSaveCloseBtn(ActionEvent actionEvent) throws SQLException, IOException {
         if (citizenModel.getFunctionJournalObservation(citizen.getId()) == null){
             citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1, citizen.getId(),tctObservation.getText()));
         }else{
@@ -46,7 +47,7 @@ public class FunctionalJournalObservationsController implements Initializable {
             if (citizenModel.getFunctionJournalObservation(citizen.getId()) != null){
                 tctObservation.setText(citizenModel.getFunctionJournalObservation(citizen.getId()).getObservation());
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

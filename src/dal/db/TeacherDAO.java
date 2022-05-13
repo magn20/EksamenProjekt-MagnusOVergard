@@ -7,26 +7,23 @@ import dal.interfaces.ITeacher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TeacherDAO implements ITeacher {
 
-
-    private Connection con;
-    public TeacherDAO(Connection con){
-        this.con = con;
-    }
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * gets all teachers from database
      * @return Observablelist of all Teachers
      */
     @Override
-    public ObservableList<Teacher> getTeachers() throws SQLException {
+    public ObservableList<Teacher> getTeachers() throws SQLException, IOException {
         ObservableList<Teacher> allTeachers =  FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Teacher";
-            Statement statement = con.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sqlStatement);
             while (rs.next()) {
                 String fName = rs.getString("fName");
@@ -38,7 +35,8 @@ public class TeacherDAO implements ITeacher {
                 int schoolId = rs.getInt("TeacherSchoolId");
                 allTeachers.add(new Teacher(teacherId,schoolId, fName, lName,username,password));
             }
-        } catch (SQLException sqlException) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException sqlException) {
             throw sqlException;
         }
         return allTeachers;
@@ -50,11 +48,11 @@ public class TeacherDAO implements ITeacher {
      * @return the teacher object that were created
      */
     @Override
-    public Teacher createTeacher(Teacher teacher) throws SQLException {
+    public Teacher createTeacher(Teacher teacher) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO Teacher(TeacherSchoolId, Fname, Lname, Username, Password ) VALUES (?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, teacher.getSchoolId());
             statement.setString(2, teacher.getFName() );
             statement.setString(3, teacher.getLName());
@@ -64,8 +62,9 @@ public class TeacherDAO implements ITeacher {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return new Teacher(insertedId,teacher.getSchoolId(), teacher.getFName(),teacher.getLName(),teacher.getUsername(),teacher.getPassword());
     }
@@ -76,11 +75,11 @@ public class TeacherDAO implements ITeacher {
      * @throws SQLException
      */
     @Override
-    public void updateTeacher(Teacher teacher) throws SQLException {
-        try {
+    public void updateTeacher(Teacher teacher) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE Teacher SET TeacherSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE TeacherId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teacher.getSchoolId());
             preparedStatement.setString(2, teacher.getFName());
             preparedStatement.setString(3, teacher.getLName());
@@ -90,8 +89,9 @@ public class TeacherDAO implements ITeacher {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException exception){
+            throw exception;
         }
     }
 
@@ -101,15 +101,16 @@ public class TeacherDAO implements ITeacher {
      * @return true for success, false for failed deletion.
      */
     @Override
-    public boolean removeTeacher(Teacher teacher) throws SQLException {
-        try {
+    public boolean removeTeacher(Teacher teacher) throws SQLException, IOException {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "DELETE FROM Teacher WHERE TeacherId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, teacher.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException sqlException) {
-            throw sqlException;
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
     }
 }

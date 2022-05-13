@@ -57,7 +57,7 @@ public class AdminEditTeacherController implements Initializable {
         allTeachers = FXCollections.observableArrayList();
         try {
             fillComboBox();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             displayError(e);
         }
@@ -66,7 +66,7 @@ public class AdminEditTeacherController implements Initializable {
     /**
      * fills the comboboxs for schools and teachers
      */
-    public void fillComboBox() throws SQLException {
+    public void fillComboBox() throws SQLException, IOException {
         allSchools.clear();
         cbSchool.getItems().clear();
         allSchools = schoolModel.getSchools();
@@ -132,13 +132,13 @@ public class AdminEditTeacherController implements Initializable {
                                     Teacher teacher = new Teacher(selectedTeacher.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                                     try {
                                         teacherModel.updateTeacher(teacher);
-                                    } catch (SQLException e) {
+                                    } catch (SQLException | IOException e) {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
                                     try {
                                         updateStatus(teacher);
-                                    } catch (SQLException e) {
+                                    } catch (SQLException | IOException e) {
                                         e.printStackTrace();
                                         displayError(e);
                                     }
@@ -189,7 +189,7 @@ public class AdminEditTeacherController implements Initializable {
      * tells the user that the change happend, and removes the data from textfields for visual feeling of succesfull changes
      * @param teacher sends the teacher that has been changed
      */
-    public void updateStatus(Teacher teacher) throws SQLException {
+    public void updateStatus(Teacher teacher) throws SQLException, IOException {
         lblStatus.setText("Redigeret i læreren: " + teacher.getFName() + " " + teacher.getLName() );
         txtPassword.setText("");
         txtUsername.setText("");

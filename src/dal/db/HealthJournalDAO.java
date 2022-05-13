@@ -7,14 +7,12 @@ import dal.interfaces.ITPLHealthJournal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class HealthJournalDAO implements IHealthJournal {
 
-    private Connection con;
-    public HealthJournalDAO(Connection con){
-        this.con = con;
-    }
+    BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
     /**
@@ -23,11 +21,11 @@ public class HealthJournalDAO implements IHealthJournal {
      * @return lst of HealthJournals
      */
     @Override
-    public ObservableList<HealthJournal> getHealthJournal(int citizenId) throws SQLException {
+    public ObservableList<HealthJournal> getHealthJournal(int citizenId) throws SQLException, IOException {
         ObservableList<HealthJournal> healthJournalFromCitizen = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM HealthJournal Where CitizenHeatlhjournalId = ?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, citizenId);
 
             statement.execute();
@@ -46,8 +44,9 @@ public class HealthJournalDAO implements IHealthJournal {
 
                 healthJournalFromCitizen.add(new HealthJournal(id, citizenIdFromDb, condition,lastUpdate,evaluation,relevancy,note,expectation));
             }
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return healthJournalFromCitizen;
     }
@@ -58,11 +57,11 @@ public class HealthJournalDAO implements IHealthJournal {
      * @return the object that is created
      */
     @Override
-    public HealthJournal createHealthJournal(HealthJournal healthJournal) throws SQLException {
+    public HealthJournal createHealthJournal(HealthJournal healthJournal) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO HealthJournal(CitizenHeatlhjournalId, Condition ,LastUpdate , Evaluation, Relevancy, Note, Expectation) VALUES (?,?,?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, healthJournal.getCitizenId());
             statement.setString(2, healthJournal.getCondition() );
             statement.setString(3, healthJournal.getLastUpdate());
@@ -74,7 +73,8 @@ public class HealthJournalDAO implements IHealthJournal {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             throw e;
         }
         return new HealthJournal(insertedId, healthJournal.getCitizenId(), healthJournal.getCondition(), healthJournal.getLastUpdate(), healthJournal.getEvaluation(), healthJournal.getRelevancy(), healthJournal.getNote(),healthJournal.getExpectation());
@@ -85,10 +85,10 @@ public class HealthJournalDAO implements IHealthJournal {
      * @param healthJournal the object holding the data for update.
      */
     @Override
-    public void updateHealthJournal(HealthJournal healthJournal) throws SQLException {
-       try {
+    public void updateHealthJournal(HealthJournal healthJournal) throws SQLException, IOException {
+       try(Connection connection = basicConnectionPool.getConnection()) {
            String sql = "UPDATE HealthJournal SET CitizenHeatlhjournalId = ?, Condition = ?, LastUpdate = ?, Evaluation = ? , Relevancy = ?, Note = ?, Expectation = ? WHERE HeatlhJournalId=?;";
-           PreparedStatement preparedStatement = con.prepareStatement(sql);
+           PreparedStatement preparedStatement = connection.prepareStatement(sql);
            preparedStatement.setInt(1, healthJournal.getCitizenId());
            preparedStatement.setString(2, healthJournal.getCondition());
            preparedStatement.setString(3, healthJournal.getLastUpdate());
@@ -101,8 +101,9 @@ public class HealthJournalDAO implements IHealthJournal {
            int affectedRows = preparedStatement.executeUpdate();
            if (affectedRows != 1) {
            }
-       }catch (SQLException sqlException){
-           throw sqlException;
+           basicConnectionPool.releaseConnection(connection);
+       }catch (SQLException | IOException exception){
+           throw exception;
        }
 
 

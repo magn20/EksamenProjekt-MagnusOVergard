@@ -12,27 +12,18 @@ import java.util.List;
 
 public class SchoolManager {
 
-    private SchoolDAO schoolDao;
-    private DatabaseConnector connector;
-    {
-        try {
-            connector = new DatabaseConnector();
-            schoolDao = new SchoolDAO(connector.getConnection());
-        } catch (SQLServerException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private SchoolDAO schoolDao = new SchoolDAO();
 
-    public ObservableList<School> getSchools() throws SQLException {
+    public ObservableList<School> getSchools() throws SQLException, IOException {
         return schoolDao.getSchool();
     }
-    public School createSchool(String name) throws SQLException {
+    public School createSchool(String name) throws SQLException, IOException {
         return schoolDao.createSchool(name);
     }
-    public boolean removeSchool(School school) throws SQLException {
+    public boolean removeSchool(School school) throws SQLException, IOException {
         return schoolDao.removeSchool(school);
     }
-    public void updateSchool(School school) throws SQLException {
+    public void updateSchool(School school) throws SQLException, IOException {
         schoolDao.updateSchool(school);
     }
 

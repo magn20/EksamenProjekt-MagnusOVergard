@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.awt.desktop.AppReopenedEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -54,7 +55,7 @@ public class TeacherAddStudentWorksOnController implements Initializable {
 
         try {
             students = studentModel.getStudentsFromSchool(singletonUser.getTeacher().getSchoolId());
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         lblCitizen.setText(citizen.getfName() + " " + citizen.getlName());
@@ -79,7 +80,7 @@ public class TeacherAddStudentWorksOnController implements Initializable {
      * adds a student working on a Citizen
      * checks for no selected student.
      */
-    public void onAddBtn(ActionEvent actionEvent) throws SQLException {
+    public void onAddBtn(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (tvStudent.getSelectionModel().isEmpty()){
             DisplayMessage.displayMessage("vælg en elev, til borgeren");

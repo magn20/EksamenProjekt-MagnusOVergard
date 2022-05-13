@@ -8,27 +8,23 @@ import dal.interfaces.ITeacher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class StudentDAO implements IStudent {
 
-
-    private Connection con;
-    public StudentDAO(Connection con){
-        this.con = con;
-    }
-
+    private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
     /**
      * gets all students
      * @return list of students
      */
     @Override
-    public ObservableList<Student> getStudents() throws SQLException {
+    public ObservableList<Student> getStudents() throws SQLException, IOException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Student";
-            Statement statement = con.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sqlStatement);
             while (rs.next()) {
                 String fName = rs.getString("fName");
@@ -40,8 +36,9 @@ public class StudentDAO implements IStudent {
                 int schoolId = rs.getInt("StudentSchoolId");
                 allStudents.add(new Student(studentId,schoolId, fName, lName,username,password));
             }
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
         return allStudents;
     }
@@ -53,12 +50,12 @@ public class StudentDAO implements IStudent {
      * @return list of students
      */
     @Override
-    public ObservableList<Student> getStudentForCitizen(int citizenId) throws SQLException {
+    public ObservableList<Student> getStudentForCitizen(int citizenId) throws SQLException, IOException {
         ObservableList<Student> allStudentForCitizen = FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Student INNER JOIN Works_on ON Works_on.FKStudentId = Student.StudentId WHERE FKCitizenId =(?); ";
 
-            PreparedStatement preparedStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, citizenId);
 
             //Extract data from DB
@@ -75,9 +72,10 @@ public class StudentDAO implements IStudent {
                     allStudentForCitizen.add(new Student(id,schoolId ,fName, lName, username,password));
                 }
             }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            throw sqlException;
+            basicConnectionPool.getConnectionsInUse();
+        } catch (SQLException | IOException exception) {
+            exception.printStackTrace();
+            throw exception;
         }
         return allStudentForCitizen;
     }
@@ -90,11 +88,11 @@ public class StudentDAO implements IStudent {
      * @throws SQLException
      */
     @Override
-    public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException {
+    public ObservableList<Student> getStudentsFromSchool(int schoolID) throws SQLException, IOException {
         ObservableList<Student> allStudents =  FXCollections.observableArrayList();
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM Student WHERE StudentSchoolId = ?;";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, schoolID);
 
             statement.execute();
@@ -110,8 +108,9 @@ public class StudentDAO implements IStudent {
                 int schoolId = rs.getInt("StudentSchoolId");
                 allStudents.add(new Student(studentId,schoolId, fName, lName,username,password));
             }
-        } catch (SQLException sqlException) {
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        } catch (Exception exception) {
+            throw exception;
         }
         return allStudents;
     }
@@ -122,11 +121,11 @@ public class StudentDAO implements IStudent {
      * @return student object that was created
      */
     @Override
-    public Student createStudent(Student student) throws SQLException {
+    public Student createStudent(Student student) throws SQLException, IOException {
         int insertedId = -1;
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "INSERT INTO Student(StudentSchoolId, Fname, Lname, Username, Password ) VALUES (?,?,?,?,?);";
-            PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, student.getSchoolId());
             statement.setString(2, student.getFName() );
             statement.setString(3, student.getLName());
@@ -136,7 +135,8 @@ public class StudentDAO implements IStudent {
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             insertedId = rs.getInt(1);
-        } catch (SQLException e) {
+            basicConnectionPool.releaseConnection(connection);
+        } catch (SQLException | IOException e) {
             throw e;
         }
         return new Student(insertedId,student.getSchoolId(), student.getFName(),
@@ -149,12 +149,12 @@ public class StudentDAO implements IStudent {
      * @throws SQLException
      */
     @Override
-    public void updateStudent(Student student) throws SQLException {
+    public void updateStudent(Student student) throws SQLException, IOException {
 
-        try {
+        try(Connection connection = basicConnectionPool.getConnection()) {
 
             String sql = "UPDATE Student SET StudentSchoolId = ?, Fname = ?, Lname = ?, Username = ?, Password = ? WHERE StudentId=?;";
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, student.getSchoolId());
             preparedStatement.setString(2, student.getFName());
             preparedStatement.setString(3, student.getLName());
@@ -164,8 +164,9 @@ public class StudentDAO implements IStudent {
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows != 1) {
             }
-        }catch (SQLException sqlException){
-            throw sqlException;
+            basicConnectionPool.releaseConnection(connection);
+        }catch (SQLException | IOException exception){
+            throw exception;
         }
     }
 
@@ -175,15 +176,16 @@ public class StudentDAO implements IStudent {
      * @return true for success deleted student, false for failed.
      */
     @Override
-    public boolean removeStudent(Student student) throws SQLException {
-        try {
+    public boolean removeStudent(Student student) throws SQLException, IOException {
+        try (Connection connection = basicConnectionPool.getConnection()){
             String sqlStatement = "DELETE FROM Student WHERE StudentId=?";
-            PreparedStatement statement = con.prepareStatement(sqlStatement);
+            PreparedStatement statement = connection.prepareStatement(sqlStatement);
             statement.setInt(1, student.getId());
             statement.execute();
+            basicConnectionPool.releaseConnection(connection);
             return true;
-        } catch (SQLException sqlException) {
-            throw sqlException;
+        } catch (SQLException | IOException exception) {
+            throw exception;
         }
     }
 }
