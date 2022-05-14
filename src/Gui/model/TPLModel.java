@@ -1,9 +1,6 @@
 package Gui.model;
 
-import be.TPLFunctionalJournal;
-import be.TPLGeneralInfo;
-import be.TPLHealthJournal;
-import be.Template;
+import be.*;
 import bll.TPLFacade;
 import javafx.collections.ObservableList;
 
@@ -54,6 +51,20 @@ public class TPLModel {
         tplFacade.updateTPLHealthJournal(tplHealthJournal);
     }
 
+    // for TPL Health Journal Observations
+    public TPLHealthJournalObservation getTPLHealthJournalObservation(int templateId) throws SQLException, IOException {
+        return tplFacade.getTPLHealthJournalObservation(templateId);
+    }
+
+    public TPLHealthJournalObservation createTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
+        return tplFacade.createTPLHealthJournalObservation(tplHealthJournalObservation);
+    }
+
+    public void updateTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
+        tplFacade.updateTPLHealthJournalObservation(tplHealthJournalObservation);
+    }
+
+
     // for TPLFunctionalJournal
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID){
         return tplFacade.getTPLFunctionalJournal(templateID);
@@ -63,5 +74,19 @@ public class TPLModel {
     }
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException, IOException {
         tplFacade.updateTPLFunctionalJournal(tplFunctionalJournal);
+    }
+
+    // for TPLFunctionalJournalObservation
+
+    public TPLFunctionJournalObservation getTPLFunctionJournalObservation(int templateId) throws SQLException, IOException {
+        return tplFacade.getTPLFunctionJournalObservation(templateId);
+    }
+
+    public TPLFunctionJournalObservation createTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
+        return tplFacade.createTPLFunctionJournalObservation(tplFunctionJournalObservation);
+    }
+
+    public void updateTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
+        tplFacade.updateTPLFunctionJournalObservation(tplFunctionJournalObservation);
     }
 }

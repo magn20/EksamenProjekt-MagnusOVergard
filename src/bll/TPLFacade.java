@@ -1,7 +1,6 @@
 package bll;
 
 import be.*;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.db.*;
 import javafx.collections.ObservableList;
 
@@ -14,9 +13,13 @@ public class TPLFacade {
     private TPLGeneralInfoDAO tplGeneralInfoDAO;
     private TPLHealthJournalDAO tplHealthJournalDAO;
     private TPLFunctionalJournalDAO tplFunctionalJournalDAO;
+    private TPLHealthJournalObservationDao tplHealthJournalObservationDao;
+    private TPLFunctionJournalObservationDao tplFunctionJournalObservationDao;
     private DatabaseConnector connector;
     {
         try {
+            tplFunctionJournalObservationDao = new TPLFunctionJournalObservationDao();
+            tplHealthJournalObservationDao = new TPLHealthJournalObservationDao();
             connector = new DatabaseConnector();
             tplHealthJournalDAO = new TPLHealthJournalDAO();
             templateDAO = new TemplateDAO();
@@ -66,6 +69,20 @@ public class TPLFacade {
     public void updateTPLHealthJournal(TPLHealthJournal tplHealthJournal) throws SQLException, IOException {
         tplHealthJournalDAO.updateTPLHealthJournal(tplHealthJournal);
     }
+
+    // for TPL Health Journal Observations
+    public TPLHealthJournalObservation getTPLHealthJournalObservation(int templateId) throws SQLException, IOException {
+        return tplHealthJournalObservationDao.getTPLHealthJournalObservation(templateId);
+    }
+
+    public TPLHealthJournalObservation createTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
+        return tplHealthJournalObservationDao.createTPLHealthJournalObservation(tplHealthJournalObservation);
+    }
+
+    public void updateTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
+        tplHealthJournalObservationDao.updateTPLHealthJournalObservation(tplHealthJournalObservation);
+    }
+
     // for TPLFunctionalJournal
     public ObservableList<TPLFunctionalJournal> getTPLFunctionalJournal(int templateID){
         return tplFunctionalJournalDAO.getTPLFunctionalJournal(templateID);
@@ -76,4 +93,19 @@ public class TPLFacade {
     public void updateTPLFunctionalJournal(TPLFunctionalJournal tplFunctionalJournal) throws SQLException, IOException {
         tplFunctionalJournalDAO.updateTPLFunctionalJournal(tplFunctionalJournal);
     }
+
+    // for TPLFunctionalJournalObservation
+
+    public TPLFunctionJournalObservation getTPLFunctionJournalObservation(int templateId) throws SQLException, IOException {
+        return tplFunctionJournalObservationDao.getTPLFunctionJournalObservation(templateId);
+    }
+
+    public TPLFunctionJournalObservation createTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
+        return tplFunctionJournalObservationDao.createTPLFunctionJournalObservation(tplFunctionJournalObservation);
+    }
+
+    public void updateTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
+        tplFunctionJournalObservationDao.updateTplFunctionJournalObservation(tplFunctionJournalObservation);
+    }
+
 }

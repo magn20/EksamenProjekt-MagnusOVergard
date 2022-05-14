@@ -155,4 +155,5 @@ public class FunctionalJournal {
     public StringProperty relevancyProperty() {
         return relevancy;
     }
+
 }

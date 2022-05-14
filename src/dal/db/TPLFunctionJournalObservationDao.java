@@ -1,22 +1,22 @@
 package dal.db;
 
 import be.FunctionJournalObservation;
-import be.HealthJournalObservation;
+import be.TPLFunctionJournalObservation;
 import dal.interfaces.IFunctionJournalObservation;
-import dal.interfaces.IHealthJournalObservation;
+import dal.interfaces.ITPLFunctionJournalObservation;
 
 import java.io.IOException;
 import java.sql.*;
 
-public class FunctionJournalObservationDao implements IFunctionJournalObservation {
+public class TPLFunctionJournalObservationDao implements ITPLFunctionJournalObservation{
 
     private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
     @Override
-    public FunctionJournalObservation getFunctionJournalObservation(int citizenId) throws SQLException, IOException {
+    public TPLFunctionJournalObservation getTPLFunctionJournalObservation(int citizenId) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
-            String sqlStatement = "SELECT * FROM FunctionJournalObservation Where CitizenFunctionObservationId = ?";
+            String sqlStatement = "SELECT * FROM TPLFunctionJournalObservation Where TPLCitizenTPLFunctionObservationId = ?";
             PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, citizenId);
 
@@ -31,7 +31,7 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
                 String condition = rs.getString(3);
 
                 basicConnectionPool.releaseConnection(connection);
-                return new FunctionJournalObservation(id, citizenIdFromDb, condition);
+                return new TPLFunctionJournalObservation(id, citizenIdFromDb, condition);
             }
             return null;
 
@@ -42,13 +42,13 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
 
 
     @Override
-    public FunctionJournalObservation createFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException, IOException {
+    public TPLFunctionJournalObservation createTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
         int insertedId = -1;
         try(Connection connection = basicConnectionPool.getConnection()) {
-            String sqlStatement = "INSERT INTO FunctionJournalObservation(CitizenFunctionObservationId, Observation) VALUES (?,?);";
+            String sqlStatement = "INSERT INTO TPLFunctionJournalObservation(TPLCitizenTPLFunctionObservationId, Observation) VALUES (?,?);";
             PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, functionJournalObservation.getCitizenId());
-            statement.setString(2, functionJournalObservation.getObservation());
+            statement.setInt(1, tplFunctionJournalObservation.getTemplateId());
+            statement.setString(2, tplFunctionJournalObservation.getObservation());
 
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
@@ -59,18 +59,18 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
         } catch (SQLException | IOException e) {
             throw e;
         }
-        return new FunctionJournalObservation(insertedId, functionJournalObservation.getCitizenId(), functionJournalObservation.getObservation());
+        return new TPLFunctionJournalObservation(insertedId, tplFunctionJournalObservation.getTemplateId(), tplFunctionJournalObservation.getObservation());
 
     }
 
     @Override
-    public void updateFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException, IOException {
+    public void updateTplFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
-            String sql = "UPDATE FunctionJournalObservation SET CitizenFunctionObservationId = ?, Observation = ? WHERE FunctionJournalObservationId=?;";
+            String sql = "UPDATE TPLFunctionJournalObservation SET TPLCitizenTPLFunctionObservationId = ?, Observation = ? WHERE TPLFunctionJournalObservationenId=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, functionJournalObservation.getCitizenId());
-            preparedStatement.setString(2, functionJournalObservation.getObservation());
-            preparedStatement.setInt(3, functionJournalObservation.getId());
+            preparedStatement.setInt(1, tplFunctionJournalObservation.getTemplateId());
+            preparedStatement.setString(2, tplFunctionJournalObservation.getObservation());
+            preparedStatement.setInt(3, tplFunctionJournalObservation.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
             basicConnectionPool.releaseConnection(connection);

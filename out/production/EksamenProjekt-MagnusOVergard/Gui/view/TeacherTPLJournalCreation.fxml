@@ -294,7 +294,7 @@
                                  <children>
                                     <ComboBox fx:id="cbMainHealthCategory" layoutX="14.0" layoutY="79.0" onAction="#onMainCategoryForHeatlhCb" prefWidth="150.0" promptText="Overkategori" />
                                     <ComboBox fx:id="cbUnderHealthCategory" layoutX="180.0" layoutY="79.0" onAction="#onSelectedHealthConditionCb" prefWidth="150.0" promptText="Underkategori" />
-                                    <Label fx:id="txtCondition" layoutX="393.0" layoutY="45.0" prefHeight="51.0" prefWidth="802.0" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="393.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="45.0">
+                                    <Label fx:id="txtCondition" layoutX="392.0" layoutY="27.0" prefHeight="51.0" prefWidth="802.0" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="392.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="27.0">
                                        <font>
                                           <Font size="35.0" />
                                        </font>
@@ -309,6 +309,7 @@
                                           <Font name="System Bold" size="23.0" />
                                        </font>
                                     </Label>
+                                    <Button layoutX="1203.0" layoutY="91.0" mnemonicParsing="false" onAction="#onOpenObservationForHealthBtn" prefHeight="27.0" prefWidth="122.0" text="observationer" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="91.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="715.0">
@@ -506,6 +507,7 @@
                                           </TitledPane>
                                       </panes>
                                     </Accordion>
+                                    <Button layoutX="1174.0" layoutY="250.0" mnemonicParsing="false" onAction="#onOpenObservationForFunctionBtn" text="Observationer" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

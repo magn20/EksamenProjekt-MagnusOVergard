@@ -303,11 +303,11 @@ public class CitizenController implements Initializable {
         tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
         tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
-        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
-        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
         tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
         tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
 
         tvfunctionsJournals.setItems(functionalJournals);
@@ -904,8 +904,10 @@ public class CitizenController implements Initializable {
     }
 
     public void onTableviewFunctionalJournal(MouseEvent mouseEvent) {
-        functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
-        updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+        if (!tvfunctionsJournals.getSelectionModel().isEmpty()){
+            functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
+            updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+        }
     }
 
     public void onObservationBtn(ActionEvent actionEvent) throws IOException {

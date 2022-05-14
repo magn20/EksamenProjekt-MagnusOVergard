@@ -224,8 +224,8 @@ public class TeacherTemplateController implements Initializable {
     private ObservableList<TPLGeneralInfo> tplGeneralInfos;
     private ObservableList<TPLHealthJournal> tplHealthJournals;
     private ObservableList<TPLFunctionalJournal> tplFunctionJournals;
-    TeacherController controller = new SceneSwapper().getTeacherController();
-
+    private TeacherController controller = new SceneSwapper().getTeacherController();
+    private SceneSwapper sceneSwapper = new SceneSwapper();
     TPLModel tplModel;
 
     @Override
@@ -277,11 +277,11 @@ public class TeacherTemplateController implements Initializable {
         tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
         tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
-        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
-        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
         tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
         tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
 
         tvfunctionsJournals.setItems(tplFunctionJournals);
@@ -895,5 +895,14 @@ public class TeacherTemplateController implements Initializable {
     public void onTableviewTPLFunctionalJournal(MouseEvent mouseEvent) {
         functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
         updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+    }
+
+    public void onOpenObservationForHealthBtn(ActionEvent actionEvent) throws IOException {
+
+        sceneSwapper.sceneSwitch(new Stage(), "TPLHealthJournalObservations.fxml");
+    }
+
+    public void onOpenObservationForFunctionBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "TPLFunctionJournalObservations.fxml");
     }
 }
