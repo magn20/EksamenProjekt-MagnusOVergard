@@ -70,7 +70,6 @@ public class BasicConnectionPool implements IConnectionPool {
         connectionPool.add(ds.getConnection());
         return ds.getConnection();
     }
-
     public int getSize() {
         return connectionPool.size() + usedConnections.size();
     }

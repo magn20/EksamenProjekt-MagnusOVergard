@@ -504,4 +504,8 @@ public class TeacherController implements Initializable {
 
         }
     }
+
+    public void onAutoGenStudentsBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "TeacherAutoGenStudents.fxml");
+    }
 }

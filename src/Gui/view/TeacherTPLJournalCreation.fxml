@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -67,61 +68,193 @@
                               <RowConstraints maxHeight="63.20003662109377" minHeight="10.0" prefHeight="56.00002441406252" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label prefHeight="27.0" prefWidth="142.0" text="Mestring" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="LivsHistorie" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Motivation" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Boligen indretning" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Ressourcer" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Hjælpemidler" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Roller" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Vaner" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Udannelse og Job" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Netværk" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Helbredsoplysninger" GridPane.columnIndex="3" GridPane.rowIndex="9">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="142.0" text="Mestring">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest" text="Borgerens bevidste eller ubevidstehåndtering af &#10;livet/sygdommen – bådeudfordringer og muligheder." wrapText="true" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="LivsHistorie">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest15" text="En beskrivelse af borgerens oplevelse afvæsentlige begivenheder,&#10;interesser oggøremål igennem livet" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label text="Motivation">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest1" text="Drivkraften bag at borgeren handler påen bestemt &#10;måde eller går i gangmed/opretholder en opgave/indsats." />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label text="Boligen indretning">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest16" text="En beskrivelse af boligens fysiske rammerog omgivelser,&#10;der har betydning forborgerens hverdagsliv og funktionsevne." />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label text="Ressourcer">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest11" text="De fysiske eller mentale kræfter, somborgerenen i et vist omfang har tilrådighed og kan udnytte. &#10;Fysiske kræfterkan fx være i form af fysisk sundhed ogstyrke. Mentale kræfter kan fx være iform &#10;af psykisk sundhed og styrke,herunder tanker og måder at forholde sigtil situationer og andre mennesker på. " wrapText="true" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label text="Hjælpemidler">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest17" text="Udstyr, produkter og teknologi somanvendes af borgeren i dagligeaktiviteter, &#10;inkl. sådanne som er tilpasseteller særligt fremstillet til, implanteret i&#10;placeret på eller nær personen, somanvender dem. &#10;(Inkl. almindeligegenstande og hjælpemidler og teknologitil personlig anvendelse). " />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <children>
+                                    <Label text="Roller">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest12" text="De roller som er særligt vigtige forborgeren &#10;i forhold til familie, arbejde ogsamfund" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <children>
+                                    <Label text="Vaner">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest13" text="Regelmæssig adfærd som borgeren hartillært gennem &#10;stadig gentagelse ogudførelse helt eller delvist ubevidst" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                 <children>
+                                    <Label text="Udannelse og Job">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest14" text="Nuværende eller tidligere uddannelsesog/eller erhvervsmæssig baggrund.&#10;Fx folkeskole, erhvervsuddannelse ogvideregående uddannelse" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                 <children>
+                                    <Label text="Netværk">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest18" text="Personer som er tæt på borgeren, ogsom giver praktisk og/ellerfølelsesmæssigt støtte &#10;og omsorgoverfor borgeren. Netværk kan væreoffentligt eller privat." />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="9">
+                                 <children>
+                                    <Label text="Helbredsoplysninger">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="?" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="System Bold" size="21.0" />
+                                       </font>
+                                       <tooltip>
+                                          <Tooltip fx:id="toolTipTest19" text="Helbredsoplysninger:Aktuelle eller tidligere sygdomme oghandicap &#10;der har betydning forborgerens situation.Sundhedsfaglige kontakter:Medarbejder eller enheder indenforsundhedsvæsenet &#10;borgeren er tilknyttet,fx øjenlæge, tandlæge, fodterapeut ellerafdeling/ambulatorium" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
                               <TextArea fx:id="txtCoping" prefHeight="200.0" prefWidth="358.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextArea fx:id="txtLifestory" prefHeight="60.0" prefWidth="616.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                               <TextArea fx:id="txtMovtivation" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />

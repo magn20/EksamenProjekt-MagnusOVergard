@@ -79,7 +79,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest" text="Borgerens bevidste eller ubevidstehåndtering af livet/sygdommen – bådeudfordringer og muligheder." />
+                                          <Tooltip fx:id="toolTipTest" text="Borgerens bevidste eller ubevidstehåndtering af &#10;livet/sygdommen – bådeudfordringer og muligheder." wrapText="true" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -96,7 +96,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest15" text="En beskrivelse af borgerens oplevelse afvæsentlige begivenheder, interesser oggøremål igennem livet" />
+                                          <Tooltip fx:id="toolTipTest15" text="En beskrivelse af borgerens oplevelse afvæsentlige begivenheder,&#10;interesser oggøremål igennem livet" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -113,7 +113,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest1" text="Drivkraften bag at borgeren handler påen bestemt måde eller går i gangmed/opretholder en opgave/indsats." />
+                                          <Tooltip fx:id="toolTipTest1" text="Drivkraften bag at borgeren handler påen bestemt &#10;måde eller går i gangmed/opretholder en opgave/indsats." />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -130,7 +130,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest16" text="En beskrivelse af boligens fysiske rammerog omgivelser, der har betydning forborgerens hverdagsliv og funktionsevne." />
+                                          <Tooltip fx:id="toolTipTest16" text="En beskrivelse af boligens fysiske rammerog omgivelser,&#10;der har betydning forborgerens hverdagsliv og funktionsevne." />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -147,7 +147,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest11" text="De fysiske eller mentale kræfter, somborgerenen i et vist omfang har tilrådighed og kan udnytte. Fysiske kræfterkan fx være i form af fysisk sundhed ogstyrke. Mentale kræfter kan fx være iform af psykisk sundhed og styrke,herunder tanker og måder at forholde sigtil situationer og andre mennesker på. " />
+                                          <Tooltip fx:id="toolTipTest11" text="De fysiske eller mentale kræfter, somborgerenen i et vist omfang har tilrådighed og kan udnytte. &#10;Fysiske kræfterkan fx være i form af fysisk sundhed ogstyrke. Mentale kræfter kan fx være iform &#10;af psykisk sundhed og styrke,herunder tanker og måder at forholde sigtil situationer og andre mennesker på. " wrapText="true" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -164,7 +164,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest17" text="Udstyr, produkter og teknologi somanvendes af borgeren i dagligeaktiviteter, inkl. sådanne som er tilpasseteller særligt fremstillet til, implanteret i,placeret på eller nær personen, somanvender dem. (Inkl. almindeligegenstande og hjælpemidler og teknologitil personlig anvendelse). " />
+                                          <Tooltip fx:id="toolTipTest17" text="Udstyr, produkter og teknologi somanvendes af borgeren i dagligeaktiviteter, &#10;inkl. sådanne som er tilpasseteller særligt fremstillet til, implanteret i&#10;placeret på eller nær personen, somanvender dem. &#10;(Inkl. almindeligegenstande og hjælpemidler og teknologitil personlig anvendelse). " />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -181,7 +181,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest12" text="De roller som er særligt vigtige forborgeren i forhold til familie, arbejde ogsamfund" />
+                                          <Tooltip fx:id="toolTipTest12" text="De roller som er særligt vigtige forborgeren &#10;i forhold til familie, arbejde ogsamfund" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -198,7 +198,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest13" text="Regelmæssig adfærd som borgeren hartillært gennem stadig gentagelse ogudførelse helt eller delvist ubevidst" />
+                                          <Tooltip fx:id="toolTipTest13" text="Regelmæssig adfærd som borgeren hartillært gennem &#10;stadig gentagelse ogudførelse helt eller delvist ubevidst" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -215,7 +215,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest14" text="Nuværende eller tidligere uddannelsesog/eller erhvervsmæssig baggrund.Fx folkeskole, erhvervsuddannelse ogvideregående uddannelse" />
+                                          <Tooltip fx:id="toolTipTest14" text="Nuværende eller tidligere uddannelsesog/eller erhvervsmæssig baggrund.&#10;Fx folkeskole, erhvervsuddannelse ogvideregående uddannelse" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -232,7 +232,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest18" text="Personer som er tæt på borgeren, ogsom giver praktisk og/ellerfølelsesmæssigt støtte og omsorgoverfor borgeren. Netværk kan væreoffentligt eller privat." />
+                                          <Tooltip fx:id="toolTipTest18" text="Personer som er tæt på borgeren, ogsom giver praktisk og/ellerfølelsesmæssigt støtte &#10;og omsorgoverfor borgeren. Netværk kan væreoffentligt eller privat." />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -249,7 +249,7 @@
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                        <tooltip>
-                                          <Tooltip fx:id="toolTipTest19" text="Helbredsoplysninger:Aktuelle eller tidligere sygdomme oghandicap der har betydning forborgerens situation.Sundhedsfaglige kontakter:Medarbejder eller enheder indenforsundhedsvæsenet borgeren er tilknyttet,fx øjenlæge, tandlæge, fodterapeut ellerafdeling/ambulatorium" />
+                                          <Tooltip fx:id="toolTipTest19" text="Helbredsoplysninger:Aktuelle eller tidligere sygdomme oghandicap &#10;der har betydning forborgerens situation.Sundhedsfaglige kontakter:Medarbejder eller enheder indenforsundhedsvæsenet &#10;borgeren er tilknyttet,fx øjenlæge, tandlæge, fodterapeut ellerafdeling/ambulatorium" />
                                        </tooltip>
                                     </Label>
                                  </children>
