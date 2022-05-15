@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="646.0" prefWidth="873.0" styleClass="backgroundingBlue" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.controller.StudentController">
@@ -48,16 +49,12 @@
                               <Button mnemonicParsing="false" onAction="#onOpenCitizenJournalBtn" text=" Omsorgs journal" />
                            </children>
                         </VBox>
+                        <Line endX="9.20001220703125" endY="-4.4000244140625" layoutX="460.0" layoutY="122.0" startX="9.20001220703125" startY="-61.20000457763672" AnchorPane.rightAnchor="396.6999877929687" AnchorPane.topAnchor="60.29999542236328" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
             <Tab text="Settings">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
-            <Tab text="Oversigt">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>

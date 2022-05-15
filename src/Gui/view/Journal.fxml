@@ -36,7 +36,7 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="1201.0" layoutY="8.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="65.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
+      <Button layoutX="1201.0" layoutY="8.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="65.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
       <TabPane layoutX="2.0" layoutY="85.0" prefHeight="675.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="84.0">
          <tabs>
             <Tab text="Generelle infomation">
@@ -268,7 +268,6 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="12">
                                  <children>
                                     <Button layoutX="464.0" layoutY="13.0" mnemonicParsing="false" onAction="#onSaveGeneralInfoBtn" prefHeight="35.0" prefWidth="95.0" text="Gem" AnchorPane.bottomAnchor="14.199999999999996" AnchorPane.rightAnchor="15.199999999999932" />
-                                    <Button layoutX="361.0" layoutY="13.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="35.0" prefWidth="95.0" text="Close" />
                                  </children>
                               </AnchorPane>
                               <Label text="Generelle Informationer" GridPane.columnIndex="1">

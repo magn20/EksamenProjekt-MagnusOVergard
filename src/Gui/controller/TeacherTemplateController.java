@@ -242,16 +242,13 @@ public class TeacherTemplateController implements Initializable {
         setComboboxMainHealth();
         setComboboxExpectation();
 
-        // gets healthJournals from one specific template
+        //set up the template with all healthJournals from that template.
         try {
-            getTPLHealthJournals();
-            getTPLFunctionsJournals();
+            setupTableviewTPLHealthJournal();
+            setupTableviewTPLFunctionalJournal();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        //set up the template with all healthJournals from that template.
-        setupTableviewTPLHealthJournal();
-        setupTableviewTPLFunctionalJournal();
         // Function ComboBox Setup
         setupComboboxForFunctionJournal();
 
@@ -284,6 +281,7 @@ public class TeacherTemplateController implements Initializable {
         tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
         tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
 
+        getTPLFunctionsJournals();
         tvfunctionsJournals.setItems(tplFunctionJournals);
     }
 
@@ -291,7 +289,7 @@ public class TeacherTemplateController implements Initializable {
     /**
      * sets up the tableview with all TPLHealthJournal objects that one specific Template has.
      */
-    public void setupTableviewTPLHealthJournal(){
+    public void setupTableviewTPLHealthJournal() throws SQLException, IOException {
         tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
         tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
@@ -299,6 +297,7 @@ public class TeacherTemplateController implements Initializable {
         tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
         tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
 
+        getTPLHealthJournals();
         tvTPLHealthJournal.setItems(tplHealthJournals);
 
 
@@ -882,12 +881,12 @@ public class TeacherTemplateController implements Initializable {
 
             }
 
-            setupTableviewTPLFunctionalJournal();
         }catch (Exception exception){
             exception.printStackTrace();
             DisplayMessage.displayError(exception);
         }
 
+        setupTableviewTPLFunctionalJournal();
     }
 
     /**
@@ -902,8 +901,10 @@ public class TeacherTemplateController implements Initializable {
     }
 
     public void onTableviewTPLFunctionalJournal(MouseEvent mouseEvent) {
-        functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
-        updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+        if(!tvfunctionsJournals.getSelectionModel().isEmpty()){
+            functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
+            updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+        }
     }
 
     public void onOpenObservationForHealthBtn(ActionEvent actionEvent) throws IOException {
