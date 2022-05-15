@@ -275,6 +275,9 @@
                            </font>
                         </Label>
                         <Button layoutX="481.0" layoutY="60.0" mnemonicParsing="false" onAction="#onAutoGenStudentsBtn" text="Lav Elever" />
+                        <Line endX="45.20001220703125" endY="24.79999542236328" layoutX="415.0" layoutY="60.0" startX="45.20001220703125" startY="-21.599998474121094" />
+                        <Line endX="45.20001220703125" endY="24.79999542236328" layoutX="-33.0" layoutY="58.0" startX="45.20001220703125" startY="-21.599998474121094" />
+                        <Line endX="45.20001220703125" endY="24.79999542236328" layoutX="-32.0" layoutY="141.0" startX="45.20001220703125" startY="-21.599998474121094" />
                      </children>
                   </AnchorPane>
                </content>

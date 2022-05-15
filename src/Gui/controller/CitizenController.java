@@ -880,7 +880,25 @@ public class CitizenController implements Initializable {
                 }else{
                     relevancy = "Ikke Relavant";
                 }
-                FunctionalJournal functionalJournal = new FunctionalJournal(-1,citizen.getId(), functionConditionString,date.toString(), cbNiveauFunction.getSelectionModel().getSelectedItem().toString(), relevancy, txtNoteFunction.getText(), cbExpectedFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(), txtCitizenExpecationFunction.getText());
+
+
+                String niveau = "";
+                String expected = "";
+                String execution = "";
+                String executionLimits = "";
+                if (!cbExecutionLimitsFunction.getSelectionModel().isEmpty()) {
+                    executionLimits = cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExecutionFunction.getSelectionModel().isEmpty()) {
+                    execution = cbExecutionFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExpectedFunction.getSelectionModel().isEmpty()) {
+                    expected = cbExpectedFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbNiveauFunction.getSelectionModel().isEmpty()) {
+                    niveau = cbNiveauFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                FunctionalJournal functionalJournal = new FunctionalJournal(-1,citizen.getId(), functionConditionString,date.toString(), niveau, relevancy, txtNoteFunction.getText(), expected, execution, executionLimits, txtCitizenExpecationFunction.getText());
                 citizenModel.createFunctionalJournal(functionalJournal);
                 updateFunctionJournalView(functionalJournal);
 
