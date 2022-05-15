@@ -292,10 +292,16 @@ public class TeacherController implements Initializable {
                     for (TPLHealthJournal tplHealthJournal : tplModel.getTPLHealthJournal(template.getId())) {
                         citizenModel.createHealthJournal(new HealthJournal(-1, citizen.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
                     }
-                    TPLFunctionJournalObservation tplFunctionJournalObservation = tplModel.getTPLFunctionJournalObservation(template.getId());
-                    citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1,citizen.getId(),tplFunctionJournalObservation.getObservation()));
-                    TPLHealthJournalObservation tplHealthJournalObservation = tplModel.getTPLHealthJournalObservation(template.getId());
-                    citizenModel.createHealthJournalObservation(new HealthJournalObservation(-1, citizen.getId(), tplHealthJournalObservation.getObservation()));
+
+                    if (tplModel.getTPLFunctionJournalObservation(template.getId()) != null){
+                        TPLFunctionJournalObservation tplFunctionJournalObservation = tplModel.getTPLFunctionJournalObservation(template.getId());
+                        citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1,citizen.getId(),tplFunctionJournalObservation.getObservation()));
+
+                    }
+                    if ( tplModel.getTPLHealthJournalObservation(template.getId()) != null){
+                        TPLHealthJournalObservation tplHealthJournalObservation = tplModel.getTPLHealthJournalObservation(template.getId());
+                        citizenModel.createHealthJournalObservation(new HealthJournalObservation(-1, citizen.getId(), tplHealthJournalObservation.getObservation()));
+                    }
 
                     // updates the tableview.
                     Platform.runLater(new Runnable() {

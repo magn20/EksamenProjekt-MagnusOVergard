@@ -869,11 +869,20 @@ public class TeacherTemplateController implements Initializable {
                 }else{
                     relevancy = "Ikke Relavant";
                 }
-                TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1,controller.getTemplateForEdit().getId(), functionConditionString,date.toString(), cbNiveauFunction.getSelectionModel().getSelectedItem().toString(), relevancy, txtNoteFunction.getText(), cbExpectedFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionFunction.getSelectionModel().getSelectedItem().toString(), cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(), txtCitizenExpecationFunction.getText());
+                TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1,controller.getTemplateForEdit().getId(),
+                        functionConditionString,date.toString(),
+                        cbNiveauFunction.getSelectionModel().getSelectedItem().toString(),
+                        relevancy, txtNoteFunction.getText(),
+                        cbExpectedFunction.getSelectionModel().getSelectedItem().toString(),
+                        cbExecutionFunction.getSelectionModel().getSelectedItem().toString(),
+                        cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString(),
+                        txtCitizenExpecationFunction.getText());
                 tplModel.createTPLFunctionalJournal(tplFunctionalJournal);
                 updateFunctionJournalView(tplFunctionalJournal);
 
             }
+
+            setupTableviewTPLFunctionalJournal();
         }catch (Exception exception){
             exception.printStackTrace();
             DisplayMessage.displayError(exception);

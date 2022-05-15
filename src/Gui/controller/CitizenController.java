@@ -885,6 +885,7 @@ public class CitizenController implements Initializable {
                 updateFunctionJournalView(functionalJournal);
 
             }
+            setupTableviewFunctionalJournal();
         }catch (Exception exception){
             exception.printStackTrace();
             DisplayMessage.displayError(exception);

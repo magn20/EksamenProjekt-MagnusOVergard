@@ -24,10 +24,10 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button layoutX="325.0" layoutY="465.0" mnemonicParsing="false" onAction="#onAddBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Add" />
-      <Button layoutX="226.0" layoutY="467.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Close" />
+      <Button fx:id="btnAdd" layoutX="325.0" layoutY="465.0" mnemonicParsing="false" onAction="#onAddBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Add" />
+      <Button fx:id="btnClose" layoutX="226.0" layoutY="467.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Close" />
       <TextArea fx:id="txtStudents" layoutX="23.0" layoutY="98.0" prefHeight="356.0" prefWidth="366.0" />
-      <Label layoutX="32.0" layoutY="67.0" text="Ind sæt Fornavne og Efternavne">
+      <Label fx:id="lblGuide" layoutX="32.0" layoutY="67.0" text="Ind sæt Fornavne og Efternavne">
          <font>
             <Font size="15.0" />
          </font>

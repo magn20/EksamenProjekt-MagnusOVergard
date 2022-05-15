@@ -24,7 +24,7 @@ public class BasicConnectionPool implements IConnectionPool {
 
         List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            pool.add(createConnection());
+            connectionPool.add(createConnection());
         }
         return new BasicConnectionPool();
     }
@@ -33,6 +33,7 @@ public class BasicConnectionPool implements IConnectionPool {
     public Connection getConnection() throws SQLException, IOException {
         if (connectionPool.isEmpty()){
             create();
+
         }
         Connection connection = connectionPool.remove(connectionPool.size() - 1);
         if (!connection.isClosed()){
