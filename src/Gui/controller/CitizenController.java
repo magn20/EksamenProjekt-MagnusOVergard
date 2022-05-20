@@ -31,7 +31,8 @@ import java.util.ResourceBundle;
 public class CitizenController implements Initializable {
 
 
-    public Tooltip toolTipTest;
+    @FXML
+    private Tooltip toolTipTest;
     // used  for all tabs
     @FXML
     private Label lblTemplate;
@@ -223,11 +224,11 @@ public class CitizenController implements Initializable {
     private ObservableList<HealthJournal> healthJournals;
     private ObservableList<FunctionalJournal> functionalJournals;
 
-    SingletonUser singletonUser = SingletonUser.getInstance();
+    private SingletonUser singletonUser = SingletonUser.getInstance();
 
-    CitizenModel citizenModel;
-    Citizen citizen;
-    SceneSwapper sceneSwapper;
+    private CitizenModel citizenModel;
+    private Citizen citizen;
+    private SceneSwapper sceneSwapper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -241,7 +242,7 @@ public class CitizenController implements Initializable {
         functionConditionString = "";
         healthConditionString = "";
 
-
+        //changes the time for when tooltip appears.
         toolTipTest.setShowDelay(Duration.millis(0.00));
 
         // sets up the combobox for HealthJournal.
@@ -272,57 +273,14 @@ public class CitizenController implements Initializable {
                 generalInfos.addAll(citizenModel.getGeneralInfo(citizen.getId()));
                 setTextFieldsForGeneralInfo(generalInfos.get(0));
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
     }
 
-
-    /**
-     * sets up the tableview with all HealthJournal objects that one specific Template has.
-     */
-    public void setupTableviewHealthJournal(){
-        tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
-        tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
-        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-
-        tvHealthJournal.setItems(healthJournals);
-    }
-
-    /**
-     * setup tableview for FunctionalJournal
-     */
-    private void setupTableviewFunctionalJournal() {
-        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
-        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
-        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
-        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
-        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
-        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
-
-        tvfunctionsJournals.setItems(functionalJournals);
-    }
-
-
-
-    /**
-     * closes the stage
-     * @param actionEvent
-     */
-    public void onCloseBtn(ActionEvent actionEvent) {
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
+    /** =======================================================================================================
+     ============================================ General information =========================================
+     ======================================================================================================= */
 
     /**
      * saves the general information to database.
@@ -353,7 +311,6 @@ public class CitizenController implements Initializable {
             citizenModel.updateGeneralInfo(generalInfo);
             setTextFieldsForGeneralInfo(generalInfo);
         }
-
         lblStatus.setText("Status: " + "Updated Generelle Informationer");
     }
 
@@ -376,28 +333,25 @@ public class CitizenController implements Initializable {
     }
 
 
+
+
+    /** =======================================================================================================
+     ============================================ Health Journal ==============================================
+     ======================================================================================================= */
+
     /**
-     * imitates a shift og control on a textarea, by hitting tab or enter key.
-     * @param event
+     * sets up the tableview with all HealthJournal objects that one specific Template has.
      */
-    public void handle(KeyEvent event) {
-        KeyCode code = event.getCode();
+    public void setupTableviewHealthJournal(){
+        tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
 
-        if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown() || code == KeyCode.ENTER && !event.isShiftDown() && !event.isControlDown()) {
-            event.consume();
-            Node node = (Node) event.getSource();
-            try {
-                Robot robot = new Robot();
-                robot.keyPress(KeyCode.CONTROL.getCode());
-                robot.keyPress(KeyCode.TAB.getCode());
-                robot.delay(10);
-                robot.keyRelease(KeyCode.TAB.getCode());
-                robot.keyRelease(KeyCode.CONTROL.getCode());
-            }
-            catch (AWTException e) { }
-        }
+        tvHealthJournal.setItems(healthJournals);
     }
-
 
     /**
      * sets up main Health journal combobox
@@ -526,14 +480,10 @@ public class CitizenController implements Initializable {
         if (healthConditionString.equals("")){
             DisplayMessage.displayMessage("Vælg en helbredstilstand først");
         }else {
-
-
-
             getHealthJournals();
 
         for (HealthJournal healthJournal : healthJournals){
             if (cbUnderHealthCategory.getSelectionModel().getSelectedItem().equals(healthJournal.getCondition())){
-
                 healthJournal.setNote(txtNote.getText());
                 healthJournal.setExpectation((String) cbExpectation.getSelectionModel().getSelectedItem());
                 healthJournal.setEvaluation(txtEvaluation.getText());
@@ -666,6 +616,27 @@ public class CitizenController implements Initializable {
         healthConditionString = tvHealthJournal.getSelectionModel().getSelectedItem().getCondition();
     }
 
+    /** =======================================================================================================
+     ============================================ Functional Journal ==========================================
+     ======================================================================================================= */
+
+
+    /**
+     * setup tableview for FunctionalJournal
+     */
+    private void setupTableviewFunctionalJournal() {
+        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
+        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
+        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
+
+        tvfunctionsJournals.setItems(functionalJournals);
+    }
 
     /**
      * Calls methods to update the screen of Function Journal, Depending on if there is a function journal for that condition
@@ -929,6 +900,12 @@ public class CitizenController implements Initializable {
         }
     }
 
+    /** =======================================================================================================
+     ============================================ stage swapper ===============================================
+     ======================================================================================================= */
+
+
+
     public void onObservationBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "HealthJournalObservations.fxml");
     }
@@ -936,4 +913,40 @@ public class CitizenController implements Initializable {
     public void onFunctionalObservationBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "FunctionJournalObservations.fxml");
     }
+
+    /**
+     * closes the stage
+     * @param actionEvent
+     */
+    public void onCloseBtn(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /** =======================================================================================================
+     ============================================ Extra =======================================================
+     ======================================================================================================= */
+
+    /**
+     * imitates a shift og control on a textarea, by hitting tab or enter key.
+     * @param event
+     */
+    public void handle(KeyEvent event) {
+        KeyCode code = event.getCode();
+
+        if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown() || code == KeyCode.ENTER && !event.isShiftDown() && !event.isControlDown()) {
+            event.consume();
+            Node node = (Node) event.getSource();
+            try {
+                Robot robot = new Robot();
+                robot.keyPress(KeyCode.CONTROL.getCode());
+                robot.keyPress(KeyCode.TAB.getCode());
+                robot.delay(10);
+                robot.keyRelease(KeyCode.TAB.getCode());
+                robot.keyRelease(KeyCode.CONTROL.getCode());
+            }
+            catch (AWTException e) { }
+        }
+    }
+
 }

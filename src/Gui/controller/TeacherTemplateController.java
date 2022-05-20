@@ -224,7 +224,7 @@ public class TeacherTemplateController implements Initializable {
     private ObservableList<TPLFunctionalJournal> tplFunctionJournals;
     private TeacherController controller = new SceneSwapper().getTeacherController();
     private SceneSwapper sceneSwapper = new SceneSwapper();
-    TPLModel tplModel;
+    private TPLModel tplModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -259,56 +259,12 @@ public class TeacherTemplateController implements Initializable {
             tplGeneralInfos.addAll(tplModel.getTPLGeneralInfo(template.getId()));
             setTextFieldsForGeneralInfo(tplGeneralInfos.get(0));
         }
-
-
     }
 
-    /**
-     * setup tableview for TPLFunctionalJournal
-     */
-    private void setupTableviewTPLFunctionalJournal() {
-        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
-        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
-        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
-        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
-        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
-        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
+    /** =======================================================================================================
+     ============================================ Template General Information ================================
+     ======================================================================================================= */
 
-        getTPLFunctionsJournals();
-        tvfunctionsJournals.setItems(tplFunctionJournals);
-    }
-
-
-    /**
-     * sets up the tableview with all TPLHealthJournal objects that one specific Template has.
-     */
-    public void setupTableviewTPLHealthJournal() throws SQLException, IOException {
-        tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
-        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
-        tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
-        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
-        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
-
-        getTPLHealthJournals();
-        tvTPLHealthJournal.setItems(tplHealthJournals);
-
-
-    }
-
-
-    /**
-     * closes the stage
-     *
-     * @param actionEvent
-     */
-    public void onCloseBtn(ActionEvent actionEvent) {
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
 
     /**
      * saves the general information to database.
@@ -368,28 +324,9 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
-    /**
-     * imitates a shift og control on a textarea, by hitting tab or enter key.
-     *
-     * @param event
-     */
-    public void handle(KeyEvent event) {
-        KeyCode code = event.getCode();
-
-        if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown() || code == KeyCode.ENTER && !event.isShiftDown() && !event.isControlDown()) {
-            event.consume();
-            Node node = (Node) event.getSource();
-            try {
-                Robot robot = new Robot();
-                robot.keyPress(KeyCode.CONTROL.getCode());
-                robot.keyPress(KeyCode.TAB.getCode());
-                robot.delay(10);
-                robot.keyRelease(KeyCode.TAB.getCode());
-                robot.keyRelease(KeyCode.CONTROL.getCode());
-            } catch (AWTException e) {
-            }
-        }
-    }
+    /** =======================================================================================================
+     ============================================ Template Health Journal =====================================
+     ======================================================================================================= */
 
 
     /**
@@ -501,6 +438,21 @@ public class TeacherTemplateController implements Initializable {
 
     }
 
+    /**
+     * sets up the tableview with all TPLHealthJournal objects that one specific Template has.
+     */
+    public void setupTableviewTPLHealthJournal() throws SQLException, IOException {
+        tcCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcEvaluation.setCellValueFactory(cellData -> cellData.getValue().evaluationProperty());
+        tcExpactation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcRelanacy.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+
+        getTPLHealthJournals();
+        tvTPLHealthJournal.setItems(tplHealthJournals);
+    }
+
 
     /**
      * when a selected maincategory set undercategories  that fits with to that main Category
@@ -525,7 +477,6 @@ public class TeacherTemplateController implements Initializable {
 
             for (TPLHealthJournal tplHealthJournal : tplHealthJournals) {
                 if (healthConditionString.equals(tplHealthJournal.getCondition())) {
-
                     tplHealthJournal.setNote(txtNote.getText());
                     tplHealthJournal.setExpectation((String) cbExpectation.getSelectionModel().getSelectedItem());
                     tplHealthJournal.setEvaluation(txtEvaluation.getText());
@@ -606,7 +557,6 @@ public class TeacherTemplateController implements Initializable {
      * get all TPLHealthJournals from one template.
      */
     private void getTPLHealthJournals() throws SQLException, IOException {
-
         if (!tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()).isEmpty()) {
             tplHealthJournals.clear();
             tplHealthJournals.addAll(tplModel.getTPLHealthJournal(controller.getTemplateForEdit().getId()));
@@ -659,40 +609,155 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
+    /** =======================================================================================================
+     ============================================ Template Function Journal ===================================
+     ======================================================================================================= */
+
+
+    /**
+     * setup tableview for TPLFunctionalJournal
+     */
+    private void setupTableviewTPLFunctionalJournal() {
+        tcFunctionCondition.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        tcFunctionsLastUpdate.setCellValueFactory(cellData -> cellData.getValue().lastUpdateProperty());
+        tcFunctionalCitizenExpactation.setCellValueFactory(cellData -> cellData.getValue().citizenExpectationProperty());
+        tcFunctionsSaveAs.setCellValueFactory(cellData -> cellData.getValue().relevancyProperty());
+        tcFunctionsNote.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
+        tcFunctonsExpectation.setCellValueFactory(cellData -> cellData.getValue().expectationProperty());
+        tcFunctionsNiveau.setCellValueFactory(cellData -> cellData.getValue().niveauProperty());
+        tcFunctionalEvaluation.setCellValueFactory(cellData -> cellData.getValue().executionProperty());
+        tcFunctionalEvaluationLimits.setCellValueFactory(cellData -> cellData.getValue().executionLimitsProperty());
+
+        getTPLFunctionsJournals();
+        tvfunctionsJournals.setItems(tplFunctionJournals);
+    }
+
+
+    /**
+     * sets functional condition if a functional condition is selected in tableview for FunctionalJournals
+     */
+    public void onTableviewTPLFunctionalJournal(MouseEvent mouseEvent) {
+        if (!tvfunctionsJournals.getSelectionModel().isEmpty()) {
+            functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
+            updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
+        }
+    }
+
+
+    /**
+     * Either updates or Creates a new TPLFunctionJournal for Databasen, depending on if already exist
+     */
+    public void onSaveTPLFunctionJournalBtn(ActionEvent actionEvent) throws SQLException {
+        try {
+            Date date = new Date();
+            getTPLFunctionsJournals();
+            boolean hasSaved = false;
+
+
+            if (!tplFunctionJournals.isEmpty()) {
+                //checks for tplfunctionaljournal exist.
+                for (TPLFunctionalJournal tplFunctionalJournal : tplFunctionJournals) {
+                    if (tplFunctionalJournal.getCondition().equals(functionConditionString)) {
+
+                        //overwrite tplfunctionaljournal if exist with new data.
+                        tplFunctionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
+                        tplFunctionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
+                        tplFunctionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
+                        tplFunctionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
+                        tplFunctionalJournal.setNote(txtNoteFunction.getText());
+                        tplFunctionalJournal.setCitizenExpectation(txtCitizenExpecationFunction.getText());
+                        tplFunctionalJournal.setLastUpdate(date.toString());
+
+                        //checks what the relevancy is
+                        if (checkboxFunctionActive.isSelected()) {
+                            tplFunctionalJournal.setRelevancy("Aktiv");
+                        } else {
+                            tplFunctionalJournal.setRelevancy("Ikke Relavant");
+                        }
+                        tplModel.updateTPLFunctionalJournal(tplFunctionalJournal);
+                        hasSaved = true;
+                        break;
+                    }
+                }
+            }
+            // if tplFunctionalJournal doesn't exist already.
+            if (!hasSaved) {
+                String relevancy = "";
+                // checks for the relevancy
+                if (checkboxFunctionActive.isSelected()) {
+                    relevancy = "Aktiv";
+                } else {
+                    relevancy = "Ikke Relavant";
+                }
+
+                String niveau = "";
+                String expected = "";
+                String execution = "";
+                String executionLimits = "";
+                //assign local variables with selected combobox values.
+                if (!cbExecutionLimitsFunction.getSelectionModel().isEmpty()) {
+                    executionLimits = cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExecutionFunction.getSelectionModel().isEmpty()) {
+                    execution = cbExecutionFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExpectedFunction.getSelectionModel().isEmpty()) {
+                    expected = cbExpectedFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbNiveauFunction.getSelectionModel().isEmpty()) {
+                    niveau = cbNiveauFunction.getSelectionModel().getSelectedItem().toString();
+                }
+
+                //creates new tplFunctionalJournal
+                TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1, controller.getTemplateForEdit().getId(), functionConditionString, date.toString(), niveau, relevancy, txtNoteFunction.getText(), expected, execution, executionLimits, txtCitizenExpecationFunction.getText());
+                tplModel.createTPLFunctionalJournal(tplFunctionalJournal);
+                updateFunctionJournalView(tplFunctionalJournal);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            DisplayMessage.displayError(exception);
+        }
+        setupTableviewTPLFunctionalJournal();
+    }
+
+
+    /**
+     * gets all TPLFunctionsJournals for a template on the Database
+     */
+    private void getTPLFunctionsJournals() {
+        if (!tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()).isEmpty()) {
+            tplFunctionJournals.clear();
+            tplFunctionJournals.addAll(tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()));
+        }
+    }
+
     /**
      * Calls methods to update the screen of Function Journal, Depending on if there is a function journal for that condition
-     *
-     * @param actionEvent on button pressed.
      */
     public void onFunctionJournalUpdateScreen(ActionEvent actionEvent) {
         getTPLFunctionsJournals();
         clearFunctionJournalView();
-
         boolean hasUpdate = false;
+
 
         if (!tplFunctionJournals.isEmpty()) {
             for (TPLFunctionalJournal tplFunctionalJournal : tplFunctionJournals) {
                 if (tplFunctionalJournal.getCondition().equals(getFunctionalCondition())) {
-
                     updateFunctionJournalView(tplFunctionalJournal);
                     hasUpdate = true;
                     break;
                 }
-
             }
         }
-
         if (!hasUpdate) {
             clearFunctionJournalView();
         }
         lblStatus.setText(getFunctionalCondition());
-
     }
+
 
     /**
      * updates the View for Functions Journals
-     *
-     * @param tplFunctionalJournal
      */
     public void updateFunctionJournalView(TPLFunctionalJournal tplFunctionalJournal) {
         cbNiveauFunction.getSelectionModel().select(tplFunctionalJournal.getNiveau());
@@ -713,11 +778,11 @@ public class TeacherTemplateController implements Initializable {
         }
     }
 
+
     /**
      * clears the view for data
      */
     public void clearFunctionJournalView() {
-
         cbNiveauFunction.getSelectionModel().clearSelection();
         cbExecutionFunction.getSelectionModel().clearSelection();
         cbExecutionLimitsFunction.getSelectionModel().clearSelection();
@@ -730,11 +795,37 @@ public class TeacherTemplateController implements Initializable {
 
     }
 
+    /**
+     * sets up the combobox with value for function journal
+     */
+    public void setupComboboxForFunctionJournal() {
+
+        cbNiveauFunction.getItems().add("0");
+        cbNiveauFunction.getItems().add("1");
+        cbNiveauFunction.getItems().add("2");
+        cbNiveauFunction.getItems().add("3");
+        cbNiveauFunction.getItems().add("4");
+
+        cbExpectedFunction.getItems().add("0");
+        cbExpectedFunction.getItems().add("1");
+        cbExpectedFunction.getItems().add("2");
+        cbExpectedFunction.getItems().add("3");
+        cbExpectedFunction.getItems().add("4");
+
+        cbExecutionFunction.getItems().add("Udfører selv");
+        cbExecutionFunction.getItems().add("Udfører dele selv");
+        cbExecutionFunction.getItems().add("Udfører ikke selv");
+        cbExecutionFunction.getItems().add("Ikke relavant");
+
+        cbExecutionLimitsFunction.getItems().add("Oplever begrænsinger");
+        cbExecutionLimitsFunction.getItems().add("Oplever ikke begrænsinger");
+    }
+
 
     /**
      * checks which button is pressed in the list of Function Conditions
      *
-     * @return
+     * @return condition for template Functional condition
      */
     public String getFunctionalCondition() {
         String condition = "";
@@ -804,125 +895,13 @@ public class TeacherTemplateController implements Initializable {
         return condition;
     }
 
-    /**
-     * sets up the combobox with value for function journal
-     */
-    public void setupComboboxForFunctionJournal() {
-
-        cbNiveauFunction.getItems().add("0");
-        cbNiveauFunction.getItems().add("1");
-        cbNiveauFunction.getItems().add("2");
-        cbNiveauFunction.getItems().add("3");
-        cbNiveauFunction.getItems().add("4");
-
-        cbExpectedFunction.getItems().add("0");
-        cbExpectedFunction.getItems().add("1");
-        cbExpectedFunction.getItems().add("2");
-        cbExpectedFunction.getItems().add("3");
-        cbExpectedFunction.getItems().add("4");
-
-        cbExecutionFunction.getItems().add("Udfører selv");
-        cbExecutionFunction.getItems().add("Udfører dele selv");
-        cbExecutionFunction.getItems().add("Udfører ikke selv");
-        cbExecutionFunction.getItems().add("Ikke relavant");
-
-        cbExecutionLimitsFunction.getItems().add("Oplever begrænsinger");
-        cbExecutionLimitsFunction.getItems().add("Oplever ikke begrænsinger");
-    }
 
     /**
-     * Either updates or Creates a new TPLFunctionJournal for Databasen, depending on if already exist
-     *
-     * @param actionEvent
+     * =======================================================================================================
+     * ============================================ Scene Switch ================================================
+     * =======================================================================================================
      */
-    public void onSaveTPLFunctionJournalBtn(ActionEvent actionEvent) throws SQLException {
-        try {
 
-            Date date = new Date();
-            getTPLFunctionsJournals();
-            boolean hasSaved = false;
-            if (!tplFunctionJournals.isEmpty()) {
-
-                for (TPLFunctionalJournal tplFunctionalJournal : tplFunctionJournals) {
-                    if (tplFunctionalJournal.getCondition().equals(functionConditionString)) {
-
-                        tplFunctionalJournal.setNiveau((String) cbNiveauFunction.getSelectionModel().getSelectedItem());
-                        tplFunctionalJournal.setExecution((String) cbExecutionFunction.getSelectionModel().getSelectedItem());
-                        tplFunctionalJournal.setExecutionLimits(cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString());
-                        tplFunctionalJournal.setExpectation(cbExpectedFunction.getSelectionModel().getSelectedItem().toString());
-                        tplFunctionalJournal.setNote(txtNoteFunction.getText());
-                        tplFunctionalJournal.setCitizenExpectation(txtCitizenExpecationFunction.getText());
-                        tplFunctionalJournal.setLastUpdate(date.toString());
-                        if (checkboxFunctionActive.isSelected()) {
-                            tplFunctionalJournal.setRelevancy("Aktiv");
-                        } else {
-                            tplFunctionalJournal.setRelevancy("Ikke Relavant");
-                        }
-                        tplModel.updateTPLFunctionalJournal(tplFunctionalJournal);
-                        hasSaved = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!hasSaved) {
-
-                String relevancy = "";
-                if (checkboxFunctionActive.isSelected()) {
-                    relevancy = "Aktiv";
-                } else {
-                    relevancy = "Ikke Relavant";
-                }
-
-                String niveau = "";
-                String expected = "";
-                String execution = "";
-                String executionLimits = "";
-
-                if (!cbExecutionLimitsFunction.getSelectionModel().isEmpty()) {
-                    executionLimits = cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString();
-                }
-                if (!cbExecutionFunction.getSelectionModel().isEmpty()) {
-                    execution = cbExecutionFunction.getSelectionModel().getSelectedItem().toString();
-                }
-                if (!cbExpectedFunction.getSelectionModel().isEmpty()) {
-                    expected = cbExpectedFunction.getSelectionModel().getSelectedItem().toString();
-                }
-                if (!cbNiveauFunction.getSelectionModel().isEmpty()) {
-                    niveau = cbNiveauFunction.getSelectionModel().getSelectedItem().toString();
-                }
-
-                TPLFunctionalJournal tplFunctionalJournal = new TPLFunctionalJournal(-1, controller.getTemplateForEdit().getId(), functionConditionString, date.toString(), niveau, relevancy, txtNoteFunction.getText(), expected, execution, executionLimits, txtCitizenExpecationFunction.getText());
-                tplModel.createTPLFunctionalJournal(tplFunctionalJournal);
-                updateFunctionJournalView(tplFunctionalJournal);
-
-            }
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            DisplayMessage.displayError(exception);
-        }
-
-        setupTableviewTPLFunctionalJournal();
-    }
-
-    /**
-     * gets all TPLFunctionsJournals for a template on the Database
-     */
-    private void getTPLFunctionsJournals() {
-
-        if (!tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()).isEmpty()) {
-            tplFunctionJournals.clear();
-            tplFunctionJournals.addAll(tplModel.getTPLFunctionalJournal(controller.getTemplateForEdit().getId()));
-        }
-    }
-
-    public void onTableviewTPLFunctionalJournal(MouseEvent mouseEvent) {
-        if (!tvfunctionsJournals.getSelectionModel().isEmpty()) {
-            functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
-            updateFunctionJournalView(tvfunctionsJournals.getSelectionModel().getSelectedItem());
-        }
-    }
 
     public void onOpenObservationForHealthBtn(ActionEvent actionEvent) throws IOException {
 
@@ -932,4 +911,43 @@ public class TeacherTemplateController implements Initializable {
     public void onOpenObservationForFunctionBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TPLFunctionJournalObservations.fxml");
     }
+
+    /**
+     * closes the stage
+     */
+    public void onCloseBtn(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+
+    /** =======================================================================================================
+     ============================================ Extra =======================================================
+     ======================================================================================================= */
+
+
+    /**
+     * imitates a shift og control on a textarea, by hitting tab or enter key.
+     *
+     * @param event
+     */
+    public void handle(KeyEvent event) {
+        KeyCode code = event.getCode();
+
+        if (code == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown() || code == KeyCode.ENTER && !event.isShiftDown() && !event.isControlDown()) {
+            event.consume();
+            Node node = (Node) event.getSource();
+            try {
+                Robot robot = new Robot();
+                robot.keyPress(KeyCode.CONTROL.getCode());
+                robot.keyPress(KeyCode.TAB.getCode());
+                robot.delay(10);
+                robot.keyRelease(KeyCode.TAB.getCode());
+                robot.keyRelease(KeyCode.CONTROL.getCode());
+            } catch (AWTException e) {
+            }
+        }
+    }
+
+
 }
