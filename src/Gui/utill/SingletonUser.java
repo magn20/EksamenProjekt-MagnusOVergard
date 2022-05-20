@@ -1,6 +1,7 @@
 package Gui.utill;
 
 import be.Citizen;
+import be.SchoolAdmin;
 import be.Student;
 import be.Teacher;
 
@@ -8,6 +9,7 @@ public class SingletonUser {
 
     private Teacher teacher;
     private Student student;
+    private SchoolAdmin schoolAdmin;
     private Citizen citizen;
     private static SingletonUser singletonUser;
 
@@ -32,6 +34,14 @@ public class SingletonUser {
 
     public Student getStudent(){
         return student;
+    }
+
+
+    public void setSchoolAdmin(SchoolAdmin schoolAdmin){
+        this.schoolAdmin = schoolAdmin;
+    }
+    public SchoolAdmin getSchoolAdmin(){
+        return schoolAdmin;
     }
 
     public void setCitizen(Citizen citizen){

@@ -4,8 +4,10 @@ import Gui.model.StudentModel;
 import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
+import be.SchoolAdmin;
 import be.Student;
 import be.Teacher;
+import bll.SchoolAdminManager;
 import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,12 +36,14 @@ public class LoginController implements Initializable {
     private TeacherModel teacherModel;
     private SingletonUser singletonUser;
     private StudentModel studentModel;
+    private SchoolAdminManager schoolAdminManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sceneSwapper = new SceneSwapper();
         teacherModel = new TeacherModel();
         studentModel = new StudentModel();
+        schoolAdminManager = new SchoolAdminManager();
 
         singletonUser = SingletonUser.getInstance();
     }
@@ -95,6 +99,22 @@ public class LoginController implements Initializable {
                 }
             }
 
+            //checks for SchoolAdmin log in
+            for (SchoolAdmin schoolAdmin : schoolAdminManager.getSchoolAdmins()){
+                if (schoolAdmin.getUsername().equals(lblUsername.getText())){
+                    if(BCrypt.checkpw(lblPassword.getText(), schoolAdmin.getPassword())){
+                        // Sceneswapper
+                        correctLogin = true;
+                        singletonUser.setSchoolAdmin(schoolAdmin);
+                        sceneSwapper.sceneSwitch(new Stage(), "SchoolAdminScreen.fxml");
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.close();
+
+                        break;
+                    }
+
+                }
+            }
 
             // if login failed due to wrong information
             if (!correctLogin){

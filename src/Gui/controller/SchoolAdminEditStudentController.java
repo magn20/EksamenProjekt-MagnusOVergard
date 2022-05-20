@@ -3,6 +3,7 @@ package Gui.controller;
 import Gui.model.SchoolModel;
 import Gui.model.StudentModel;
 import Gui.utill.SceneSwapper;
+import Gui.utill.SingletonUser;
 import be.School;
 import be.Student;
 import be.Teacher;
@@ -24,15 +25,12 @@ import java.util.ResourceBundle;
 import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
 
-public class AdminEditStudentController implements Initializable {
+public class SchoolAdminEditStudentController implements Initializable {
     @FXML
     private Label lblStatus;
     @FXML
-    private ComboBox cbStudent;
-    @FXML
     private TextField txtFName;
-    @FXML
-    private ComboBox cbSchool;
+
     @FXML
     private TextField txtLName;
     @FXML
@@ -43,52 +41,23 @@ public class AdminEditStudentController implements Initializable {
     SceneSwapper sceneSwapper;
     SchoolModel schoolModel;
     StudentModel studentModel;
-    private ObservableList<School> allSchools;
-    private ObservableList<Student> allStudents;
-    private Student selectedStudent;
+
+    private Student selectedStudent = SingletonUser.getInstance().getStudent();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        schoolModel = new SchoolModel();
         sceneSwapper  = new SceneSwapper();
         studentModel = new StudentModel();
 
 
-        allSchools = FXCollections.observableArrayList();
-        allStudents = FXCollections.observableArrayList();
-        try {
-            fillComboBox();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            displayError(e);
-        }
     }
 
-    /**
-     * fills combobox for Schools & Students
-     */
-    public void fillComboBox() throws SQLException, IOException {
-        allSchools.clear();
-        cbSchool.getItems().clear();
-        allSchools = schoolModel.getSchools();
-
-        for(School school: allSchools){
-            cbSchool.getItems().add(school.getName());
-        }
-
-        allStudents.clear();
-        cbStudent.getItems().clear();
-        allStudents = studentModel.getStudents();
-        for (Student student: allStudents){
-            cbStudent.getItems().add(student.getFName() + " " + student.getLName());
-        }
-    }
 
     /**
      * Set Admin Screen stage and closes currently stage
      */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
+        sceneSwapper.sceneSwitch(new Stage(), "SchoolAdminScreen.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -98,34 +67,22 @@ public class AdminEditStudentController implements Initializable {
      */
     public void onEditBtn(ActionEvent actionEvent) {
             try {
-                //checks if student is selected
-                if (cbStudent.getSelectionModel().isEmpty()){
-                    displayMessage("vælg en Elev");
-                }else{
-
-                    //finds school selected
-                    for (School school: allSchools){
-                        if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())){
-
-                            // checks if a password change is needed if not just change the student
-                            if (txtPassword.getText().equals("")) {
-                                String hashed = selectedStudent.getPassword();
-                                Student student = new Student(selectedStudent.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                // checks if a password change is needed if not just change the student
+                  if (txtPassword.getText().equals("")) {
+                                Student student = new Student(selectedStudent.getId(),selectedStudent.getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), selectedStudent.getPassword());
                                 studentModel.updateStudent(student);
                                 updateStatus(student);
-                                break;
                                 // if a password change is detected. ask for confirmation before proceeding with student change.
                             }else {
                                 String salt = BCrypt.gensalt(10);
                                 //hash + salt one liner
                                 String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
 
-
                                 Alert a = new Alert(Alert.AlertType.CONFIRMATION, "du overskriver kodeordet for denne elev");
                                 a.setTitle("Rediger i Elev ");
                                 a.setHeaderText("Ville du gerne redigere denne elev");
                                 a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-                                    Student student = new Student(selectedStudent.getId(),school.getId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                                    Student student = new Student(selectedStudent.getId(),selectedStudent.getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                                     try {
                                         studentModel.updateStudent(student);
                                     } catch (SQLException | IOException e) {
@@ -136,20 +93,16 @@ public class AdminEditStudentController implements Initializable {
                                         updateStatus(student);
                                     } catch (SQLException | IOException e) {
                                         e.printStackTrace();
-                                        displayError(e);
                                     }
+
                                 });
-                                break;
                             }
-                        }
-                    }
-                }
             }catch (Exception e){
                 e.printStackTrace();
                 displayError(e);
             }
-
         }
+
 
     /**
      * updates the view for visually effect of successful change to student
@@ -160,27 +113,5 @@ public class AdminEditStudentController implements Initializable {
         txtUsername.setText("");
         txtFName.setText("");
         txtLName.setText("");
-        fillComboBox();
-    }
-
-    /**
-     * shows the data of the selected student.
-     * @param actionEvent runs on an action on ComboBox
-     */
-    public void onStudentCb(ActionEvent actionEvent) {
-        for (Student student : allStudents){
-            if (cbStudent.getSelectionModel().getSelectedItem().equals(student.getFName() + " " + student.getLName())){
-                txtFName.setText(student.getFName());
-                txtLName.setText(student.getLName());
-                txtUsername.setText(student.getUsername());
-                selectedStudent = student;
-                for (School school: allSchools){
-                    if (student.getSchoolId() == school.getId()){
-                        cbSchool.getSelectionModel().select(school.getName());
-                    }
-                }
-            }
-
-        }
     }
 }

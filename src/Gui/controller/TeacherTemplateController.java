@@ -356,7 +356,7 @@ public class TeacherTemplateController implements Initializable {
     public void setTextFieldsForGeneralInfo(TPLGeneralInfo tplGeneralInfo) {
         txtCoping.setText(tplGeneralInfo.getCoping());
         txtEducationAndJob.setText(tplGeneralInfo.getEducationAndJob());
-        txtEquitmentAids.setText(tplGeneralInfo.getCoping());
+        txtEquitmentAids.setText(tplGeneralInfo.getEquipmentAids());
         txtHabits.setText(tplGeneralInfo.getHabits());
         txtHealthInfo.setText(tplGeneralInfo.getHealthInformation());
         txtHouseLayout.setText(tplGeneralInfo.getHomeLayout());

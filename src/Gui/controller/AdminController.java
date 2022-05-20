@@ -1,14 +1,13 @@
 package Gui.controller;
 
 import Gui.model.SchoolModel;
-import Gui.model.StudentModel;
-import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
+import Gui.utill.SingletonUser;
 import be.School;
-import be.Student;
-import be.Teacher;
+import be.SchoolAdmin;
+import bll.SchoolAdminManager;
+import bll.utill.DisplayMessage;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,27 +29,14 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
-    // tableview for Student
     @FXML
-    private TableView<Student> tvStudent;
+    private TableColumn<SchoolAdmin, Integer> tcSchoolAdminSchoolId;
     @FXML
-    private TableColumn<Student, String> tcStudentFName;
+    private TableColumn<SchoolAdmin, String> tcSchoolAdminLName;
     @FXML
-    private TableColumn<Student, String> tcStudentLName;
+    private TableColumn<SchoolAdmin, String> tcSchoolAdminFName;
     @FXML
-    private TableColumn<Student, Integer> tcStudentSchoolId;
-    // tableview for Teacher
-    @FXML
-    private TableView<Teacher> tvTeacher;
-    @FXML
-    private TableColumn<Teacher, String> tcTeacherFName;
-    @FXML
-    private TableColumn<Teacher, String> tcTeacherLName;
-    @FXML
-    private TableColumn<Teacher, Integer> tcTeacherSchoolID;
-    @FXML
-    private TableColumn<Teacher, String> tcUsername;
-
+    private TableView<SchoolAdmin> tvSchoolAdmin;
     // tableview for School
     @FXML
     private TableView<School> tvSchool;
@@ -59,26 +45,22 @@ public class AdminController implements Initializable {
     @FXML
     private TableColumn<School, String> tcSchoolId;
 
-    SchoolModel schoolModel;
-    TeacherModel teacherModel;
-    StudentModel studentModel;
-
-    SceneSwapper sceneSwapper;
+    private SchoolModel schoolModel;
+    private SchoolAdminManager schoolAdminManager;
+    private SceneSwapper sceneSwapper;
+    SingletonUser singletonUser = SingletonUser.getInstance();
 
     private ObservableList<School> allSchools;
-    private ObservableList<Teacher> allTeachers;
-    private ObservableList<Student> allStudents;
+    private ObservableList<SchoolAdmin> allSchoolAdmins;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         schoolModel = new SchoolModel();
-        teacherModel = new TeacherModel();
-        studentModel = new StudentModel();
         sceneSwapper = new SceneSwapper();
+        schoolAdminManager = new SchoolAdminManager();
 
         allSchools = FXCollections.observableArrayList();
-        allTeachers = FXCollections.observableArrayList();
-        allStudents = FXCollections.observableArrayList();
+        allSchoolAdmins = FXCollections.observableArrayList();
 
         try {
             prepareTableview();
@@ -95,18 +77,11 @@ public class AdminController implements Initializable {
         tcSchoolname.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty()  );
 
-        // setup for tableview Teacher
-        tcTeacherFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
-        tcTeacherLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
-        tcUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-        tcTeacherSchoolID.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
+        tcSchoolAdminFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
+        tcSchoolAdminLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
+        tcSchoolAdminSchoolId.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
 
-        // setup for tableview Student
-        tcStudentFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
-        tcStudentLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
-        tcStudentSchoolId.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
-
-        setTableview();
+    setTableview();
     }
 
     /**
@@ -117,13 +92,9 @@ public class AdminController implements Initializable {
         allSchools.addAll(schoolModel.getSchools());
         tvSchool.setItems(allSchools);
 
-        allTeachers.clear();
-        allTeachers.addAll(teacherModel.getTeachers());
-        tvTeacher.setItems(allTeachers);
-
-        allStudents.clear();
-        allStudents.addAll(studentModel.getStudents());
-        tvStudent.setItems(allStudents);
+        allSchoolAdmins.clear();
+        allSchoolAdmins.addAll(schoolAdminManager.getSchoolAdmins());
+        tvSchoolAdmin.setItems(allSchoolAdmins);
     }
 
 
@@ -154,59 +125,6 @@ public class AdminController implements Initializable {
 
     }
 
-    /**
-     * Removes a Teacher
-     * Checks for no selection
-     * proceed after confirmation
-     */
-    public void OnRemoveTeacherBtn(ActionEvent actionEvent) {
-        if (tvTeacher.getSelectionModel().getSelectedItem() == null) {
-            displayMessage("Ingen lærer er valgt");
-        } else {
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne lærer.");
-            a.setTitle("Fjern lære");
-            a.setHeaderText("Fjern lære: " + tvTeacher.getSelectionModel().getSelectedItem().getFName() +tvTeacher.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
-            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-                try {
-                    teacherModel.removeTeacher(tvTeacher.getSelectionModel().getSelectedItem());
-                    prepareTableview();
-                } catch (SQLException | IOException e) {
-                    e.printStackTrace();
-                    displayError(e);
-                }
-            });
-        }
-
-    }
-
-    /**
-     * Removes a Student
-     * Checks for no selection
-     * proceed after confirmation
-     */
-    public void onRemoveStudentBtn(ActionEvent actionEvent) {
-        if (tvStudent.getSelectionModel().getSelectedItem() == null) {
-            displayMessage("Ingen elev er valgt");
-        } else {
-            // waiting for confirmation.
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
-            a.setTitle("Fjern elev");
-            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
-            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-                try {
-                    studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
-                    prepareTableview();
-                } catch (SQLException | IOException e) {
-                    e.printStackTrace();
-                    displayError(e);
-                }
-            });
-        }
-    }
-
-
-
-
 
     /**
      * switches to AdminAddSchool. and closes current stage.
@@ -227,44 +145,64 @@ public class AdminController implements Initializable {
         stage.close();
     }
 
-    /**
-     * opens AdminEditTeacher scene on new stage, Closes current stage
-     */
-    public void onEditTeacherBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminEditTeacher.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
 
     /**
-     * opens AdminAddTeacher scene on new stage, Closes current stage
+     * closes the stage and set the login screen.
+     * @param actionEvent
+     * @throws IOException
      */
-    public void onAddTeacherBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminAddTeacher.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * opens AdminAddStudent scene on new stage, Closes current stage
-     */
-    public void onAddStudentBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminAddStudent.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-    /**
-     * opens AdminEditStudent scene on new stage, Closes current stage
-     */
-    public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
-        sceneSwapper.sceneSwitch(new Stage(), "AdminEditStudent.fxml");
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
     public void onLogoutBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * opens the screen for creating school admins
+     * closses current screen.
+     */
+    public void onAddSchoolAdmin(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "AdminAddSchoolAdmin.fxml");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * removes a schoolAdmin
+     * checks for no selections and confirmation
+     */
+    public void onRemoveSchoolAdmin(ActionEvent actionEvent) {
+        if (tvSchool.getSelectionModel().isEmpty()) {
+            displayMessage("Ingen Skole er valgt");
+        } else {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne skole admin, fra systemet, indholder også alle lærer,elever og borger");
+            a.setTitle("Fjern Skole admin");
+            a.setHeaderText("Fjern skole admin: " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getFName()+ " " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getLName() +  " fra systemet");
+            a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+                try {
+                    schoolAdminManager.removeSchoolAdmin(tvSchoolAdmin.getSelectionModel().getSelectedItem());
+                    prepareTableview();
+                } catch (SQLException | IOException e) {
+                    e.printStackTrace();
+                    displayError(e);
+                }
+            });
+        }
+
+    }
+
+    /**
+     * opens edit for schoolAdmin
+     * Checks for no selection
+     */
+    public void onEditSchoolAdmin(ActionEvent actionEvent) throws IOException {
+        if (tvSchoolAdmin.getSelectionModel().isEmpty()){
+            DisplayMessage.displayMessage("Vælg en Skole Adminstrator");
+        }else {
+            singletonUser.setSchoolAdmin(tvSchoolAdmin.getSelectionModel().getSelectedItem());
+            sceneSwapper.sceneSwitch(new Stage(), "AdminEditSchoolAdmin.fxml");
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 }

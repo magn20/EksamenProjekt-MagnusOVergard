@@ -3,7 +3,6 @@ package Gui.controller;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.Citizen;
-import be.Student;
 import bll.CitizenFacade;
 import bll.utill.DisplayMessage;
 import javafx.event.ActionEvent;
@@ -13,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -85,5 +83,19 @@ public class StudentController implements Initializable {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * opens new scene for changing username
+     */
+    public void onNewUsernameBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "StudentNewUsername.fxml");
+    }
+
+    /**
+     * opens new scene for changing password
+     */
+    public void onNewPasswordBtn(ActionEvent actionEvent) throws IOException {
+        sceneSwapper.sceneSwitch(new Stage(), "StudentNewPassword.fxml");
     }
 }

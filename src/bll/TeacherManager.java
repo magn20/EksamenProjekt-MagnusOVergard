@@ -13,14 +13,9 @@ import java.sql.SQLException;
 public class TeacherManager {
 
     private TeacherDAO teacherDAO;
-    private DatabaseConnector connector;
+
     {
-        try {
-            connector = new DatabaseConnector();
-            teacherDAO = new TeacherDAO();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        teacherDAO = new TeacherDAO();
     }
 
     public ObservableList<Teacher> getTeachers() throws SQLException, IOException {

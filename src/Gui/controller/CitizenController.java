@@ -364,7 +364,7 @@ public class CitizenController implements Initializable {
     public void setTextFieldsForGeneralInfo(GeneralInfo generalInfo){
         txtCoping.setText(generalInfo.getCoping());
         txtEducationAndJob.setText(generalInfo.getEducationAndJob());
-        txtEquitmentAids.setText(generalInfo.getCoping());
+        txtEquitmentAids.setText(generalInfo.getEquipmentAids());
         txtHabits.setText(generalInfo.getHabits());
         txtHealthInfo.setText(generalInfo.getHealthInformation());
         txtHouseLayout.setText(generalInfo.getHomeLayout());

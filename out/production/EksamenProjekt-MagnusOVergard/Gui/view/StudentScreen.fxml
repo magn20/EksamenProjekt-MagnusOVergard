@@ -56,7 +56,23 @@
             </Tab>
             <Tab text="Settings">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="42.0" layoutY="62.0" mnemonicParsing="false" onAction="#onNewUsernameBtn" text="Nyt brugernavn" />
+                        <Label layoutX="36.0" layoutY="28.0" text="Ændre brugernavn">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Line endX="-29.800006866455078" endY="-46.20000457763672" layoutX="58.0" layoutY="127.0" startX="-29.800006866455078" startY="-91.80001068115234" />
+                        <Label layoutX="36.0" layoutY="112.0" text="Ændre kodeord">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="42.0" layoutY="146.0" mnemonicParsing="false" onAction="#onNewPasswordBtn" text="Nyt kodeord" />
+                        <Line endX="-29.800006866455078" endY="-46.20000457763672" layoutX="58.0" layoutY="214.0" startX="-29.800006866455078" startY="-91.80001068115234" />
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>

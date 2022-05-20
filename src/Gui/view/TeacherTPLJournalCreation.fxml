@@ -269,7 +269,6 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="12">
                                  <children>
                                     <Button layoutX="569.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveGeneralInfoBtn" prefHeight="35.0" prefWidth="95.0" text="Gem" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="7.0" />
-                                    <Button layoutX="368.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="35.0" prefWidth="95.0" text="Close" />
                                  </children>
                               </AnchorPane>
                               <Label text="Generelle Informationer" GridPane.columnIndex="1">
@@ -348,7 +347,7 @@
                                              <children>
                                                 <ComboBox fx:id="cbExpectation" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="180.0" promptText=" Vælg Forventet Niveau" />
                                                 <Label fx:id="lblLastUpdate" layoutX="14.0" layoutY="64.0" text="Sidst Opdateret den" />
-                                                <Button layoutX="472.0" layoutY="46.0" mnemonicParsing="false" onAction="#onSaveHealthjournalBtn" prefHeight="36.0" prefWidth="54.0" text="Gem" />
+                                                <Button layoutX="424.0" layoutY="50.0" mnemonicParsing="false" onAction="#onSaveHealthjournalBtn" prefHeight="27.0" prefWidth="75.0" text="Gem" />
                                                 <CheckBox fx:id="checkboxMaybe" layoutX="307.0" layoutY="9.0" mnemonicParsing="false" text="potentiel" />
                                                 <CheckBox fx:id="checkboxActive" layoutX="220.0" layoutY="9.0" mnemonicParsing="false" text="aktiv" />
                                                 <CheckBox fx:id="checkboxNotRelavant" layoutX="410.0" layoutY="9.0" mnemonicParsing="false" text="Ikke relavant" />
@@ -573,7 +572,7 @@
                                              <children>
                                                 <CheckBox fx:id="checkboxFunctionActive" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" text="Gem som aktiv" />
                                                 <CheckBox fx:id="checkboxFunctionNotActive" layoutX="14.0" layoutY="39.0" mnemonicParsing="false" text="Gem som ikke aktiv" />
-                                                <Button layoutX="157.0" layoutY="34.0" mnemonicParsing="false" onAction="#onSaveTPLFunctionJournalBtn" text="Gem Funktionstilstand">
+                                                <Button layoutX="204.0" layoutY="25.0" mnemonicParsing="false" onAction="#onSaveTPLFunctionJournalBtn" text="Gem Funktionstilstand">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>

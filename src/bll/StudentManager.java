@@ -14,14 +14,8 @@ import java.sql.SQLException;
 public class StudentManager {
 
     private StudentDAO studentDAO;
-    private DatabaseConnector connector;
     {
-        try {
-            connector = new DatabaseConnector();
-            studentDAO = new StudentDAO();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        studentDAO = new StudentDAO();
     }
 
     public ObservableList<Student> getStudents() throws SQLException, IOException {
