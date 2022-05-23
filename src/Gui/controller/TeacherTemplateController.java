@@ -952,6 +952,8 @@ public class TeacherTemplateController implements Initializable {
 
 
     public void updatelblStatus(Event event) {
-        lblStatus.setText("");
+        if (lblStatus != null){
+            lblStatus.setText("");
+        }
     }
 }
