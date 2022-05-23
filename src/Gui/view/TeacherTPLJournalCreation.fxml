@@ -40,7 +40,7 @@
       <Button layoutX="804.0" layoutY="8.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="53.0" stylesheets="@../css/StyleSheetforLogout.css" text="Close" underline="true" AnchorPane.rightAnchor="14.0" />
       <TabPane layoutX="-2.0" layoutY="82.0" prefHeight="679.0" prefWidth="1286.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="81.0">
          <tabs>
-            <Tab text="Generelle infomation">
+            <Tab onSelectionChanged="#updatelblStatus" text="Generelle infomation">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgrounding">
                      <children>
@@ -283,7 +283,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="helbredstilstand">
+            <Tab onSelectionChanged="#updatelblStatus" text="helbredstilstand">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingDarkBlue">
                      <children>
@@ -293,11 +293,6 @@
                                  <children>
                                     <ComboBox fx:id="cbMainHealthCategory" layoutX="14.0" layoutY="79.0" onAction="#onMainCategoryForHeatlhCb" prefWidth="150.0" promptText="Overkategori" />
                                     <ComboBox fx:id="cbUnderHealthCategory" layoutX="180.0" layoutY="79.0" onAction="#onSelectedHealthConditionCb" prefWidth="150.0" promptText="Underkategori" />
-                                    <Label fx:id="txtCondition" layoutX="392.0" layoutY="27.0" prefHeight="51.0" prefWidth="802.0" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="392.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="27.0">
-                                       <font>
-                                          <Font size="35.0" />
-                                       </font>
-                                    </Label>
                                     <Label layoutX="14.0" text="Helbredstilstand">
                                        <font>
                                           <Font name="System Bold Italic" size="23.0" />
@@ -374,7 +369,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Funktionstilstand">
+            <Tab onSelectionChanged="#updatelblStatus" text="Funktionstilstand">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingOrange">
                      <children>

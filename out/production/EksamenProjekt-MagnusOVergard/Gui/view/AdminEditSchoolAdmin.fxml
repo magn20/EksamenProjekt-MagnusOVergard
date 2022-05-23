@@ -29,7 +29,7 @@
       <TextField fx:id="txtLName" layoutX="128.0" layoutY="157.0" prefHeight="26.0" prefWidth="173.0" promptText="petersen" />
       <TextField fx:id="txtUsername" layoutX="128.0" layoutY="199.0" prefHeight="26.0" prefWidth="173.0" promptText="hape4939" />
       <TextField fx:id="txtPassword" layoutX="128.0" layoutY="239.0" prefHeight="26.0" prefWidth="173.0" promptText="Q4o3fm3" />
-      <Button layoutX="214.0" layoutY="284.0" mnemonicParsing="false" onAction="#onAddBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Add" />
+      <Button layoutX="214.0" layoutY="284.0" mnemonicParsing="false" onAction="#onAddBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Rediger" />
       <Button layoutX="238.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackBtn" prefHeight="27.0" prefWidth="86.0" stylesheets="@../css/StyleSheet.css" text="Back" />
       <Label layoutX="25.0" layoutY="161.0" text="Efternavn" />
       <Label layoutX="30.0" layoutY="203.0" text="Brugernavn" />

@@ -10,6 +10,7 @@ import bll.utill.DisplayMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -56,8 +57,6 @@ public class TeacherTemplateController implements Initializable {
     @FXML
     private Label lblLastUpdate;
 
-    @FXML
-    private Label txtCondition;
     // checkbox
     @FXML
     private CheckBox checkboxMaybe;
@@ -491,6 +490,7 @@ public class TeacherTemplateController implements Initializable {
                     }
 
                     tplModel.updateTPLHealthJournal(tplHealthJournal);
+                    lblStatus.setText("opdateret: " + tplHealthJournal.getCondition());
                     hasSaved = true;
                     break;
                 }
@@ -507,6 +507,7 @@ public class TeacherTemplateController implements Initializable {
 
                 TPLHealthJournal tplHealthJournal = new TPLHealthJournal(-1, template.getId(), healthConditionString, date.toString(), txtEvaluation.getText(), relavancy, txtNote.getText(), (String) cbExpectation.getSelectionModel().getSelectedItem());
                 tplModel.createTPLHealthJournal(tplHealthJournal);
+                lblStatus.setText("opdateret: " + tplHealthJournal.getCondition());
             }
         }
 
@@ -541,7 +542,7 @@ public class TeacherTemplateController implements Initializable {
                 txtEvaluation.setText("");
                 cbExpectation.getSelectionModel().clearSelection();
                 lblLastUpdate.setText("Sidst Opdateret den:");
-                txtCondition.setText("Problem:" + cbUnderHealthCategory.getSelectionModel().getSelectedItem());
+                lblStatus.setText(cbUnderHealthCategory.getSelectionModel().getSelectedItem().toString());
                 checkboxActive.setSelected(false);
                 checkboxNotRelavant.setSelected(false);
                 checkboxMaybe.setSelected(false);
@@ -573,7 +574,7 @@ public class TeacherTemplateController implements Initializable {
         txtEvaluation.setText(tplHealthJournal.getEvaluation());
         cbExpectation.getSelectionModel().select(tplHealthJournal.getExpectation());
         lblLastUpdate.setText("Sidst Opdateret den: " + tplHealthJournal.getLastUpdate());
-        txtCondition.setText("Problem: " + tplHealthJournal.getCondition());
+        lblStatus.setText(tplHealthJournal.getCondition());
 
         if (tplHealthJournal.getRelevancy().equals("Aktiv")) {
             checkboxActive.setSelected(true);
@@ -950,4 +951,7 @@ public class TeacherTemplateController implements Initializable {
     }
 
 
+    public void updatelblStatus(Event event) {
+        lblStatus.setText("");
+    }
 }

@@ -32,7 +32,6 @@ public class TPLFacade {
 
 
     // for our template Citizens
-
     public ObservableList<Template> getTemplate(int schoolID) throws SQLException, IOException {
         return templateDAO.getTemplate(schoolID);
     }

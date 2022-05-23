@@ -39,11 +39,11 @@
       <Button layoutX="1201.0" layoutY="8.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="65.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
       <TabPane layoutX="2.0" layoutY="85.0" prefHeight="675.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="84.0">
          <tabs>
-            <Tab text="Generelle infomation">
+            <Tab onSelectionChanged="#updateStatus" text="Generelle infomation">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgrounding">
                      <children>
-                        <GridPane layoutX="185.0" layoutY="-10.0" onKeyReleased="#handle" prefHeight="585.0" prefWidth="1218.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane layoutX="185.0" layoutY="-10.0" onKeyReleased="#handle" prefHeight="585.0" prefWidth="1218.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.5999755859375" minWidth="10.0" prefWidth="24.00000610351563" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="640.1999809265137" minWidth="10.0" prefWidth="459.19999389648444" />
@@ -86,7 +86,7 @@
                               </AnchorPane>
                               <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
-                                    <Label text="LivsHistorie">
+                                    <Label text="Livshistorie">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -120,7 +120,7 @@
                               </AnchorPane>
                               <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
                                  <children>
-                                    <Label text="Boligen indretning">
+                                    <Label text="Boligens indretning">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -281,7 +281,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Funktionstilstand">
+            <Tab onSelectionChanged="#updateStatus" text="Funktionstilstand">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingOrange">
                      <children>
@@ -515,7 +515,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="helbredstilstand">
+            <Tab onSelectionChanged="#updateStatus" text="helbredstilstand">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingDarkBlue">
                      <children>
@@ -525,11 +525,6 @@
                                  <children>
                                     <ComboBox fx:id="cbMainHealthCategory" layoutX="14.0" layoutY="86.0" onAction="#onMainCategoryForHeatlhCb" prefWidth="150.0" promptText="Hoved tilstand" />
                                     <ComboBox fx:id="cbUnderHealthCategory" layoutX="199.0" layoutY="86.0" onAction="#onSelectedHealthConditionCb" prefWidth="150.0" promptText="Under Tilstand" />
-                                    <Label fx:id="txtCondition" layoutX="382.0" layoutY="47.0" prefHeight="66.0" prefWidth="884.0" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="382.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="47.0">
-                                       <font>
-                                          <Font size="35.0" />
-                                       </font>
-                                    </Label>
                                     <Label layoutX="14.0" layoutY="45.0" text="Vælg tilstand for borgeren">
                                        <font>
                                           <Font size="24.0" />
@@ -609,7 +604,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Medcine LIste">
+            <Tab onSelectionChanged="#updateStatus" text="Medcine LIste">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>

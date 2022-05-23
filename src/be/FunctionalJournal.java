@@ -22,7 +22,8 @@ public class FunctionalJournal {
     private final StringProperty citizenExpectation = new SimpleStringProperty();
 
 
-    public FunctionalJournal(int id, int citizenId, String condition, String lastUpdate, String niveau, String relevancy, String note, String expectation, String execution, String executionLimits, String citizenExpectation){
+    public FunctionalJournal(int id, int citizenId, String condition, String lastUpdate, String niveau, String relevancy, String note,
+                             String expectation, String execution, String executionLimits, String citizenExpectation){
         setId(id);
         setCitizenId(citizenId);
         setCondition(condition);
