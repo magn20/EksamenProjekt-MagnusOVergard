@@ -4,7 +4,6 @@ import Gui.model.CitizenModel;
 import Gui.utill.SingletonUser;
 import be.Citizen;
 import be.HealthJournalObservation;
-import dal.db.HealthJournalObservationDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

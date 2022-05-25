@@ -42,7 +42,7 @@
          <tabs>
             <Tab onSelectionChanged="#updatelblStatus" text="Generelle infomation">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgrounding">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingGreen">
                      <children>
                         <GridPane layoutX="185.0" layoutY="-10.0" onKeyReleased="#handle" prefHeight="585.0" prefWidth="1218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columnConstraints>
@@ -602,10 +602,16 @@
          </tabs>
       </TabPane>
       <Line endX="-23.4071044921875" endY="0.40000152587890625" layoutX="382.0" layoutY="67.0" startX="-306.79998779296875" startY="7.62939453125E-6" AnchorPane.leftAnchor="74.70001220703125" AnchorPane.rightAnchor="-4.9000122070312955" />
-      <Label fx:id="lblStatus" layoutX="450.0" layoutY="21.0" prefHeight="46.0" prefWidth="654.0">
+      <Label fx:id="lblStatus" layoutX="416.0" layoutY="74.0" prefHeight="46.0" prefWidth="771.0" AnchorPane.leftAnchor="416.0">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
+      <Label fx:id="lblTemplateName" layoutX="416.0" layoutY="21.0" prefHeight="46.0" prefWidth="772.0" text="Borger:" AnchorPane.leftAnchor="416.0">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Line endX="669.7929077148438" endY="1.4000015258789062" layoutX="517.0" layoutY="66.0" startX="-100.0" AnchorPane.leftAnchor="416.5" />
    </children>
 </AnchorPane>

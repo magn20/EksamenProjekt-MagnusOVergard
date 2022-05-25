@@ -13,27 +13,17 @@ public class GenerateLogin {
 
 
     public String createUsername(String fName) throws SQLException, IOException {
-
         try {
             String username = "";
-
             if (fName.length() > 4){
                 username = fName.substring(0, 4);
-            }else{
-                username = fName;
-            }
+            }else{username = fName;}
 
             int numbers = getRandomNumbers(1000, 9999);
-
             username = username + numbers;
-
             StudentModel studentModel = new StudentModel();
-
-
             for (Student student : studentModel.getStudents()){
-                if (student.getUsername().equals(username)){
-                    username = "";
-                }
+                if (student.getUsername().equals(username)){username = "";}
             }
             if (!username.equals("")){
                 return username;
@@ -52,7 +42,6 @@ public class GenerateLogin {
             password = password + getRandomChars(2);
             password = password + getRandomNumbers(10,99);
             password = password + getRandomChars(3);
-
 
         return password;
     }

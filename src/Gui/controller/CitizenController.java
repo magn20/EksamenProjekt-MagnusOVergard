@@ -33,6 +33,8 @@ public class CitizenController implements Initializable {
 
 
     @FXML
+    private Label lblCitizenName;
+    @FXML
     private Tooltip toolTipTest;
     // used  for all tabs
     @FXML
@@ -239,6 +241,7 @@ public class CitizenController implements Initializable {
         functionalJournals = FXCollections.observableArrayList();
         functionConditionString = "";
         healthConditionString = "";
+        lblCitizenName.setText("Borger: " + citizen.getfName() + " " + citizen.getlName());
 
         //changes the time for when tooltip appears.
         toolTipTest.setShowDelay(Duration.millis(0.00));

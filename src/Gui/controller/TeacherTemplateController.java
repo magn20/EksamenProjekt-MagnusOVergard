@@ -33,7 +33,8 @@ import java.util.stream.Stream;
 
 public class TeacherTemplateController implements Initializable {
 
-
+    @FXML
+    private Label lblTemplateName;
     // used  for all tabs
     @FXML
     private Label lblTemplate;
@@ -234,7 +235,7 @@ public class TeacherTemplateController implements Initializable {
         tplFunctionJournals = FXCollections.observableArrayList();
         functionConditionString = "";
         healthConditionString = "";
-
+        lblTemplateName.setText("Borger: " + controller.getTemplateForEdit().getfName() + " " + controller.getTemplateForEdit().getlName());
         // sets up the combobox for TPLHealthJournal.
         setComboboxMainHealth();
         setComboboxExpectation();
@@ -570,24 +571,31 @@ public class TeacherTemplateController implements Initializable {
      * @param tplHealthJournal the object holding the data
      */
     private void updateHealthScreen(TPLHealthJournal tplHealthJournal) {
-        txtNote.setText(tplHealthJournal.getNote());
-        txtEvaluation.setText(tplHealthJournal.getEvaluation());
-        cbExpectation.getSelectionModel().select(tplHealthJournal.getExpectation());
-        lblLastUpdate.setText("Sidst Opdateret den: " + tplHealthJournal.getLastUpdate());
-        lblStatus.setText(tplHealthJournal.getCondition());
 
-        if (tplHealthJournal.getRelevancy().equals("Aktiv")) {
-            checkboxActive.setSelected(true);
-            checkboxNotRelavant.setSelected(false);
-            checkboxMaybe.setSelected(false);
-        } else if (tplHealthJournal.getRelevancy().equals("Ikke relavant")) {
-            checkboxActive.setSelected(false);
-            checkboxNotRelavant.setSelected(true);
-            checkboxMaybe.setSelected(false);
-        } else {
-            checkboxActive.setSelected(false);
-            checkboxNotRelavant.setSelected(false);
-            checkboxMaybe.setSelected(true);
+        try {
+            if (tplHealthJournal != null) {
+                txtNote.setText(tplHealthJournal.getNote());
+                txtEvaluation.setText(tplHealthJournal.getEvaluation());
+                cbExpectation.getSelectionModel().select(tplHealthJournal.getExpectation());
+                lblLastUpdate.setText("Sidst Opdateret den: " + tplHealthJournal.getLastUpdate());
+                lblStatus.setText(tplHealthJournal.getCondition());
+
+                if (tplHealthJournal.getRelevancy().equals("Aktiv")) {
+                    checkboxActive.setSelected(true);
+                    checkboxNotRelavant.setSelected(false);
+                    checkboxMaybe.setSelected(false);
+                } else if (tplHealthJournal.getRelevancy().equals("Ikke relavant")) {
+                    checkboxActive.setSelected(false);
+                    checkboxNotRelavant.setSelected(true);
+                    checkboxMaybe.setSelected(false);
+                } else {
+                    checkboxActive.setSelected(false);
+                    checkboxNotRelavant.setSelected(false);
+                    checkboxMaybe.setSelected(true);
+                }
+            }
+        }catch (Exception exception){
+            exception.printStackTrace();
         }
 
     }

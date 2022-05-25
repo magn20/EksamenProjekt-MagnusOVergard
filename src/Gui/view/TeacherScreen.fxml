@@ -41,19 +41,19 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Templates">
+          <Tab text="Skabelon">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="tvTemplate" layoutX="14.0" layoutY="56.0" prefHeight="541.0" prefWidth="418.0" stylesheets="@../css/TableViewStyling.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="835.1999999999999" AnchorPane.topAnchor="56.0">
                           <columns>
-                            <TableColumn fx:id="tcTemplateID" prefWidth="75.0" text="Template ID" />
+                            <TableColumn fx:id="tcTemplateID" prefWidth="75.0" text="Skabelon ID" />
                             <TableColumn fx:id="tcFName" prefWidth="136.79998779296875" text="Fornavn" />
                               <TableColumn fx:id="tcLName" prefWidth="141.5999755859375" text="Efternavn" />
-                              <TableColumn fx:id="tcAge" minWidth="0.0" prefWidth="64.0000061035156" text="Age" />
+                              <TableColumn fx:id="tcAge" minWidth="0.0" prefWidth="64.0000061035156" text="Alder" />
                           </columns>
                         </TableView>
-                        <Label layoutX="14.0" layoutY="14.0" text="Templates">
+                        <Label layoutX="14.0" layoutY="14.0" text="Skabelon">
                            <font>
                               <Font size="31.0" />
                            </font>
@@ -94,8 +94,8 @@
                                     <Font size="25.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#onCreateCitizenOfTemplateBtn" text="Template til Borger" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Template til template" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#onCreateCitizenOfTemplateBtn" prefHeight="27.0" prefWidth="126.0" text="Skabelon til Borger" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onCopyTemplateBtn" text="Skabelon til Skabelon" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                         <GridPane layoutX="488.0" layoutY="56.0" prefHeight="77.0" prefWidth="214.0" AnchorPane.rightAnchor="571.1999999999999">
@@ -116,8 +116,8 @@
                            </children>
                         </GridPane>
                         <Line endX="-279.5999755859375" endY="1.199981689453125" layoutX="755.0" layoutY="122.0" startX="-279.5999755859375" startY="-65.20000457763672" AnchorPane.rightAnchor="797.6999755859374" />
-                        <Line endX="-237.79998779296875" endY="-110.0" layoutX="713.0" layoutY="272.0" startX="-237.79998779296875" startY="44.399993896484375" />
-                        <Line endX="-16.20001220703125" endY="-135.4000244140625" layoutX="490.0" layoutY="479.0" startX="-16.20001220703125" startY="-32.999969482421875" />
+                        <Line endX="-237.79998779296875" endY="-110.0" layoutX="713.0" layoutY="272.0" startX="-237.79998779296875" startY="44.399993896484375" AnchorPane.rightAnchor="797.8999877929687" />
+                        <Line endX="-16.20001220703125" endY="-135.4000244140625" layoutX="490.0" layoutY="479.0" startX="-16.20001220703125" startY="-32.999969482421875" AnchorPane.rightAnchor="799.3000122070312" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -224,7 +224,7 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#onShowAllCitizensBtn" prefHeight="34.0" prefWidth="90.0" text="Se Alt Data" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onShowAllCitizensBtn" prefHeight="34.0" prefWidth="90.0" text="Opdatere" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <GridPane layoutX="456.0" layoutY="161.0" prefHeight="64.0" prefWidth="147.0" AnchorPane.rightAnchor="670.3999999999999">
@@ -241,14 +241,14 @@
                                     <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#onAsignStudentForCitzen" prefHeight="27.0" prefWidth="143.0" text="Sæt En Elev på borger" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#onAsignStudentForCitzen" prefHeight="27.0" prefWidth="143.0" text="Tilføj elev til borger" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <Line endX="-143.0" endY="-65.99999237060547" layoutX="592.0" layoutY="138.0" startX="-143.0" startY="-3.600006103515625" AnchorPane.rightAnchor="824.0999999999999" />
                         <Line endX="-189.5999755859375" endY="-63.600006103515625" layoutX="637.0" layoutY="234.0" startX="-189.5999755859375" startY="-16.4000244140625" AnchorPane.rightAnchor="824.0999999999999" />
                         <Line endX="-284.0" endY="146.79998779296875" layoutX="729.0" layoutY="246.0" startX="-284.0" startY="17.199981689453125" AnchorPane.rightAnchor="824.0999999999999" />
                         <Line endX="-197.20001220703125" endY="138.00006103515625" layoutX="643.0" layoutY="434.0" startX="-197.20001220703125" startY="5.200042724609375" AnchorPane.rightAnchor="824.0999999999999" />
-                        <Line endX="19.60003662109375" endY="28.00006103515625" layoutX="615.0" layoutY="540.0" startX="19.60003662109375" startY="-29.5999755859375" />
+                        <Line endX="19.60003662109375" endY="28.00006103515625" layoutX="615.0" layoutY="540.0" startX="19.60003662109375" startY="-29.5999755859375" AnchorPane.rightAnchor="638.4999633789062" />
                      </children>
                   </AnchorPane>
                </content>
@@ -262,13 +262,13 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="17.0" layoutY="113.0" text="Ændre Password" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="113.0">
+                        <Label layoutX="17.0" layoutY="113.0" text="Ændre Kodeord" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="113.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                         <Button layoutX="32.0" layoutY="60.0" mnemonicParsing="false" onAction="#onTeacherNewUsername" prefHeight="27.0" prefWidth="118.0" text="Ændre Brugernavn" />
-                        <Button layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onTeacherNewPassword" prefHeight="27.0" prefWidth="118.0" text="Ændre Password" />
+                        <Button layoutX="32.0" layoutY="143.0" mnemonicParsing="false" onAction="#onTeacherNewPassword" prefHeight="27.0" prefWidth="118.0" text="Ændre Kodeord" />
                         <Label layoutX="464.0" layoutY="30.0" text="Auto Generer Elever">
                            <font>
                               <Font size="20.0" />
