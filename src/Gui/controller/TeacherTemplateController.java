@@ -594,7 +594,7 @@ public class TeacherTemplateController implements Initializable {
                     checkboxMaybe.setSelected(true);
                 }
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
 
@@ -960,7 +960,7 @@ public class TeacherTemplateController implements Initializable {
 
 
     public void updatelblStatus(Event event) {
-        if (lblStatus != null){
+        if (lblStatus != null) {
             lblStatus.setText("");
         }
     }

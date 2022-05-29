@@ -28,12 +28,13 @@ public class AdminEditSchoolController implements Initializable {
     @FXML
     private ComboBox cbSchool;
 
-     SceneSwapper sceneSwapper;
-     SchoolModel schoolModel;
+    SceneSwapper sceneSwapper;
+    SchoolModel schoolModel;
     private ObservableList<School> allSchools;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sceneSwapper  = new SceneSwapper();
+        sceneSwapper = new SceneSwapper();
         schoolModel = new SchoolModel();
 
         allSchools = FXCollections.observableArrayList();
@@ -46,20 +47,20 @@ public class AdminEditSchoolController implements Initializable {
     }
 
     /**
-     * fills combox with all schools
+     * fills combobox with all schools
      */
     public void fillComboBox() throws SQLException, IOException {
         allSchools.clear();
         allSchools = schoolModel.getSchools();
 
-        for(School school: allSchools){
+        for (School school : allSchools) {
             cbSchool.getItems().add(school.getName());
         }
 
     }
 
     /**
-     *goes to admin screen and closes current stage.
+     * goes to admin screen and closes current stage.
      */
     public void onBackBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
@@ -71,14 +72,14 @@ public class AdminEditSchoolController implements Initializable {
      * edit a school and check for wrong values
      */
     public void onEditBtn(ActionEvent actionEvent) throws SQLException {
-        if (cbSchool.getSelectionModel().isEmpty()){
+        if (cbSchool.getSelectionModel().isEmpty()) {
             displayMessage("vælg en skole at rediger i");
-        }else if(txtSchoolName.getText().equals("")){
+        } else if (txtSchoolName.getText().equals("")) {
             displayMessage("Skriv skolen navn");
-        } else{
+        } else {
             try {
-                for (School school: allSchools){
-                    if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())){
+                for (School school : allSchools) {
+                    if (cbSchool.getSelectionModel().getSelectedItem().equals(school.getName())) {
                         School school1 = new School(school.getId(), txtSchoolName.getText());
                         schoolModel.updateSchool(school1);
                         txtSchoolName.setText("");
@@ -86,7 +87,7 @@ public class AdminEditSchoolController implements Initializable {
                         break;
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 displayError(e);
             }

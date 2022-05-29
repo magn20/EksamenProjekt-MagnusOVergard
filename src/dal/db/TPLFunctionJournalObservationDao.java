@@ -13,12 +13,17 @@ public class TPLFunctionJournalObservationDao implements ITPLFunctionJournalObse
     private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
+    /**
+     * get TPLFunctionJournalObservation from a Template
+     * @param templateId of the which the TPLFunctionJournalObservation belongs to
+     * @return the TPLFunctionJournalObservation object that was created
+     */
     @Override
-    public TPLFunctionJournalObservation getTPLFunctionJournalObservation(int citizenId) throws SQLException, IOException {
+    public TPLFunctionJournalObservation getTPLFunctionJournalObservation(int templateId) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
             String sqlStatement = "SELECT * FROM TPLFunctionJournalObservation Where TPLCitizenTPLFunctionObservationId = ?";
             PreparedStatement statement = connection.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, citizenId);
+            statement.setInt(1, templateId);
 
             statement.execute();
 
@@ -41,6 +46,11 @@ public class TPLFunctionJournalObservationDao implements ITPLFunctionJournalObse
     }
 
 
+    /**
+     * Create a TPLFunctionJournalObservation
+     * @param tplFunctionJournalObservation the object for creation
+     * @return the created object
+     */
     @Override
     public TPLFunctionJournalObservation createTPLFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
         int insertedId = -1;
@@ -63,6 +73,10 @@ public class TPLFunctionJournalObservationDao implements ITPLFunctionJournalObse
 
     }
 
+    /**
+     * Updates a TPLFunctionJournalObservation
+     * @param tplFunctionJournalObservation object For update
+     */
     @Override
     public void updateTplFunctionJournalObservation(TPLFunctionJournalObservation tplFunctionJournalObservation) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {

@@ -2,7 +2,6 @@ package Gui.controller;
 
 import Gui.model.SchoolModel;
 import Gui.utill.SceneSwapper;
-import Gui.utill.SingletonUser;
 import be.School;
 import be.SchoolAdmin;
 import bll.SchoolAdminManager;
@@ -38,9 +37,10 @@ public class AdminAddSchoolAdminController implements Initializable {
     private SceneSwapper sceneSwapper;
     private SchoolAdminManager schoolAdminManager;
     private SchoolModel schoolModel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sceneSwapper  = new SceneSwapper();
+        sceneSwapper = new SceneSwapper();
         schoolAdminManager = new SchoolAdminManager();
         schoolModel = new SchoolModel();
 
@@ -54,9 +54,12 @@ public class AdminAddSchoolAdminController implements Initializable {
     }
 
 
+    /**
+     * setup the combobox for schools with all schools
+     */
     private void setupComboBox() throws SQLException, IOException {
 
-        for (School school: schoolModel.getSchools()){
+        for (School school : schoolModel.getSchools()) {
             cbSchool.getItems().add(school.getName());
         }
 
@@ -73,7 +76,8 @@ public class AdminAddSchoolAdminController implements Initializable {
     }
 
 
-    /**a
+    /**
+     * a
      * add SchoolAdmin to database
      * checks for no inputs
      */
@@ -82,10 +86,10 @@ public class AdminAddSchoolAdminController implements Initializable {
         if (txtFName.getText().equals("") || cbSchool.getSelectionModel().isEmpty() || txtLName.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().isEmpty()) {
             displayMessage("Der mangler infomation");
             //checks for selection of school
-        } else{
+        } else {
             int schoolId = -1;
-            for (School school : schoolModel.getSchools()){
-                if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())){
+            for (School school : schoolModel.getSchools()) {
+                if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())) {
                     schoolId = school.getId();
                 }
                 String fName = txtFName.getText();
@@ -97,18 +101,17 @@ public class AdminAddSchoolAdminController implements Initializable {
                 //hash + salt one liner
                 String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
 
-                updateStatus(schoolAdminManager.createSchoolAdmin(new SchoolAdmin(-1, schoolId, fName,lName,username,hashed)));
+                updateStatus(schoolAdminManager.createSchoolAdmin(new SchoolAdmin(-1, schoolId, fName, lName, username, hashed)));
             }
         }
     }
 
 
-
     /**
      * updates ui for feeling of successful creation of schoolAdmin object
      */
-    public void updateStatus(SchoolAdmin schoolAdmin){
-        lblStatus.setText("tilføjet ny skole admin: " + schoolAdmin.getFName() + " " + schoolAdmin.getLName() );
+    public void updateStatus(SchoolAdmin schoolAdmin) {
+        lblStatus.setText("tilføjet ny skole admin: " + schoolAdmin.getFName() + " " + schoolAdmin.getLName());
         txtPassword.setText("");
         txtUsername.setText("");
         txtFName.setText("");

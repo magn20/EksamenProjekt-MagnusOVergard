@@ -3,7 +3,6 @@ package Gui.controller;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.Citizen;
-import be.Template;
 import bll.CitizenFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,30 +47,30 @@ public class TeacherEditCitizenController implements Initializable {
 
 
         // checks for no inputs
-        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")){
+        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")) {
             displayMessage("Der mangler infomation");
-        }else {
+        } else {
             try {
 
 
                 TeacherController controller = new SceneSwapper().getTeacherController();
                 Citizen citizen = controller.getCitizenForEdit();
-                        citizen.setlName(txtLName.getText());
-                        citizen.setFName(txtFName.getText());
-                        citizen.setAge(txtAge.getText());
+                citizen.setlName(txtLName.getText());
+                citizen.setFName(txtFName.getText());
+                citizen.setAge(txtAge.getText());
 
 
-                        // adds the student to database
-                        citizenFacade.updateCitizen(citizen);
+                // adds the student to database
+                citizenFacade.updateCitizen(citizen);
 
 
-                        //updates ui
-                        updateStatus(citizen);
+                //updates ui
+                updateStatus(citizen);
 
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 displayError(e);
             }
@@ -89,9 +88,10 @@ public class TeacherEditCitizenController implements Initializable {
 
     /**
      * updates the ui for user feeling of succesful Update of Template.
+     *
      * @param citizen that has ben created
      */
-    public void updateStatus(Citizen citizen){
+    public void updateStatus(Citizen citizen) {
         lblStatus.setText("Redigeret i Template: " + citizen.getfName() + " " + citizen.getlName());
         txtAge.setText("");
         txtFName.setText("");

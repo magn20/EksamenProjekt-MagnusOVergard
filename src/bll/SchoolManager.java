@@ -1,18 +1,17 @@
 package bll;
 
 import be.School;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dal.db.DatabaseConnector;
 import dal.db.SchoolDAO;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class SchoolManager {
 
+    //Create instances of SchoolDao
     private SchoolDAO schoolDao = new SchoolDAO();
+
 
     public ObservableList<School> getSchools() throws SQLException, IOException {
         return schoolDao.getSchool();

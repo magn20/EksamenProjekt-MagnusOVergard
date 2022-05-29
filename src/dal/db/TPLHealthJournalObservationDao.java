@@ -13,6 +13,11 @@ public class TPLHealthJournalObservationDao implements ITPLHealthJournalObservat
     private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
+    /**
+     * gets the TPLHealthJournalObservation from a template
+     * @param templateId the id of which the TPLHealthJournalObservation belongs to
+     * @return the object
+     */
     @Override
     public TPLHealthJournalObservation getTPLHealthJournalObservation(int templateId) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
@@ -40,6 +45,11 @@ public class TPLHealthJournalObservationDao implements ITPLHealthJournalObservat
     }
 
 
+    /**
+     * creates a TPLHealthJournalObservation in database
+     * @param tplHealthJournalObservation object for creation
+     * @return the created object
+     */
     @Override
     public TPLHealthJournalObservation createTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
         int insertedId = -1;
@@ -61,6 +71,10 @@ public class TPLHealthJournalObservationDao implements ITPLHealthJournalObservat
 
     }
 
+    /**
+     * updates a TPLHealthJournalObservation
+     * @param tplHealthJournalObservation the object that wil be updated
+     */
     @Override
     public void updateTPLHealthJournalObservation(TPLHealthJournalObservation tplHealthJournalObservation) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {

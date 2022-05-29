@@ -9,6 +9,11 @@ public class HealthJournalObservationDao implements IHealthJournalObservation {
     private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
+    /**
+     * gets healthJournalObservation for a citizen
+     * @param citizenId the citizen which the healthJournalObservation Belongs to.
+     * @return the healthJournalObservation object
+     */
     @Override
     public HealthJournalObservation getHealthJournalObservation(int citizenId) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
@@ -36,6 +41,11 @@ public class HealthJournalObservationDao implements IHealthJournalObservation {
     }
 
 
+    /**
+     * Creates a healthJournalObservation in database
+     * @param healthJournalObservation the object for creation
+     * @return the object that was created
+     */
     @Override
     public HealthJournalObservation createHealthJournalObservation(HealthJournalObservation healthJournalObservation) throws SQLException, IOException {
         int insertedId = -1;
@@ -57,6 +67,10 @@ public class HealthJournalObservationDao implements IHealthJournalObservation {
 
     }
 
+    /**
+     * updates a healthJournalObservation
+     * @param healthJournalObservation object for update
+     */
     @Override
     public void updateHealthJournalObservation(HealthJournalObservation healthJournalObservation) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {

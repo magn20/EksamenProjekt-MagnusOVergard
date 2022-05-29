@@ -293,12 +293,12 @@ public class TeacherController implements Initializable {
                         citizenModel.createHealthJournal(new HealthJournal(-1, citizen.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
                     }
 
-                    if (tplModel.getTPLFunctionJournalObservation(template.getId()) != null){
+                    if (tplModel.getTPLFunctionJournalObservation(template.getId()) != null) {
                         TPLFunctionJournalObservation tplFunctionJournalObservation = tplModel.getTPLFunctionJournalObservation(template.getId());
-                        citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1,citizen.getId(),tplFunctionJournalObservation.getObservation()));
+                        citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1, citizen.getId(), tplFunctionJournalObservation.getObservation()));
 
                     }
-                    if ( tplModel.getTPLHealthJournalObservation(template.getId()) != null){
+                    if (tplModel.getTPLHealthJournalObservation(template.getId()) != null) {
                         TPLHealthJournalObservation tplHealthJournalObservation = tplModel.getTPLHealthJournalObservation(template.getId());
                         citizenModel.createHealthJournalObservation(new HealthJournalObservation(-1, citizen.getId(), tplHealthJournalObservation.getObservation()));
                     }
@@ -489,7 +489,7 @@ public class TeacherController implements Initializable {
                         tplModel.createTPLHealthJournal(new TPLHealthJournal(-1, newTemplate.getId(), tplHealthJournal.getCondition(), tplHealthJournal.getLastUpdate(), tplHealthJournal.getEvaluation(), tplHealthJournal.getRelevancy(), tplHealthJournal.getNote(), tplHealthJournal.getExpectation()));
                     }
                     TPLFunctionJournalObservation tplFunctionJournalObservation = tplModel.getTPLFunctionJournalObservation(template.getId());
-                    tplModel.createTPLFunctionJournalObservation(new TPLFunctionJournalObservation(-1,newTemplate.getId(),tplFunctionJournalObservation.getObservation()));
+                    tplModel.createTPLFunctionJournalObservation(new TPLFunctionJournalObservation(-1, newTemplate.getId(), tplFunctionJournalObservation.getObservation()));
                     TPLHealthJournalObservation tplHealthJournalObservation = tplModel.getTPLHealthJournalObservation(template.getId());
                     tplModel.createTPLHealthJournalObservation(new TPLHealthJournalObservation(-1, newTemplate.getId(), tplHealthJournalObservation.getObservation()));
 
@@ -522,6 +522,12 @@ public class TeacherController implements Initializable {
         }
     }
 
+    /**
+     * opens scene for autogenerate students.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onAutoGenStudentsBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "TeacherAutoGenStudents.fxml");
     }

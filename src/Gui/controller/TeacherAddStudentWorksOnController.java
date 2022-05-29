@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-import java.awt.desktop.AppReopenedEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -45,6 +44,7 @@ public class TeacherAddStudentWorksOnController implements Initializable {
     SingletonUser singletonUser;
     CitizenFacade citizenFacade;
     Citizen citizen;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentModel = new StudentModel();
@@ -82,12 +82,12 @@ public class TeacherAddStudentWorksOnController implements Initializable {
      */
     public void onAddBtn(ActionEvent actionEvent) throws SQLException, IOException {
 
-        if (tvStudent.getSelectionModel().isEmpty()){
+        if (tvStudent.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("vælg en elev, til borgeren");
-        }else {
+        } else {
             //Create works on.
             citizenFacade.setStudentWorksOnCitizen(citizen, tvStudent.getSelectionModel().getSelectedItem());
-            lblStatus.setText(tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName() + " arbejder nu på borgeren: " + citizen.getfName() + " "+ citizen.getlName());
+            lblStatus.setText(tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName() + " arbejder nu på borgeren: " + citizen.getfName() + " " + citizen.getlName());
         }
 
     }

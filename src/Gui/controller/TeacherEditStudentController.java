@@ -3,9 +3,7 @@ package Gui.controller;
 import Gui.model.StudentModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
-import be.Citizen;
 import be.Student;
-import bll.CitizenFacade;
 import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,9 +68,9 @@ public class TeacherEditStudentController implements Initializable {
     public void onEditBtn(ActionEvent actionEvent) throws SQLException, IOException {
 
         // checks for no inputs
-        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("")){
+        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("")) {
             displayMessage("Der mangler infomation");
-        }else {
+        } else {
             try {
 
                 if (txtPassword.getText().equals("")) {
@@ -83,7 +81,7 @@ public class TeacherEditStudentController implements Initializable {
                     studentModel.updateStudent(student);
                     updateStatus(student);
 
-                }else {
+                } else {
 
                     String salt = BCrypt.gensalt(10);
                     //hash + salt one liner
@@ -92,7 +90,7 @@ public class TeacherEditStudentController implements Initializable {
                     a.setTitle("Rediger i Elev ");
                     a.setHeaderText("Ville du gerne redigere denne elev");
                     a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
-                        Student student = new Student(this.student.getId(),this.student.getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                        Student student = new Student(this.student.getId(), this.student.getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                         try {
                             studentModel.updateStudent(student);
                         } catch (SQLException | IOException e) {
@@ -107,16 +105,16 @@ public class TeacherEditStudentController implements Initializable {
             }
 
 
-                //updates ui
-                // updateStatus(student);
-                TeacherController controller = new SceneSwapper().getTeacherController();
-                controller.setTableview();
+            //updates ui
+            // updateStatus(student);
+            TeacherController controller = new SceneSwapper().getTeacherController();
+            controller.setTableview();
 
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
 
-            }
-            }
+        }
+    }
 
 
     /**
@@ -129,9 +127,10 @@ public class TeacherEditStudentController implements Initializable {
 
     /**
      * updates the ui for user feeling of successful Update of Student.
+     *
      * @param student that has ben created
      */
-    public void updateStatus(Student student){
+    public void updateStatus(Student student) {
         lblStatus.setText("Redigeret i Template: " + student.getFName() + " " + student.getLName());
         txtUsername.setText("");
         txtPassword.setText("");

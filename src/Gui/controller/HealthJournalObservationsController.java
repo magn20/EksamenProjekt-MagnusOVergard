@@ -23,10 +23,14 @@ public class HealthJournalObservationsController implements Initializable {
     private Citizen citizen;
     private CitizenModel citizenModel;
 
+    /**
+     * Saves a HealthJournalObservation
+     * checks if exist already, if true update, if false create
+     */
     public void onSaveCloseBtn(ActionEvent actionEvent) throws SQLException, IOException {
-        if (citizenModel.getHealthJournalObservation(citizen.getId()) == null){
-            citizenModel.createHealthJournalObservation(new HealthJournalObservation(-1, citizen.getId(),tctObservation.getText()));
-        }else{
+        if (citizenModel.getHealthJournalObservation(citizen.getId()) == null) {
+            citizenModel.createHealthJournalObservation(new HealthJournalObservation(-1, citizen.getId(), tctObservation.getText()));
+        } else {
             HealthJournalObservation healthJournalObservation = citizenModel.getHealthJournalObservation(citizen.getId());
             healthJournalObservation.setObservation(tctObservation.getText());
             citizenModel.updateHealthJournalObservation(healthJournalObservation);
@@ -38,12 +42,12 @@ public class HealthJournalObservationsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    singletonUser = SingletonUser.getInstance();
-    citizen = singletonUser.getCitizen();
-    citizenModel = new CitizenModel();
+        singletonUser = SingletonUser.getInstance();
+        citizen = singletonUser.getCitizen();
+        citizenModel = new CitizenModel();
 
         try {
-            if (citizenModel.getHealthJournalObservation(citizen.getId()) != null){
+            if (citizenModel.getHealthJournalObservation(citizen.getId()) != null) {
                 tctObservation.setText(citizenModel.getHealthJournalObservation(citizen.getId()).getObservation());
             }
         } catch (SQLException | IOException e) {

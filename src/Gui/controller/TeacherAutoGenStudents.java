@@ -35,6 +35,11 @@ public class TeacherAutoGenStudents {
     private SingletonUser singletonUser = SingletonUser.getInstance();
     private TeacherController controller = new SceneSwapper().getTeacherController();
 
+    /**
+     * adds new students to the database.
+     * disabled input fields
+     * And perform new thread creating students.
+     */
     public void onAddBtn(ActionEvent actionEvent) throws SQLException, IOException {
         lblGuide.setText("Ind sæt Fornavne og Efternavne");
 
@@ -74,14 +79,22 @@ public class TeacherAutoGenStudents {
 
     }
 
+    /**
+     * when done with creating students,
+     * display all students with all info in textfield.
+     */
     private void updateTextArea() {
         txtStudents.clear();
-        for(Student student: newStudents){
+        for (Student student : newStudents) {
 
-            txtStudents.setText( txtStudents.getText() + "Fornavn: " + student.getFName() + " Efternavn: " + student.getLName() + " Brugernavn: " + student.getUsername() + " Kodeord: "+ student.getPassword() + "\n");
+            txtStudents.setText(txtStudents.getText() + "Fornavn: " + student.getFName() + " Efternavn: " + student.getLName() + " Brugernavn: " + student.getUsername() + " Kodeord: " + student.getPassword() + "\n");
         }
     }
 
+    /**
+     * Creates a new Student
+     * string line = a line from text field, representing a Fname & Lname
+     */
     public void handleCreation(String line) throws SQLException, IOException {
 
 
@@ -89,7 +102,6 @@ public class TeacherAutoGenStudents {
         String lName = "";
         String username = "";
         String password = "";
-
 
 
         fName = line.substring(0, line.indexOf(" "));
@@ -100,11 +112,11 @@ public class TeacherAutoGenStudents {
 
 
         String salt = BCrypt.gensalt(10);
-        String hashedPw =  BCrypt.hashpw(password, salt);
+        String hashedPw = BCrypt.hashpw(password, salt);
 
-        Student student = new Student(-1,singletonUser.getTeacher().getSchoolId(),fName,lName,username,password);
+        Student student = new Student(-1, singletonUser.getTeacher().getSchoolId(), fName, lName, username, password);
         newStudents.add(student);
-        studentModel.createStudent( new Student(-1,singletonUser.getTeacher().getSchoolId(),fName,lName,username,hashedPw));
+        studentModel.createStudent(new Student(-1, singletonUser.getTeacher().getSchoolId(), fName, lName, username, hashedPw));
 
     }
 

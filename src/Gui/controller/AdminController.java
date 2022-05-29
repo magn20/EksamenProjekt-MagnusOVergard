@@ -75,13 +75,13 @@ public class AdminController implements Initializable {
     public void prepareTableview() throws SQLException, IOException {
         // setup for tableview School
         tcSchoolname.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty()  );
+        tcSchoolId.setCellValueFactory(cellData -> cellData.getValue().getIdPropertyAsStringProperty());
 
         tcSchoolAdminFName.setCellValueFactory(cellData -> cellData.getValue().fNameProperty());
         tcSchoolAdminLName.setCellValueFactory(cellData -> cellData.getValue().lNameProperty());
         tcSchoolAdminSchoolId.setCellValueFactory(cellData -> cellData.getValue().schoolIdProperty().asObject());
 
-    setTableview();
+        setTableview();
     }
 
     /**
@@ -96,8 +96,6 @@ public class AdminController implements Initializable {
         allSchoolAdmins.addAll(schoolAdminManager.getSchoolAdmins());
         tvSchoolAdmin.setItems(allSchoolAdmins);
     }
-
-
 
 
     /**
@@ -148,6 +146,7 @@ public class AdminController implements Initializable {
 
     /**
      * closes the stage and set the login screen.
+     *
      * @param actionEvent
      * @throws IOException
      */
@@ -177,7 +176,7 @@ public class AdminController implements Initializable {
         } else {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne skole admin, fra systemet, indholder også alle lærer,elever og borger");
             a.setTitle("Fjern Skole admin");
-            a.setHeaderText("Fjern skole admin: " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getFName()+ " " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getLName() +  " fra systemet");
+            a.setHeaderText("Fjern skole admin: " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getFName() + " " + tvSchoolAdmin.getSelectionModel().getSelectedItem().getLName() + " fra systemet");
             a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
                 try {
                     schoolAdminManager.removeSchoolAdmin(tvSchoolAdmin.getSelectionModel().getSelectedItem());
@@ -196,9 +195,9 @@ public class AdminController implements Initializable {
      * Checks for no selection
      */
     public void onEditSchoolAdmin(ActionEvent actionEvent) throws IOException {
-        if (tvSchoolAdmin.getSelectionModel().isEmpty()){
+        if (tvSchoolAdmin.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en Skole Adminstrator");
-        }else {
+        } else {
             singletonUser.setSchoolAdmin(tvSchoolAdmin.getSelectionModel().getSelectedItem());
             sceneSwapper.sceneSwitch(new Stage(), "AdminEditSchoolAdmin.fxml");
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

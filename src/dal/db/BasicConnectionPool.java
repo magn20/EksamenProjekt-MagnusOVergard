@@ -20,6 +20,10 @@ public class BasicConnectionPool implements IConnectionPool {
     private static List<Connection> usedConnections = new ArrayList<>();
     private static int INITIAL_POOL_SIZE = 10;
 
+    /**
+     * Creates 10 connections
+     * @return BasicConnectionPool object
+     */
     public static BasicConnectionPool create() throws SQLException, IOException {
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
             connectionPool.add(createConnection());
@@ -27,6 +31,10 @@ public class BasicConnectionPool implements IConnectionPool {
         return new BasicConnectionPool();
     }
 
+    /**
+     * gets a single connection
+     * @return connection object
+     */
     @Override
     public Connection getConnection() throws SQLException, IOException {
         if (connectionPool.isEmpty()){
@@ -43,12 +51,20 @@ public class BasicConnectionPool implements IConnectionPool {
     }
 
 
+    /**
+     * puts connection object back into available connections "connectionPool" list
+     * @param connection object thats not inuse anymore.
+     */
     @Override
     public boolean releaseConnection(Connection connection) {
         connectionPool.add(connection);
         return usedConnections.remove(connection);
     }
 
+    /**
+     * creates a connection to database
+     * @return connection object
+     */
     private static Connection createConnection() throws SQLException, IOException {
 
         Properties databaseProperties = new Properties();
@@ -68,12 +84,23 @@ public class BasicConnectionPool implements IConnectionPool {
         connectionPool.add(ds.getConnection());
         return ds.getConnection();
     }
+
+    /**
+     * @return int size of all connections in total
+     */
     public int getSize() {
         return connectionPool.size() + usedConnections.size();
     }
+
+    /**
+     * @return int size of available connections
+     */
     public int getAvailableConnections(){
         return connectionPool.size();
     }
+    /**
+     * @return int size of in use connections
+     */
     public int getConnectionsInUse(){
         return usedConnections.size();
     }

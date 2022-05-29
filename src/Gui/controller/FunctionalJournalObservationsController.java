@@ -4,7 +4,6 @@ import Gui.model.CitizenModel;
 import Gui.utill.SingletonUser;
 import be.Citizen;
 import be.FunctionJournalObservation;
-import be.HealthJournalObservation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,10 +23,14 @@ public class FunctionalJournalObservationsController implements Initializable {
     private Citizen citizen;
     private CitizenModel citizenModel;
 
+    /**
+     * saves the functionalJournalObservation
+     * checks if already exist, if true update if false create.
+     */
     public void onSaveCloseBtn(ActionEvent actionEvent) throws SQLException, IOException {
-        if (citizenModel.getFunctionJournalObservation(citizen.getId()) == null){
-            citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1, citizen.getId(),tctObservation.getText()));
-        }else{
+        if (citizenModel.getFunctionJournalObservation(citizen.getId()) == null) {
+            citizenModel.createFunctionJournalObservation(new FunctionJournalObservation(-1, citizen.getId(), tctObservation.getText()));
+        } else {
             FunctionJournalObservation functionJournalObservation = citizenModel.getFunctionJournalObservation(citizen.getId());
             functionJournalObservation.setObservation(tctObservation.getText());
             citizenModel.updateFunctionJournalObservation(functionJournalObservation);
@@ -39,12 +42,12 @@ public class FunctionalJournalObservationsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    singletonUser = SingletonUser.getInstance();
-    citizen = singletonUser.getCitizen();
-    citizenModel = new CitizenModel();
+        singletonUser = SingletonUser.getInstance();
+        citizen = singletonUser.getCitizen();
+        citizenModel = new CitizenModel();
 
         try {
-            if (citizenModel.getFunctionJournalObservation(citizen.getId()) != null){
+            if (citizenModel.getFunctionJournalObservation(citizen.getId()) != null) {
                 tctObservation.setText(citizenModel.getFunctionJournalObservation(citizen.getId()).getObservation());
             }
         } catch (SQLException | IOException e) {

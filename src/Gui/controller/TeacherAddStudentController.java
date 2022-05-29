@@ -1,17 +1,14 @@
 package Gui.controller;
 
 import Gui.model.StudentModel;
-import Gui.model.TPLModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.Student;
-import be.Template;
 import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,7 +20,6 @@ import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
 
 public class TeacherAddStudentController implements Initializable {
-
 
 
     @FXML
@@ -51,27 +47,27 @@ public class TeacherAddStudentController implements Initializable {
      */
     public void onAddBtn(ActionEvent actionEvent) {
         // checks for no inputs
-        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().isEmpty()){
+        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtUsername.getText().equals("") || txtPassword.getText().isEmpty()) {
             displayMessage("Der mangler infomation");
-        }else {
+        } else {
             try {
 
                 String salt = BCrypt.gensalt(10);
                 //hash + salt one liner
                 String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
-                        // creates new Student object
-                        Student student  = new Student(-1,singletonUser.getTeacher().getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                // creates new Student object
+                Student student = new Student(-1, singletonUser.getTeacher().getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
 
-                        // adds the student to database
-                        studentModel.createStudent(student);
+                // adds the student to database
+                studentModel.createStudent(student);
 
-                        //updates ui
-                        updateStatus(student);
+                //updates ui
+                updateStatus(student);
 
 
                 TeacherController controller = new SceneSwapper().getTeacherController();
                 controller.setTableview();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 displayError(e);
             }
@@ -89,9 +85,10 @@ public class TeacherAddStudentController implements Initializable {
 
     /**
      * updates the ui for user feeling of succesful creation of student.
+     *
      * @param student that has ben created
      */
-    public void updateStatus(Student student){
+    public void updateStatus(Student student) {
         lblStatus.setText("tilføjet ny elev: " + student.getFName() + " " + student.getLName());
         txtUsername.setText("");
         txtPassword.setText("");

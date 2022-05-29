@@ -44,13 +44,13 @@ public class TeacherNewPasswordController implements Initializable {
     public void onSaveBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
-            if (!txtNewPassword.getText().equals(txtRepeatNewPassword.getText())){
+            if (!txtNewPassword.getText().equals(txtRepeatNewPassword.getText())) {
                 DisplayMessage.displayMessage("Brugernavn Matcher ikke");
-            }else {
+            } else {
 
                 String salt = BCrypt.gensalt(10);
 
-                String hashed = BCrypt.hashpw(txtNewPassword.getText(),salt);
+                String hashed = BCrypt.hashpw(txtNewPassword.getText(), salt);
 
                 Teacher teacher = singletonUser.getTeacher();
                 teacher.setPassword(hashed);
@@ -58,7 +58,7 @@ public class TeacherNewPasswordController implements Initializable {
 
                 lblStatus.setText("Status: opdateret Password");
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             DisplayMessage.displayError(exception);
             exception.printStackTrace();
         }

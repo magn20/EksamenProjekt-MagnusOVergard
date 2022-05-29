@@ -3,7 +3,6 @@ package Gui.controller;
 import Gui.model.StudentModel;
 import Gui.utill.SingletonUser;
 import be.Student;
-import be.Teacher;
 import bll.utill.BCrypt;
 import bll.utill.DisplayMessage;
 import javafx.event.ActionEvent;
@@ -45,13 +44,13 @@ public class StudentNewPasswordController implements Initializable {
     public void onSaveBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
-            if (!txtNewPassword.getText().equals(txtRepeatNewPassword.getText())){
+            if (!txtNewPassword.getText().equals(txtRepeatNewPassword.getText())) {
                 DisplayMessage.displayMessage("Brugernavn Matcher ikke");
-            }else {
+            } else {
 
                 String salt = BCrypt.gensalt(10);
 
-                String hashed = BCrypt.hashpw(txtNewPassword.getText(),salt);
+                String hashed = BCrypt.hashpw(txtNewPassword.getText(), salt);
 
                 Student student = singletonUser.getStudent();
                 student.setPassword(hashed);
@@ -59,7 +58,7 @@ public class StudentNewPasswordController implements Initializable {
 
                 lblStatus.setText("Status: opdateret Password");
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             DisplayMessage.displayError(exception);
             exception.printStackTrace();
         }

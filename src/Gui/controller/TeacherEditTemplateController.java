@@ -50,30 +50,30 @@ public class TeacherEditTemplateController implements Initializable {
 
 
         // checks for no inputs
-        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")){
+        if (txtFName.getText().equals("") || txtLName.getText().equals("") || txtAge.getText().equals("")) {
             displayMessage("Der mangler infomation");
-        }else {
+        } else {
             try {
 
 
                 TeacherController controller = new SceneSwapper().getTeacherController();
                 Template template = controller.getTemplateForEdit();
-                        template.setlName(txtLName.getText());
-                        template.setFName(txtFName.getText());
-                        template.setAge(txtAge.getText());
+                template.setlName(txtLName.getText());
+                template.setFName(txtFName.getText());
+                template.setAge(txtAge.getText());
 
 
-                        // adds the student to database
-                        tplModel.updateTemplate(template);
+                // adds the student to database
+                tplModel.updateTemplate(template);
 
 
-                        //updates ui
-                        updateStatus(template);
+                //updates ui
+                updateStatus(template);
 
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 displayError(e);
             }
@@ -91,9 +91,10 @@ public class TeacherEditTemplateController implements Initializable {
 
     /**
      * updates the ui for user feeling of succesful Update of Template.
+     *
      * @param template that has ben created
      */
-    public void updateStatus(Template template){
+    public void updateStatus(Template template) {
         lblStatus.setText("Redigeret i Template: " + template.getfName() + " " + template.getlName());
         txtAge.setText("");
         txtFName.setText("");

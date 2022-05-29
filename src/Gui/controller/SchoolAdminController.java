@@ -1,11 +1,9 @@
 package Gui.controller;
 
-import Gui.model.SchoolModel;
 import Gui.model.StudentModel;
 import Gui.model.TeacherModel;
 import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
-import be.School;
 import be.Student;
 import be.Teacher;
 import bll.utill.DisplayMessage;
@@ -51,7 +49,6 @@ public class SchoolAdminController implements Initializable {
     private TableColumn<Teacher, Integer> tcTeacherSchoolID;
     @FXML
     private TableColumn<Teacher, String> tcUsername;
-
 
 
     TeacherModel teacherModel;
@@ -112,8 +109,6 @@ public class SchoolAdminController implements Initializable {
     }
 
 
-
-
     /**
      * Removes a Teacher
      * Checks for no selection
@@ -125,7 +120,7 @@ public class SchoolAdminController implements Initializable {
         } else {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne lærer.");
             a.setTitle("Fjern lære");
-            a.setHeaderText("Fjern lære: " + tvTeacher.getSelectionModel().getSelectedItem().getFName() +tvTeacher.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
+            a.setHeaderText("Fjern lære: " + tvTeacher.getSelectionModel().getSelectedItem().getFName() + tvTeacher.getSelectionModel().getSelectedItem().getLName() + " fra systemet");
             a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
                 try {
                     teacherModel.removeTeacher(tvTeacher.getSelectionModel().getSelectedItem());
@@ -151,7 +146,7 @@ public class SchoolAdminController implements Initializable {
             // waiting for confirmation.
             Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ville du gerne fjerne denne elev.");
             a.setTitle("Fjern elev");
-            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName()  + " fra systemet");
+            a.setHeaderText("Fjern elev: " + tvStudent.getSelectionModel().getSelectedItem().getFName() + " " + tvStudent.getSelectionModel().getSelectedItem().getLName() + " fra systemet");
             a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
                 try {
                     studentModel.removeStudent(tvStudent.getSelectionModel().getSelectedItem());
@@ -163,9 +158,6 @@ public class SchoolAdminController implements Initializable {
             });
         }
     }
-
-
-
 
 
     /**
@@ -194,13 +186,14 @@ public class SchoolAdminController implements Initializable {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
+
     /**
      * opens AdminEditStudent scene on new stage, Closes current stage
      */
     public void onEditStudentBtn(ActionEvent actionEvent) throws IOException {
-        if (tvStudent.getSelectionModel().isEmpty()){
+        if (tvStudent.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Vælg en elev");
-        }else {
+        } else {
             //sets up student for edit
             SingletonUser singletonUser = SingletonUser.getInstance();
             singletonUser.setStudent(tvStudent.getSelectionModel().getSelectedItem());
@@ -212,6 +205,9 @@ public class SchoolAdminController implements Initializable {
         }
     }
 
+    /**
+     * goes back to login screen.
+     */
     public void onLogoutBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "Login.fxml");
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

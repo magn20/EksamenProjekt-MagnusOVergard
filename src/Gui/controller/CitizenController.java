@@ -19,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -861,12 +860,23 @@ public class CitizenController implements Initializable {
                 } else {
                     relevancy = "Ikke Relavant";
                 }
-                String niveau = ""; String expected = ""; String execution = ""; String executionLimits = "";
+                String niveau = "";
+                String expected = "";
+                String execution = "";
+                String executionLimits = "";
 
-                if (!cbExecutionLimitsFunction.getSelectionModel().isEmpty()) {executionLimits = cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString();}
-                if (!cbExecutionFunction.getSelectionModel().isEmpty()) {execution = cbExecutionFunction.getSelectionModel().getSelectedItem().toString();}
-                if (!cbExpectedFunction.getSelectionModel().isEmpty()) {expected = cbExpectedFunction.getSelectionModel().getSelectedItem().toString();}
-                if (!cbNiveauFunction.getSelectionModel().isEmpty()) {niveau = cbNiveauFunction.getSelectionModel().getSelectedItem().toString();}
+                if (!cbExecutionLimitsFunction.getSelectionModel().isEmpty()) {
+                    executionLimits = cbExecutionLimitsFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExecutionFunction.getSelectionModel().isEmpty()) {
+                    execution = cbExecutionFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbExpectedFunction.getSelectionModel().isEmpty()) {
+                    expected = cbExpectedFunction.getSelectionModel().getSelectedItem().toString();
+                }
+                if (!cbNiveauFunction.getSelectionModel().isEmpty()) {
+                    niveau = cbNiveauFunction.getSelectionModel().getSelectedItem().toString();
+                }
 
                 FunctionalJournal functionalJournal = new FunctionalJournal(-1, citizen.getId(), functionConditionString, date.toString(),
                         niveau, relevancy, txtNoteFunction.getText(), expected, execution, executionLimits, txtCitizenExpecationFunction.getText());
@@ -893,6 +903,11 @@ public class CitizenController implements Initializable {
         }
     }
 
+    /**
+     * Sets the selected functionJournal, to the view.
+     *
+     * @param mouseEvent when a mouse event happens on tableview for FunctionJournal.
+     */
     public void onTableviewFunctionalJournal(MouseEvent mouseEvent) {
         if (!tvfunctionsJournals.getSelectionModel().isEmpty()) {
             functionConditionString = tvfunctionsJournals.getSelectionModel().getSelectedItem().getCondition();
@@ -906,11 +921,16 @@ public class CitizenController implements Initializable {
      * =======================================================================================================
      */
 
-
+    /**
+     * switch to new stage and scene.
+     */
     public void onObservationBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "HealthJournalObservations.fxml");
     }
 
+    /**
+     * switch to new stage and scene.
+     */
     public void onFunctionalObservationBtn(ActionEvent actionEvent) throws IOException {
         sceneSwapper.sceneSwitch(new Stage(), "FunctionJournalObservations.fxml");
     }
@@ -952,8 +972,13 @@ public class CitizenController implements Initializable {
         }
     }
 
+    /**
+     * sets the label status to be empty if it isnt already.
+     *
+     * @param event when switching tab
+     */
     public void updateStatus(Event event) {
-        if (lblStatus != null){
+        if (lblStatus != null) {
             lblStatus.setText("");
         }
     }
