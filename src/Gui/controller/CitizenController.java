@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,7 +31,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CitizenController implements Initializable {
-
 
     @FXML
     private Label lblCitizenName;

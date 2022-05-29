@@ -39,6 +39,36 @@
       <Button layoutX="1201.0" layoutY="8.0" mnemonicParsing="false" onAction="#onCloseBtn" prefHeight="27.0" prefWidth="65.0" stylesheets="@../css/StyleSheetforLogout.css" text="Log ud" underline="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
       <TabPane layoutX="2.0" layoutY="85.0" prefHeight="675.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="84.0">
          <tabs>
+            <Tab onSelectionChanged="#updateStatus" text="Borgeren">
+              <content>
+                  <AnchorPane styleClass="backgroundingRed">
+                     <children>
+                        <Label layoutX="25.0" layoutY="36.0" text="Medcineliste" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="20.0">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="638.0" layoutY="13.0" text="Målinger" AnchorPane.leftAnchor="700.0" AnchorPane.topAnchor="25.0">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
+                        <Line endX="-152.8000030517578" endY="33.199981689453125" layoutX="170.0" layoutY="101.0" startX="-152.8000030517578" startY="-72.40000915527344" />
+                        <Line endX="-152.8000030517578" endY="33.199981689453125" layoutX="842.0" layoutY="101.0" startX="-152.8000030517578" startY="-72.40000915527344" AnchorPane.leftAnchor="688.6999969482422" AnchorPane.topAnchor="28.099990844726562" />
+                        <Button layoutX="26.0" layoutY="69.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="144.0" text="Åben" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="69.0">
+                           <font>
+                              <Font name="System Italic" size="26.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="701.0" layoutY="70.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="144.0" text="Åben" AnchorPane.leftAnchor="701.0" AnchorPane.topAnchor="70.0">
+                           <font>
+                              <Font name="System Italic" size="26.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
             <Tab onSelectionChanged="#updateStatus" text="Generelle infomation">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundingGreen">
@@ -408,7 +438,7 @@
                                           </TitledPane>
                                       </panes>
                                     </Accordion>
-                                    <Button layoutX="1109.0" layoutY="218.0" mnemonicParsing="false" onAction="#onFunctionalObservationBtn" prefHeight="27.0" prefWidth="149.0" text="Observationer" />
+                                    <Button layoutX="1109.0" layoutY="218.0" mnemonicParsing="false" onAction="#onFunctionalObservationBtn" prefHeight="27.0" prefWidth="149.0" text="Observationer" AnchorPane.rightAnchor="14.19999999999996" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -535,7 +565,7 @@
                                           <Font name="System Bold Italic" size="23.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="1111.0" layoutY="99.0" mnemonicParsing="false" onAction="#onObservationBtn" prefHeight="27.0" prefWidth="149.0" text="Observationer" />
+                                    <Button layoutX="1111.0" layoutY="99.0" mnemonicParsing="false" onAction="#onObservationBtn" prefHeight="27.0" prefWidth="149.0" text="Observationer" AnchorPane.rightAnchor="11.400000000000006" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="715.0">
@@ -603,11 +633,6 @@
                      </children>
                   </AnchorPane>
                </content>
-            </Tab>
-            <Tab onSelectionChanged="#updateStatus" text="Medcine LIste">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
             </Tab>
          </tabs>
       </TabPane>

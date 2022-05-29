@@ -116,8 +116,8 @@
                            </children>
                         </GridPane>
                         <Line endX="-279.5999755859375" endY="1.199981689453125" layoutX="755.0" layoutY="122.0" startX="-279.5999755859375" startY="-65.20000457763672" AnchorPane.rightAnchor="797.6999755859374" />
-                        <Line endX="-237.79998779296875" endY="-110.0" layoutX="713.0" layoutY="272.0" startX="-237.79998779296875" startY="44.399993896484375" />
-                        <Line endX="-16.20001220703125" endY="-135.4000244140625" layoutX="490.0" layoutY="479.0" startX="-16.20001220703125" startY="-32.999969482421875" />
+                        <Line endX="-237.79998779296875" endY="-110.0" layoutX="713.0" layoutY="272.0" startX="-237.79998779296875" startY="44.399993896484375" AnchorPane.rightAnchor="797.8999877929687" />
+                        <Line endX="-16.20001220703125" endY="-135.4000244140625" layoutX="490.0" layoutY="479.0" startX="-16.20001220703125" startY="-32.999969482421875" AnchorPane.rightAnchor="799.3000122070312" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -248,7 +248,7 @@
                         <Line endX="-189.5999755859375" endY="-63.600006103515625" layoutX="637.0" layoutY="234.0" startX="-189.5999755859375" startY="-16.4000244140625" AnchorPane.rightAnchor="824.0999999999999" />
                         <Line endX="-284.0" endY="146.79998779296875" layoutX="729.0" layoutY="246.0" startX="-284.0" startY="17.199981689453125" AnchorPane.rightAnchor="824.0999999999999" />
                         <Line endX="-197.20001220703125" endY="138.00006103515625" layoutX="643.0" layoutY="434.0" startX="-197.20001220703125" startY="5.200042724609375" AnchorPane.rightAnchor="824.0999999999999" />
-                        <Line endX="19.60003662109375" endY="28.00006103515625" layoutX="615.0" layoutY="540.0" startX="19.60003662109375" startY="-29.5999755859375" />
+                        <Line endX="19.60003662109375" endY="28.00006103515625" layoutX="615.0" layoutY="540.0" startX="19.60003662109375" startY="-29.5999755859375" AnchorPane.rightAnchor="638.4999633789062" />
                      </children>
                   </AnchorPane>
                </content>

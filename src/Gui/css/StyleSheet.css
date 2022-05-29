@@ -45,6 +45,12 @@
     -fx-arc-width: 2;
     -fx-border-style: solid;
 }
+.backgroundingRed{
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-background-color: #ffaeae;
+    -fx-arc-width: 2;
+    -fx-border-style: solid;
+}
 .backgroundingDarkBlue{
     -fx-border-color: #000000;
     -fx-background-color: #28a0ff;
