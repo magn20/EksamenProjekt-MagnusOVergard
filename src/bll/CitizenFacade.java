@@ -1,7 +1,6 @@
 package bll;
 
 import be.*;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.db.*;
 import javafx.collections.ObservableList;
 
@@ -16,19 +15,14 @@ public class CitizenFacade {
     private FunctionalJournalDAO functionalJournalDAO;
     private HealthJournalObservationDao healthJournalObservationDao;
     private FunctionJournalObservationDao functionJournalObservationDao;
-    private DatabaseConnector connector;
     {
-        try {
-            connector = new DatabaseConnector();
-            healthJournalDAO = new HealthJournalDAO();
-            citizenDAO = new CitizenDAO();
-            generalInfoDAO = new GeneralInfoDAO();
-            functionalJournalDAO = new FunctionalJournalDAO();
-            healthJournalObservationDao = new HealthJournalObservationDao();
-            functionJournalObservationDao = new FunctionJournalObservationDao();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //create instances of dao classes
+        healthJournalDAO = new HealthJournalDAO();
+        citizenDAO = new CitizenDAO();
+        generalInfoDAO = new GeneralInfoDAO();
+        functionalJournalDAO = new FunctionalJournalDAO();
+        healthJournalObservationDao = new HealthJournalObservationDao();
+        functionJournalObservationDao = new FunctionJournalObservationDao();
     }
 
 

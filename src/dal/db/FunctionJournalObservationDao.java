@@ -13,6 +13,11 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
     private BasicConnectionPool basicConnectionPool = new BasicConnectionPool();
 
 
+    /**
+     *  gets functionjournalobservation for  citizen
+     * @param citizenId which observation belongs to
+     * @return functionjournalobservation object
+     */
     @Override
     public FunctionJournalObservation getFunctionJournalObservation(int citizenId) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {
@@ -41,6 +46,11 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
     }
 
 
+    /**
+     * Creates a functionJournalObservation
+     * @param functionJournalObservation the object for creation
+     * @return the object created
+     */
     @Override
     public FunctionJournalObservation createFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException, IOException {
         int insertedId = -1;
@@ -63,6 +73,10 @@ public class FunctionJournalObservationDao implements IFunctionJournalObservatio
 
     }
 
+    /**
+     * updates a functionJournalObservation
+     * @param functionJournalObservation object for update
+     */
     @Override
     public void updateFunctionJournalObservation(FunctionJournalObservation functionJournalObservation) throws SQLException, IOException {
         try(Connection connection = basicConnectionPool.getConnection()) {

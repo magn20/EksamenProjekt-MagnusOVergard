@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,9 +24,9 @@ public class TPLFunctionalJournalObservationsController implements Initializable
     private TPLModel tplModel;
 
     public void onSaveCloseBtn(ActionEvent actionEvent) throws SQLException, IOException {
-        if (tplModel.getTPLFunctionJournalObservation(template.getId()) == null){
-            tplModel.createTPLFunctionJournalObservation(new TPLFunctionJournalObservation(-1, template.getId(),tctObservation.getText()));
-        }else{
+        if (tplModel.getTPLFunctionJournalObservation(template.getId()) == null) {
+            tplModel.createTPLFunctionJournalObservation(new TPLFunctionJournalObservation(-1, template.getId(), tctObservation.getText()));
+        } else {
             TPLFunctionJournalObservation tplFunctionJournalObservation = tplModel.getTPLFunctionJournalObservation(template.getId());
             tplFunctionJournalObservation.setObservation(tctObservation.getText());
             tplModel.updateTPLFunctionJournalObservation(tplFunctionJournalObservation);
@@ -37,11 +38,11 @@ public class TPLFunctionalJournalObservationsController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    template = controller.getTemplateForEdit();
-    tplModel = new TPLModel();
+        template = controller.getTemplateForEdit();
+        tplModel = new TPLModel();
 
         try {
-            if (tplModel.getTPLFunctionJournalObservation(template.getId()) != null){
+            if (tplModel.getTPLFunctionJournalObservation(template.getId()) != null) {
                 tctObservation.setText(tplModel.getTPLFunctionJournalObservation(template.getId()).getObservation());
             }
         } catch (SQLException | IOException e) {

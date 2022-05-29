@@ -1,10 +1,7 @@
 package bll;
 
 import be.SchoolAdmin;
-import be.Teacher;
-import dal.db.DatabaseConnector;
 import dal.db.SchoolAdminDAO;
-import dal.db.TeacherDAO;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -12,6 +9,7 @@ import java.sql.SQLException;
 
 public class SchoolAdminManager {
 
+    //create instance of SchoolAdminDAO
     private SchoolAdminDAO schoolAdminDAO;
     {
         schoolAdminDAO = new SchoolAdminDAO();

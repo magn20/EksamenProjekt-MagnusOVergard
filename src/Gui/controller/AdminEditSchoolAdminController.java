@@ -5,7 +5,6 @@ import Gui.utill.SceneSwapper;
 import Gui.utill.SingletonUser;
 import be.School;
 import be.SchoolAdmin;
-import be.Teacher;
 import bll.SchoolAdminManager;
 import bll.utill.BCrypt;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
 
 public class AdminEditSchoolAdminController implements Initializable {
@@ -45,7 +43,7 @@ public class AdminEditSchoolAdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sceneSwapper  = new SceneSwapper();
+        sceneSwapper = new SceneSwapper();
         schoolAdminManager = new SchoolAdminManager();
         schoolModel = new SchoolModel();
         singletonUser = SingletonUser.getInstance();
@@ -60,10 +58,13 @@ public class AdminEditSchoolAdminController implements Initializable {
 
     }
 
+    /**
+     * updates the view with selected SchoolAdmin information
+     */
     private void viewSelectedSchoolAdmin() throws SQLException, IOException {
         String schoolName = "";
-        for (School school : schoolModel.getSchools()){
-            if (school.getId() == selectedSchoolAdmin.getSchoolId()){
+        for (School school : schoolModel.getSchools()) {
+            if (school.getId() == selectedSchoolAdmin.getSchoolId()) {
                 schoolName = school.getName();
             }
         }
@@ -74,9 +75,12 @@ public class AdminEditSchoolAdminController implements Initializable {
         txtUsername.setText(selectedSchoolAdmin.getUsername());
     }
 
+    /**
+     * setup combobox for schools
+     */
     private void setupComboBox() throws SQLException, IOException {
 
-        for (School school: schoolModel.getSchools()){
+        for (School school : schoolModel.getSchools()) {
             cbSchool.getItems().add(school.getName());
         }
 
@@ -103,8 +107,8 @@ public class AdminEditSchoolAdminController implements Initializable {
             displayMessage("Der mangler infomation");
             //checks for selection of school
         } else if (txtPassword.getText().isEmpty()) {
-            for (School school : schoolModel.getSchools()){
-                if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())){
+            for (School school : schoolModel.getSchools()) {
+                if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())) {
                     selectedSchoolAdmin.setSchoolId(school.getId());
                 }
                 selectedSchoolAdmin.setFName(txtFName.getText());
@@ -113,7 +117,7 @@ public class AdminEditSchoolAdminController implements Initializable {
 
                 schoolAdminManager.updateSchoolAdmin(selectedSchoolAdmin);
             }
-        }else {
+        } else {
             // generate salt
             String salt = BCrypt.gensalt(10);
             //hash + salt one liner
@@ -126,8 +130,8 @@ public class AdminEditSchoolAdminController implements Initializable {
             a.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
 
                 try {
-                    for (School school : schoolModel.getSchools()){
-                        if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())){
+                    for (School school : schoolModel.getSchools()) {
+                        if (school.getName().equals(cbSchool.getSelectionModel().getSelectedItem())) {
                             selectedSchoolAdmin.setSchoolId(school.getId());
                         }
                         selectedSchoolAdmin.setFName(txtFName.getText());
@@ -145,12 +149,11 @@ public class AdminEditSchoolAdminController implements Initializable {
     }
 
 
-
     /**
      * updates ui for feeling of successful creation of schoolAdmin object
      */
-    public void updateStatus(SchoolAdmin schoolAdmin){
-        lblStatus.setText("Redigeret skole admin: " + schoolAdmin.getFName() + " " + schoolAdmin.getLName() );
+    public void updateStatus(SchoolAdmin schoolAdmin) {
+        lblStatus.setText("Redigeret skole admin: " + schoolAdmin.getFName() + " " + schoolAdmin.getLName());
         txtPassword.setText("");
         txtUsername.setText("");
         txtFName.setText("");

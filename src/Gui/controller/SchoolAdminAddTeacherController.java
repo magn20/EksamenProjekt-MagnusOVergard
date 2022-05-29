@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import static bll.utill.DisplayMessage.displayError;
 import static bll.utill.DisplayMessage.displayMessage;
 
@@ -37,7 +38,7 @@ public class SchoolAdminAddTeacherController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sceneSwapper  = new SceneSwapper();
+        sceneSwapper = new SceneSwapper();
         teacherModel = new TeacherModel();
     }
 
@@ -70,10 +71,10 @@ public class SchoolAdminAddTeacherController implements Initializable {
                 String hashed = BCrypt.hashpw(txtPassword.getText(), salt);
 
                 // creates teacher object & creates it
-                Teacher teacher = new Teacher(-1,singletonUser.getSchoolAdmin().getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
+                Teacher teacher = new Teacher(-1, singletonUser.getSchoolAdmin().getSchoolId(), txtFName.getText(), txtLName.getText(), txtUsername.getText(), hashed);
                 updateStatus(teacher);
                 teacherModel.createTeacher(teacher);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 displayError(e);
             }
@@ -83,8 +84,8 @@ public class SchoolAdminAddTeacherController implements Initializable {
     /**
      * updates ui for feeling of successful creation of teacher object
      */
-    public void updateStatus(Teacher teacher){
-        lblStatus.setText("tilføjet ny lære: " + teacher.getFName() + " " + teacher.getLName() );
+    public void updateStatus(Teacher teacher) {
+        lblStatus.setText("tilføjet ny lære: " + teacher.getFName() + " " + teacher.getLName());
         txtPassword.setText("");
         txtUsername.setText("");
         txtFName.setText("");

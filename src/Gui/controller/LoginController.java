@@ -58,7 +58,7 @@ public class LoginController implements Initializable {
             boolean correctLogin = false;
 
             //checks for admin log in
-            if (lblPassword.getText().equals("admin") & lblUsername.getText().equals("admin")){
+            if (lblPassword.getText().equals("admin") & lblUsername.getText().equals("admin")) {
                 sceneSwapper.sceneSwitch(new Stage(), "AdminScreen.fxml");
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();
@@ -66,9 +66,9 @@ public class LoginController implements Initializable {
             }
 
             // checks for teachers log in
-            for (Teacher teacher : teacherModel.getTeachers()){
-                if (teacher.getUsername().equals(lblUsername.getText())){
-                    if(BCrypt.checkpw(lblPassword.getText(), teacher.getPassword())){
+            for (Teacher teacher : teacherModel.getTeachers()) {
+                if (teacher.getUsername().equals(lblUsername.getText())) {
+                    if (BCrypt.checkpw(lblPassword.getText(), teacher.getPassword())) {
                         // Sceneswapper
                         correctLogin = true;
                         singletonUser.setTeacher(teacher);
@@ -83,9 +83,9 @@ public class LoginController implements Initializable {
             }
 
             //checks for Student log in
-            for (Student student : studentModel.getStudents()){
-                if (student.getUsername().equals(lblUsername.getText())){
-                    if(BCrypt.checkpw(lblPassword.getText(), student.getPassword())){
+            for (Student student : studentModel.getStudents()) {
+                if (student.getUsername().equals(lblUsername.getText())) {
+                    if (BCrypt.checkpw(lblPassword.getText(), student.getPassword())) {
                         // Sceneswapper
                         correctLogin = true;
                         singletonUser.setStudent(student);
@@ -100,9 +100,9 @@ public class LoginController implements Initializable {
             }
 
             //checks for SchoolAdmin log in
-            for (SchoolAdmin schoolAdmin : schoolAdminManager.getSchoolAdmins()){
-                if (schoolAdmin.getUsername().equals(lblUsername.getText())){
-                    if(BCrypt.checkpw(lblPassword.getText(), schoolAdmin.getPassword())){
+            for (SchoolAdmin schoolAdmin : schoolAdminManager.getSchoolAdmins()) {
+                if (schoolAdmin.getUsername().equals(lblUsername.getText())) {
+                    if (BCrypt.checkpw(lblPassword.getText(), schoolAdmin.getPassword())) {
                         // Sceneswapper
                         correctLogin = true;
                         singletonUser.setSchoolAdmin(schoolAdmin);
@@ -117,11 +117,11 @@ public class LoginController implements Initializable {
             }
 
             // if login failed due to wrong information
-            if (!correctLogin){
+            if (!correctLogin) {
                 displayMessage("Brugernavn eller Kodeord var Forkert");
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             displayError(e);
         }
     }

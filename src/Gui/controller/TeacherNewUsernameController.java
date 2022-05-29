@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -44,16 +43,16 @@ public class TeacherNewUsernameController implements Initializable {
     public void onSaveBtn(ActionEvent actionEvent) throws SQLException {
         try {
 
-            if (!txtNewUsername.getText().equals(txtRepeatNewUsername.getText())){
+            if (!txtNewUsername.getText().equals(txtRepeatNewUsername.getText())) {
                 DisplayMessage.displayMessage("Brugernavn Matcher ikke");
-            }else {
+            } else {
                 Teacher teacher = singletonUser.getTeacher();
                 teacher.setUsername(txtNewUsername.getText());
                 teacherModel.updateTeacher(teacher);
 
                 lblStatus.setText("Status: opdateret brugernavn");
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             DisplayMessage.displayError(exception);
             exception.printStackTrace();
         }

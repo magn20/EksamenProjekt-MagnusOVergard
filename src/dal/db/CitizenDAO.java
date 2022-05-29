@@ -54,7 +54,7 @@ public class CitizenDAO implements ICitizen {
 
     /**
      * gets Citizen for a student from database
-     * @return Observablelist of all Teachers
+     * @return Observablelist of all Citizens
      */
     @Override
     public ObservableList<Citizen> getCitizenForStudent(int studentID) throws SQLException, IOException {

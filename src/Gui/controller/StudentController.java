@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -42,7 +43,7 @@ public class StudentController implements Initializable {
         try {
             setupTableview();
         } catch (SQLException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +59,7 @@ public class StudentController implements Initializable {
 
         try {
             tvCitizen.setItems(citizenFacade.getCitizenForStudent(singletonUser.getStudent().getId()));
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
 
@@ -68,9 +69,9 @@ public class StudentController implements Initializable {
      * opens Citizen journal Containing "GeneralInfo, HealthJournal & FunctionalJournal"
      */
     public void onOpenCitizenJournalBtn(ActionEvent actionEvent) throws IOException {
-        if (tvCitizen.getSelectionModel().isEmpty()){
+        if (tvCitizen.getSelectionModel().isEmpty()) {
             DisplayMessage.displayMessage("Ingen borger valgt");
-        }else{
+        } else {
             singletonUser.setCitizen(tvCitizen.getSelectionModel().getSelectedItem());
             sceneSwapper.sceneSwitch(new Stage(), "Journal.fxml");
         }

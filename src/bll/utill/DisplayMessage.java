@@ -42,7 +42,7 @@ public class DisplayMessage {
     /**
      *  used for getting confirmation from user thet they want to perform a certain action.
      * @param message the exception message.
-     * @return true if user have clicked ok. false if user clicked cansel
+     * @return true if user have clicked ok. false if user clicked cancel
      */
     public static boolean displayWarning (String message){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
